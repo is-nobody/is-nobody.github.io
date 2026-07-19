@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Language</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/editor/editor.main.min.css" />
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .dark body {
+            background-color: #0d0d0d;
+            color: #e5e7eb;
+        }
+
+        .light body {
+            background-color: #ffffff;
+            color: #1f2937;
+        }
+
+        .editor-container {
+            height: 400px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .dark .editor-container {
+            border: 1px solid #2d2d2d;
+        }
+
+        .light .editor-container {
+            border: 1px solid #d1d5db;
+        }
+
+        .terminal {
+            min-height: 100px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .dark .terminal {
+            background-color: #1e1e1e;
+            border-top: 1px solid #2d2d2d;
+        }
+
+        .light .terminal {
+            background-color: #f9fafb;
+            border-top: 1px solid #d1d5db;
+            color: #1f2937;
+        }
+
+        .active-tab {
+            border-bottom: 2px solid #22c55e;
+        }
+
+        .dark .active-tab {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        .light .active-tab {
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+
+        .btn-primary {
+            background-color: #22c55e;
+            transition: background-color 0.2s;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #16a34a;
+        }
+
+        .dark .btn-outline {
+            border: 1px solid #4b5563;
+            color: #9ca3af;
+            transition: all 0.2s;
+        }
+
+        .dark .btn-outline:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        .light .btn-outline {
+            border: 1px solid #d1d5db;
+            color: #4b5563;
+            transition: all 0.2s;
+        }
+
+        .light .btn-outline:hover {
+            border-color: #111827;
+            color: #111827;
+        }
+
+        .dark ::-webkit-scrollbar { width: 8px; }
+        .dark ::-webkit-scrollbar-track { background: #1e1e1e; }
+        .dark ::-webkit-scrollbar-thumb { background: #424242; border-radius: 4px; }
+
+        .light ::-webkit-scrollbar { width: 8px; }
+        .light ::-webkit-scrollbar-track { background: #f3f4f6; }
+        .light ::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 4px; }
+
+        .toolbar-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dark nav {
+            background-color: #0d0d0d;
+            border-bottom: 1px solid #2d2d2d;
+        }
+
+        .light nav {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .dark .hero-title {
+            color: #ffffff;
+        }
+
+        .light .hero-title {
+            color: #111827;
+        }
+
+        .dark .hero-text {
+            color: #d1d5db;
+        }
+
+        .light .hero-text {
+            color: #4b5563;
+        }
+
+        .dark .section-title {
+            color: #ffffff;
+        }
+
+        .light .section-title {
+            color: #111827;
+        }
+
+        .dark .ide-container {
+            background-color: #0d0d0d;
+            border: 1px solid #2d2d2d;
+        }
+
+        .light .ide-container {
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+        }
+
+        .dark .tabs-toolbar {
+            background-color: #1e1e1e;
+            border-bottom: 1px solid #2d2d2d;
+        }
+
+        .light .tabs-toolbar {
+            background-color: #f9fafb;
+            border-bottom: 1px solid #d1d5db;
+        }
+
+        .dark .tab-text {
+            color: #9ca3af;
+        }
+
+        .light .tab-text {
+            color: #6b7280;
+        }
+
+        .dark .tab-text:hover {
+            color: #ffffff;
+        }
+
+        .light .tab-text:hover {
+            color: #111827;
+        }
+
+        .dark .toolbar-text {
+            color: #9ca3af;
+        }
+
+        .light .toolbar-text {
+            color: #6b7280;
+        }
+
+        .dark .toolbar-text:hover {
+            color: #ffffff;
+        }
+
+        .light .toolbar-text:hover {
+            color: #111827;
+        }
+
+        .dark .terminal-header {
+            color: #9ca3af;
+            border-bottom: 1px solid #333;
+        }
+
+        .light .terminal-header {
+            color: #6b7280;
+            border-bottom: 1px solid #d1d5db;
+        }
+
+        .dark .terminal-badge {
+            background-color: #333;
+        }
+
+        .light .terminal-badge {
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+
+        .dark .terminal-clear:hover {
+            color: #d1d5db;
+        }
+
+        .light .terminal-clear:hover {
+            color: #111827;
+        }
+
+        .dark .output-box {
+            color: #4ade80;
+        }
+
+        .light .output-box {
+            color: #16a34a;
+        }
+
+        .dark .search-box {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            color: #6b7280;
+        }
+
+        .light .search-box {
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #6b7280;
+        }
+
+        .dark .search-box-shortcut {
+            border: 1px solid #444;
+            background-color: #2d2d2d;
+        }
+
+        .light .search-box-shortcut {
+            border: 1px solid #d1d5db;
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+
+        .dark .nav-link {
+            color: #9ca3af;
+        }
+
+        .dark .nav-link:hover {
+            color: #ffffff;
+        }
+
+        .light .nav-link {
+            color: #4b5563;
+        }
+
+        .light .nav-link:hover {
+            color: #111827;
+        }
+
+        .dark .github-icon {
+            color: #9ca3af;
+        }
+
+        .dark .github-icon:hover {
+            color: #ffffff;
+        }
+
+        .light .github-icon {
+            color: #4b5563;
+        }
+
+        .light .github-icon:hover {
+            color: #111827;
+        }
+
+        .dark .auto-button {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            color: #d1d5db;
+        }
+
+        .light .auto-button {
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #4b5563;
+        }
+
+        .dark .auto-button:hover {
+            color: #ffffff;
+        }
+
+        .light .auto-button:hover {
+            color: #111827;
+        }
+
+        .light .logo-dark-img {
+            display: block !important;
+        }
+        .light .logo-light-img {
+            display: none !important;
+        }
+        .dark .logo-dark-img {
+            display: none !important;
+        }
+        .dark .logo-light-img {
+            display: block !important;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .dark .theme-icon {
+            color: #9ca3af;
+        }
+
+        .light .theme-icon {
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <nav class="flex items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-2 text-green-500 font-bold text-xl tracking-wide">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/></svg>
+                Apex
+            </div>
+            <div class="hidden md:flex items-center gap-6 text-sm">
+                <a href="#" class="nav-link transition">Learn</a>
+                <a href="#" class="nav-link transition">News</a>
+                <div class="flex items-center search-box rounded px-3 py-1 text-xs">
+                    <svg class="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    Search
+                    <span class="ml-4 search-box-shortcut rounded px-1 text-[10px]">Ctrl K</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="theme-toggle" onclick="toggleTheme()" title="Switch theme">
+                <svg class="w-5 h-5 theme-icon" id="theme-icon-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <svg class="w-5 h-5 theme-icon" id="theme-icon-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                </svg>
+            </div>
+            <a href="#" class="github-icon">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <button class="auto-button rounded px-3 py-1 text-xs">Auto ▼</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-5xl">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-12 mb-16">
+            <div class="md:w-1/2">
+                <h1 class="text-6xl font-bold hero-title mb-6">Apex</h1>
+                <p class="text-lg hero-text mb-8 leading-relaxed max-w-lg">
+                    Apex is a simple, powerful, and high-performance programming language with clean, indentation-based syntax and a rich standard library.
+                </p>
+                <div class="flex flex-wrap items-center gap-4">
+                    <button class="btn-primary px-6 py-2 rounded-full font-medium">Get Started</button>
+                    <button class="btn-outline px-6 py-2 rounded-full font-medium bg-transparent">News</button>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center md:justify-end">
+                <div class="w-64 h-64 flex items-center justify-center">
+                    <img src="resources/logo-dark.png" 
+                         alt="Apex Logo Light Theme" 
+                         class="logo-dark-img w-full h-full object-contain drop-shadow-xl"
+                         style="display: none;"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-64 h-64 bg-gray-200 rounded-full flex items-center justify-center text-gray-500\'>Logo not found</div>'">
+                    <img src="resources/logo.png" 
+                         alt="Apex Logo Dark Theme" 
+                         class="logo-light-img w-full h-full object-contain drop-shadow-xl"
+                         style="display: block;"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-64 h-64 bg-[#1e1e1e] rounded-full flex items-center justify-center text-gray-500\'>Logo not found</div>'">
+                </div>
+            </div>
+        </div>
+
+        <!-- IDE Section -->
+        <h2 class="text-3xl font-bold section-title mb-6">Try Apex!</h2>
+        <div class="ide-container rounded-lg overflow-hidden shadow-2xl">
+            <!-- Tabs & Toolbar -->
+            <div class="flex items-center justify-between tabs-toolbar px-2 py-1">
+                <div class="flex items-center gap-1 text-sm">
+                    <div class="px-3 py-1 cursor-pointer active-tab tab-text" onclick="switchFile('calculator.apex')">calculator.apex</div>
+                    <div class="px-3 py-1 cursor-pointer tab-text" onclick="switchFile('fib.apex')">fib.apex</div>
+                    <div class="px-3 py-1 cursor-pointer tab-text" onclick="switchFile('tree.apex')">tree.apex</div>
+                    <div class="px-3 py-1 cursor-pointer tab-text" onclick="switchFile('ackermann.apex')">ackermann.apex</div>
+                    <div class="px-3 py-1 cursor-pointer tab-text" onclick="switchFile('for.apex')">for.apex</div>
+                </div>
+                <div class="toolbar-actions">
+                    <button onclick="executeCode()" class="btn-primary text-xs px-3 py-1 rounded flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Run
+                    </button>
+                    <button class="text-xs toolbar-text bg-transparent px-2 py-1 rounded">Open</button>
+                </div>
+            </div>
+
+            <!-- Monaco Editor -->
+            <div id="editor-container" class="editor-container"></div>
+
+            <!-- Output / Terminal -->
+            <div class="terminal p-4">
+                <div class="flex items-center justify-between text-xs terminal-header pb-2 mb-2">
+                    <span>▼ Output <span class="terminal-badge text-[10px] px-1 rounded">0.18 secs</span></span>
+                    <span class="cursor-pointer terminal-clear" onclick="document.getElementById('output-box').innerHTML=''">Clear</span>
+                </div>
+                <div id="output-box" class="output-box whitespace-pre-wrap font-mono text-sm leading-relaxed"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Monaco Loader -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
+    
+    <script>
+        const files = {
+            'calculator.apex': `import os\n\na = number(os.input("Enter first number: "))\nb = number(os.input("Enter second number: "))\no = os.input("Operation (+, -, *, /, %): ")\n\nif a == none or o == none or b == none\n    os.output("Invalid input!")\n    os.exit(1)\n\nif o == "+"\n    result = a + b\nelif o == "-"\n    result = a - b\nelif o == "*"\n    result = a * b\nelif o == "/"\n    if b == 0\n        os.output("Error: division by zero!")\n        os.exit(1)\n    result = a / b\nelif o == "%"\n    result = a % b\nelse\n    os.output("Unknown operation!")\n    os.exit(1)\n\nos.output("{a} {o} {b} = {result}")`,
+            'fib.apex': `import os\nimport sys\n\nfunction fib(n)\n    if n < 2\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nstart = sys.time()\nresult = fib(35)\nelapsed = sys.time() - start\nos.output("fib(35) recursive = {result}, elapsed {elapsed}")`,
+            'tree.apex': `import os\nimport sys\n\nfunction tree(n)\n    if n == 0\n        return 0\n    return 1 + tree(n - 1) + tree(n - 1)\n\nstart = sys.time()\nresult = tree(25)\nelapsed = sys.time() - start\nos.output("tree(25) = {result}, elapsed {elapsed}")`,
+            'ackermann.apex': `import os\nimport sys\n\nfunction ackermann(m, n)\n    if m == 0\n        return n + 1\n    if n == 0\n        return ackermann(m - 1, 1)\n    return ackermann(m - 1, ackermann(m, n - 1))\n\nstart = sys.time()\nresult = ackermann(3, 10)\nelapsed = sys.time() - start\nos.output("Ackermann(3,10) = {result}, elapsed {elapsed}")`,
+            'for.apex': `import os\nimport sys\n\nfunction for_counter_100m()\n    start = sys.time()\n    x = 0\n    for i = 1, 100000000\n        x = x + i\n    elapsed = sys.time() - start\n    os.output("100000000 iterations for counter: {x}, elapsed {elapsed}")\n\nfunction for_condition_100m()\n    start = sys.time()\n    x = 0\n    i = 1\n    for i < 100000001\n        x = x + i\n        i = i + 1\n    elapsed = sys.time() - start\n    os.output("100000000 iterations for condition: {x}, elapsed {elapsed}")\n\nfor_counter_100m()\nfor_condition_100m()`
+        };
+
+        let editor;
+        let currentFile = 'calculator.apex';
+        let currentTheme = 'dark';
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (currentTheme === 'dark') {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                currentTheme = 'light';
+                if (editor) {
+                    monaco.editor.setTheme('vs');
+                }
+                document.getElementById('theme-icon-light').style.display = 'block';
+                document.getElementById('theme-icon-dark').style.display = 'none';
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                currentTheme = 'dark';
+                if (editor) {
+                    monaco.editor.setTheme('vs-dark');
+                }
+                document.getElementById('theme-icon-light').style.display = 'none';
+                document.getElementById('theme-icon-dark').style.display = 'block';
+            }
+            updateLogo();
+        }
+
+        function updateLogo() {
+            const logoLight = document.querySelector('.logo-light-img');
+            const logoDark = document.querySelector('.logo-dark-img');
+            if (currentTheme === 'dark') {
+                if (logoLight) logoLight.style.display = 'block';
+                if (logoDark) logoDark.style.display = 'none';
+            } else {
+                if (logoLight) logoLight.style.display = 'none';
+                if (logoDark) logoDark.style.display = 'block';
+            }
+        }
+
+        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs' }});
+        require(['vs/editor/editor.main'], function() {
+            const initialTheme = currentTheme === 'dark' ? 'vs-dark' : 'vs';
+            editor = monaco.editor.create(document.getElementById('editor-container'), {
+                value: files[currentFile],
+                language: 'lua',
+                theme: initialTheme,
+                automaticLayout: true,
+                minimap: { enabled: false },
+                fontSize: 14,
+                scrollbar: { vertical: 'visible', horizontal: 'visible' }
+            });
+
+            if (currentTheme === 'dark') {
+                document.getElementById('theme-icon-dark').style.display = 'block';
+                document.getElementById('theme-icon-light').style.display = 'none';
+            } else {
+                document.getElementById('theme-icon-light').style.display = 'block';
+                document.getElementById('theme-icon-dark').style.display = 'none';
+            }
+            updateLogo();
+        });
+
+        function switchFile(filename) {
+            if(!files[filename]) {
+                files[filename] = `# New file: ${filename}`;
+            }
+            if(editor) {
+                files[currentFile] = editor.getValue();
+                currentFile = filename;
+                editor.setValue(files[currentFile]);
+                document.querySelectorAll('.active-tab').forEach(el => el.classList.remove('active-tab'));
+                const tabs = document.querySelectorAll('[onclick*="switchFile"]');
+                tabs.forEach(tab => {
+                    if(tab.innerText.trim() === filename) {
+                        tab.classList.add('active-tab');
+                    }
+                });
+            }
+        }
+
+        function executeCode() {
+            const outputBox = document.getElementById('output-box');
+            outputBox.innerHTML = '';
+            if(editor) files[currentFile] = editor.getValue();
+            outputBox.innerHTML = '<span class="text-gray-500">Compiling Apex...</span>';
+            setTimeout(() => {
+                outputBox.innerHTML = '<span class="text-yellow-300">> execute in todo</span>\n\n';
+            }, 300);
+        }
+    </script>
+</body>
+</html>
