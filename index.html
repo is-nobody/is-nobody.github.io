@@ -348,7 +348,7 @@
                 Apex
             </div>
             <div class="hidden md:flex items-center gap-6 text-sm">
-                <a href="#" class="nav-link transition">Learn</a>
+                <a href="learn.html" class="nav-link transition">Learn</a>
                 <a href="#" class="nav-link transition">News</a>
                 <div class="flex items-center search-box rounded px-3 py-1 text-xs">
                     <svg class="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -439,6 +439,8 @@
     <!-- Monaco Loader -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
     
+    <script src="apex-language.js"></script>
+
     <script>
         const files = {
             'calculator.apex': `import os\n\na = number(os.input("Enter first number: "))\nb = number(os.input("Enter second number: "))\no = os.input("Operation (+, -, *, /, %): ")\n\nif a == none or o == none or b == none\n    os.output("Invalid input!")\n    os.exit(1)\n\nif o == "+"\n    result = a + b\nelif o == "-"\n    result = a - b\nelif o == "*"\n    result = a * b\nelif o == "/"\n    if b == 0\n        os.output("Error: division by zero!")\n        os.exit(1)\n    result = a / b\nelif o == "%"\n    result = a % b\nelse\n    os.output("Unknown operation!")\n    os.exit(1)\n\nos.output("{a} {o} {b} = {result}")`,
@@ -458,18 +460,14 @@
                 html.classList.remove('dark');
                 html.classList.add('light');
                 currentTheme = 'light';
-                if (editor) {
-                    monaco.editor.setTheme('vs');
-                }
+                if (editor) monaco.editor.setTheme('apex-light');
                 document.getElementById('theme-icon-light').style.display = 'block';
                 document.getElementById('theme-icon-dark').style.display = 'none';
             } else {
                 html.classList.remove('light');
                 html.classList.add('dark');
                 currentTheme = 'dark';
-                if (editor) {
-                    monaco.editor.setTheme('vs-dark');
-                }
+                if (editor) monaco.editor.setTheme('apex-dark');
                 document.getElementById('theme-icon-light').style.display = 'none';
                 document.getElementById('theme-icon-dark').style.display = 'block';
             }
@@ -490,10 +488,12 @@
 
         require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs' }});
         require(['vs/editor/editor.main'], function() {
-            const initialTheme = currentTheme === 'dark' ? 'vs-dark' : 'vs';
+            registerApexLanguage();
+            
+            const initialTheme = 'apex-dark';
             editor = monaco.editor.create(document.getElementById('editor-container'), {
                 value: files[currentFile],
-                language: 'lua',
+                language: 'apex',
                 theme: initialTheme,
                 automaticLayout: true,
                 minimap: { enabled: false },
@@ -501,13 +501,8 @@
                 scrollbar: { vertical: 'visible', horizontal: 'visible' }
             });
 
-            if (currentTheme === 'dark') {
-                document.getElementById('theme-icon-dark').style.display = 'block';
-                document.getElementById('theme-icon-light').style.display = 'none';
-            } else {
-                document.getElementById('theme-icon-light').style.display = 'block';
-                document.getElementById('theme-icon-dark').style.display = 'none';
-            }
+            document.getElementById('theme-icon-dark').style.display = 'block';
+            document.getElementById('theme-icon-light').style.display = 'none';
             updateLogo();
         });
 
