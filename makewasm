@@ -1,0 +1,14 @@
+emcc -O3 \
+    -s WASM=1 \
+    -s EXPORTED_FUNCTIONS='[_apex_execute]' \
+    -s EXPORTED_RUNTIME_METHODS='[ccall,cwrap]' \
+    -s ALLOW_MEMORY_GROWTH=1 \
+    -s NO_FILESYSTEM=1 \
+    -s ENVIRONMENT=web \
+    --no-entry \
+    -I. -I./source/core -I./source/utils -I./source/libraries \
+    -o apex.wasm \
+    main.c \
+    source/utils/*.c \
+    source/core/*.c \
+    source/libraries/*.c

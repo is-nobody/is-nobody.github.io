@@ -432,6 +432,13 @@
                     <span class="cursor-pointer terminal-clear" onclick="document.getElementById('output-box').innerHTML=''">Clear</span>
                 </div>
                 <div id="output-box" class="output-box whitespace-pre-wrap font-mono text-sm leading-relaxed"></div>
+                <div id="input-prompt" style="display: none; padding: 8px 0; border-top: 1px solid #333; align-items: center; gap: 8px;">
+                    <span style="color: #4ade80; font-family: monospace;">></span>
+                    <input id="input-field" type="text" 
+                        style="background: transparent; border: none; color: #e5e7eb; 
+                                font-family: monospace; font-size: 14px; width: 90%; outline: none;"
+                        onkeydown="if(event.key === 'Enter') submitInput()">
+                </div>
             </div>
         </div>
     </main>
@@ -440,6 +447,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
     
     <script src="apex-language.js"></script>
+    <script src="execute_apex.js"></script>
 
     <script>
         const files = {
@@ -449,6 +457,36 @@
             'ackermann.apex': `import os\nimport sys\n\nfunction ackermann(m, n)\n    if m == 0\n        return n + 1\n    if n == 0\n        return ackermann(m - 1, 1)\n    return ackermann(m - 1, ackermann(m, n - 1))\n\nstart = sys.time()\nresult = ackermann(3, 10)\nelapsed = sys.time() - start\nos.output("Ackermann(3,10) = {result}, elapsed {elapsed}")`,
             'for.apex': `import os\nimport sys\n\nfunction for_counter_100m()\n    start = sys.time()\n    x = 0\n    for i = 1, 100000000\n        x = x + i\n    elapsed = sys.time() - start\n    os.output("100000000 iterations for counter: {x}, elapsed {elapsed}")\n\nfunction for_condition_100m()\n    start = sys.time()\n    x = 0\n    i = 1\n    for i < 100000001\n        x = x + i\n        i = i + 1\n    elapsed = sys.time() - start\n    os.output("100000000 iterations for condition: {x}, elapsed {elapsed}")\n\nfor_counter_100m()\nfor_condition_100m()`
         };
+
+        const executor = new ApexExecutor();
+
+        executor.onOutput = function(text) {
+            const outputBox = document.getElementById('output-box');
+            outputBox.innerHTML += text;
+            outputBox.scrollTop = outputBox.scrollHeight;
+        };
+
+        executor.onInput = function() {
+            const inputPrompt = document.getElementById('input-prompt');
+            inputPrompt.style.display = 'flex';
+            const inputField = document.getElementById('input-field');
+            inputField.value = '';
+            inputField.focus();
+        };
+
+        window.submitInput = function() {
+            const inputField = document.getElementById('input-field');
+            const value = inputField.value;
+            inputField.value = '';
+            document.getElementById('input-prompt').style.display = 'none';
+            executor.submitInput(value);
+        };
+
+        executor.init('apex.wasm').then(() => {
+            document.getElementById('output-box').innerHTML = 'WASM ready\n';
+        }).catch(err => {
+            document.getElementById('output-box').innerHTML = 'Failed to load WASM: ' + err.message + '\n';
+        });
 
         let editor;
         let currentFile = 'calculator.apex';
@@ -527,11 +565,42 @@
         function executeCode() {
             const outputBox = document.getElementById('output-box');
             outputBox.innerHTML = '';
+            
             if(editor) files[currentFile] = editor.getValue();
-            outputBox.innerHTML = '<span class="text-gray-500">Compiling Apex...</span>';
-            setTimeout(() => {
-                outputBox.innerHTML = '<span class="text-yellow-300">> execute in todo</span>\n\n';
-            }, 300);
+            
+            const code = files[currentFile];
+            
+            if (!executor.isReady()) {
+                outputBox.innerHTML = 'Loading WASM...\n';
+                executor.init('apex.wasm').then(() => {
+                    runApexCode(code);
+                }).catch(err => {
+                    outputBox.innerHTML = 'Failed to load WASM: ' + err.message + '\n';
+                });
+            } else {
+                runApexCode(code);
+            }
+        }
+
+        function runApexCode(code) {
+            const outputBox = document.getElementById('output-box');
+            outputBox.innerHTML = '';
+            
+            executor.onOutput = function(text) {
+                outputBox.innerHTML += text;
+                outputBox.scrollTop = outputBox.scrollHeight;
+            };
+            
+            executor.execute(code).then(result => {
+                if (result.error) {
+                    outputBox.innerHTML += '\x1b[31mError: ' + result.error + '\x1b[0m\n';
+                }
+                if (!result.output && !result.error) {
+                    outputBox.innerHTML += 'Execution completed\n';
+                }
+            }).catch(err => {
+                outputBox.innerHTML += '\x1b[31mError: ' + err.message + '\x1b[0m\n';
+            });
         }
     </script>
 </body>
