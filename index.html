@@ -43,17 +43,20 @@
         <div class="ide-container rounded-lg overflow-hidden shadow-2xl">
             <!-- Tabs & Toolbar -->
             <div class="flex items-center justify-between tabs-toolbar px-2 py-1">
-                <div class="flex items-center gap-1 text-sm">
-                    <div class="px-3 py-1 cursor-pointer active-tab tab-text" onclick="switchFile('for.apex')">for.apex</div>
-                    <div class="px-3 py-1 cursor-pointer tab-text" onclick="switchFile('calculator.apex')">calculator.apex</div>
-                    <div class="px-3 py-1 cursor-pointer tab-text" onclick="switchFile('fib.apex')">fib.apex</div>
-                    <div class="px-3 py-1 cursor-pointer tab-text" onclick="switchFile('tree.apex')">tree.apex</div>
+                <div class="tabs-scroll-container flex-1 md:flex-none">
+                    <div class="flex items-center gap-1 text-sm">
+                        <div class="px-3 py-1 cursor-pointer active-tab tab-text whitespace-nowrap" onclick="switchFile('for.apex')">for.apex</div>
+                        <div class="px-3 py-1 cursor-pointer tab-text whitespace-nowrap" onclick="switchFile('calculator.apex')">calculator.apex</div>
+                        <div class="px-3 py-1 cursor-pointer tab-text whitespace-nowrap" onclick="switchFile('fib.apex')">fib.apex</div>
+                        <div class="px-3 py-1 cursor-pointer tab-text whitespace-nowrap" onclick="switchFile('tree.apex')">tree.apex</div>
+                    </div>
                 </div>
-                <div class="toolbar-actions">
-                    <button onclick="executeCode()" class="btn-primary text-xs px-3 py-1 rounded flex items-center gap-1">
+                
+                <div class="toolbar-actions flex-shrink-0 ml-2 md:ml-0">
+                    <button onclick="executeCode()" class="btn-primary text-xs px-3 py-1 rounded flex items-center gap-1 whitespace-nowrap">
                         <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Run
                     </button>
-                    <button class="text-xs toolbar-text bg-transparent px-2 py-1 rounded">Open</button>
+                    <button class="text-xs toolbar-text bg-transparent px-2 py-1 rounded whitespace-nowrap ml-2">Open</button>
                 </div>
             </div>
 

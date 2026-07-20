@@ -540,3 +540,67 @@ body {
     background-color: #22c55e !important;
     color: white !important;
 }
+
+@media (max-width: 768px) {
+    .tabs-toolbar {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 8px;
+        padding: 8px !important;
+    }
+    
+    .tabs-scroll-container {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding-bottom: 4px;
+    }
+    
+    .tabs-scroll-container::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .tabs-scroll-container .flex {
+        display: inline-flex;
+        flex-wrap: nowrap;
+    }
+    
+    .toolbar-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .toolbar-actions .btn-primary {
+        padding: 8px 16px !important;
+        font-size: 14px !important;
+        font-weight: 600;
+    }
+    
+    .toolbar-actions button:not(.btn-primary) {
+        padding: 8px 16px !important;
+        font-size: 14px !important;
+    }
+}
+
+.tabs-scroll-container {
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .tabs-scroll-container::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 30px;
+        background: linear-gradient(to right, transparent, rgba(30, 30, 30, 0.9));
+        pointer-events: none;
+    }
+}
