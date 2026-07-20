@@ -604,3 +604,27 @@ body {
         pointer-events: none;
     }
 }
+
+.dark #tagline {
+    color: #ffffff;
+}
+
+.light #tagline {
+    color: #111827;
+}
+
+.dark .doc-card h3 {
+    color: #ffffff;
+}
+
+.light .doc-card h3 {
+    color: #111827;
+}
+
+.dark .doc-card p {
+    color: #d1d5db;
+}
+
+.light .doc-card p {
+    color: #4b5563;
+}

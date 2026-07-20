@@ -5,21 +5,35 @@ async function loadNavbar() {
         document.body.insertAdjacentHTML('afterbegin', navbarHtml);
         
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        const navLearn = document.getElementById('nav-learn');
-        const navNews = document.getElementById('nav-news');
+        const navProjects = document.getElementById('nav-projects');
+        const navChangelog = document.getElementById('nav-news');
+        const navAbout = document.getElementById('nav-about');
         
-        if (currentPage === 'index.html' || currentPage === '') {
-            if (navLearn) {
-                navLearn.className = 'nav-link transition';
-                navLearn.style.fontWeight = 'normal';
+        // Reset all nav links
+        const navLinks = [navProjects, navChangelog, navAbout];
+        navLinks.forEach(link => {
+            if (link) {
+                link.className = 'nav-link transition';
+                link.style.fontWeight = 'normal';
             }
-            if (navNews) navNews.className = 'nav-link transition';
-        } else if (currentPage === 'learn.html') {
-            if (navLearn) {
-                navLearn.className = 'nav-link transition font-semibold';
-                navLearn.style.fontWeight = '600';
+        });
+        
+        // Highlight current page
+        if (currentPage === 'projects.html') {
+            if (navProjects) {
+                navProjects.className = 'nav-link transition font-semibold';
+                navProjects.style.fontWeight = '600';
             }
-            if (navNews) navNews.className = 'nav-link transition';
+        } else if (currentPage === 'changelog.html') {
+            if (navChangelog) {
+                navChangelog.className = 'nav-link transition font-semibold';
+                navChangelog.style.fontWeight = '600';
+            }
+        } else if (currentPage === 'about.html') {
+            if (navAbout) {
+                navAbout.className = 'nav-link transition font-semibold';
+                navAbout.style.fontWeight = '600';
+            }
         }
         
         // Language dropdown

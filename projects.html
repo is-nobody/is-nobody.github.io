@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex - Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="components/common.css">
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- hero section -->
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-5xl">
+        <!-- tagline rotator -->
+        <div class="text-center mb-8">
+            <p id="tagline" class="text-2xl md:text-3xl font-bold dark:text-white light:text-gray-900 transition-opacity duration-500" style="min-height: 3.5rem;">
+                The biggest problem with Apex? You're still using something else.
+            </p>
+        </div>
+
+        <!-- divider -->
+        <div class="w-full h-px dark:bg-[#2d2d2d] light:bg-gray-200 mb-12"></div>
+
+        <!-- projects grid -->
+        <h2 class="text-3xl font-bold section-title mb-8 text-center">Projects</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- apex language -->
+            <a href="index.html" class="block doc-card rounded-xl p-6 hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold dark:text-white light:text-gray-900">Apex Language</h3>
+                        <span class="text-xs dark:text-gray-400 light:text-gray-500">26.07</span>
+                    </div>
+                </div>
+                <p class="dark:text-gray-300 light:text-gray-600 text-sm leading-relaxed mb-4">
+                    A programming language built for speed, power, simplicity, clarity, readability, and modernity.
+                </p>
+                <div class="mt-4 pt-4 border-t dark:border-[#2d2d2d] light:border-gray-200 flex items-center justify-between">
+                    <span class="text-sm text-green-500 hover:text-green-400 transition flex items-center gap-1">
+                        Explore <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </span>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <script src="components/load-navbar.js"></script>
+    <script>
+        // tagline rotator
+        const taglines = [
+            "The biggest problem with Apex? You're still using something else.",
+            "Giants spend millions on marketing. We spend nights on code.",
+            "Apex: where every line of code does the work of ten.",
+            "Complex problems — simple solutions. That's our entire philosophy.",
+            "Code should be elegant, not bulky like a tax return manual.",
+            "Our code wasn't written for processors — it was written for people.",
+            "They dictate the rules. We give you the tools to change them.",
+            "We have no stock on the exchange. We have code that works.",
+            "Apex. Nowhere to go but up.",
+            "Apex. Power that corporations can't control."
+        ];
+
+        let currentIndex = 0;
+        const taglineElement = document.getElementById('tagline');
+
+        function rotateTagline() {
+            taglineElement.classList.add('opacity-0');
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % taglines.length;
+                taglineElement.textContent = taglines[currentIndex];
+                taglineElement.classList.remove('opacity-0');
+            }, 500);
+        }
+
+        // initial random tagline
+        currentIndex = Math.floor(Math.random() * taglines.length);
+        taglineElement.textContent = taglines[currentIndex];
+
+        // rotate every 5 seconds
+        setInterval(rotateTagline, 5000);
+    </script>
+</body>
+</html>
