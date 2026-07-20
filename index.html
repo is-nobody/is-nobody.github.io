@@ -62,10 +62,7 @@
 
             <!-- Output / Terminal -->
             <div class="terminal p-4">
-                <div class="flex items-center justify-between text-xs terminal-header pb-2 mb-2">
-                    <span>▼ Output <span class="terminal-badge text-[10px] px-1 rounded">0.18 secs</span></span>
-                    <span class="cursor-pointer terminal-clear" onclick="document.getElementById('output-box').innerHTML=''">Clear</span>
-                </div>
+                <div class="border-t border-gray-600 pt-2"></div>
                 <div id="output-box" class="output-box whitespace-pre-wrap font-mono text-sm leading-relaxed"></div>
                 <div id="input-prompt" style="display: none; padding: 8px 0; border-top: 1px solid #333; align-items: center; gap: 8px;">
                     <span style="color: #4ade80; font-family: monospace;">></span>
@@ -83,7 +80,7 @@
     <script src="components/load-navbar.js"></script>
     <script src="apex-language.js"></script>
     <script src="execute_apex.js"></script>
-    
+
     <script>
         const files = {
             'for.apex': `import os\nimport sys\n\nfunction for_counter_100m()\n    start = sys.time()\n    x = 0\n    for i = 1, 100000000\n        x = x + i\n    elapsed = sys.time() - start\n    os.output("100000000 iterations for counter: {x}, elapsed {elapsed}")\n\nfunction for_condition_100m()\n    start = sys.time()\n    x = 0\n    i = 1\n    for i < 100000001\n        x = x + i\n        i = i + 1\n    elapsed = sys.time() - start\n    os.output("100000000 iterations for condition: {x}, elapsed {elapsed}")\n\nfor_counter_100m()\nfor_condition_100m()`,
