@@ -500,3 +500,43 @@ body {
 .light .markdown-content blockquote {
     color: #6b7280;
 }
+
+.dark .lang-btn {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    color: #d1d5db;
+}
+
+.light .lang-btn {
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    color: #4b5563;
+}
+
+.dark .lang-btn:hover,
+.light .lang-btn:hover {
+    border-color: #22c55e;
+}
+
+.dark .lang-menu {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+}
+
+.light .lang-menu {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+}
+
+.dark .lang-option {
+    color: #d1d5db;
+}
+
+.light .lang-option {
+    color: #4b5563;
+}
+
+.lang-option:hover {
+    background-color: #22c55e !important;
+    color: white !important;
+}
