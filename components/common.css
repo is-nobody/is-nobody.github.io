@@ -1,0 +1,502 @@
+body {
+    font-family: sans-serif;
+}
+
+.dark body {
+    background-color: #0d0d0d;
+    color: #e5e7eb;
+}
+
+.light body {
+    background-color: #ffffff;
+    color: #1f2937;
+}
+
+.dark nav {
+    background-color: #0d0d0d;
+    border-bottom: 1px solid #2d2d2d;
+}
+
+.light nav {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .nav-link {
+    color: #9ca3af;
+}
+
+.dark .nav-link:hover {
+    color: #ffffff;
+}
+
+.light .nav-link {
+    color: #4b5563;
+}
+
+.light .nav-link:hover {
+    color: #111827;
+}
+
+.dark .github-icon {
+    color: #9ca3af;
+}
+
+.dark .github-icon:hover {
+    color: #ffffff;
+}
+
+.light .github-icon {
+    color: #4b5563;
+}
+
+.light .github-icon:hover {
+    color: #111827;
+}
+
+.dark .search-box {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    color: #6b7280;
+}
+
+.light .search-box {
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    color: #6b7280;
+}
+
+.dark .search-box-shortcut {
+    border: 1px solid #444;
+    background-color: #2d2d2d;
+}
+
+.light .search-box-shortcut {
+    border: 1px solid #d1d5db;
+    background-color: #e5e7eb;
+    color: #4b5563;
+}
+
+.dark .auto-button {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    color: #d1d5db;
+}
+
+.light .auto-button {
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    color: #4b5563;
+}
+
+.dark .auto-button:hover {
+    color: #ffffff;
+}
+
+.light .auto-button:hover {
+    color: #111827;
+}
+
+.theme-toggle {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.theme-toggle:hover {
+    opacity: 0.8;
+}
+
+.dark .theme-icon {
+    color: #9ca3af;
+}
+
+.light .theme-icon {
+    color: #4b5563;
+}
+
+.light .logo-dark-img {
+    display: block !important;
+}
+.light .logo-light-img {
+    display: none !important;
+}
+.dark .logo-dark-img {
+    display: none !important;
+}
+.dark .logo-light-img {
+    display: block !important;
+}
+
+.dark ::-webkit-scrollbar { width: 8px; }
+.dark ::-webkit-scrollbar-track { background: #1e1e1e; }
+.dark ::-webkit-scrollbar-thumb { background: #424242; border-radius: 4px; }
+
+.light ::-webkit-scrollbar { width: 8px; }
+.light ::-webkit-scrollbar-track { background: #f3f4f6; }
+.light ::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 4px; }
+
+.editor-container {
+    height: 400px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.dark .editor-container {
+    border: 1px solid #2d2d2d;
+}
+
+.light .editor-container {
+    border: 1px solid #d1d5db;
+}
+
+.terminal {
+    min-height: 100px;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.dark .terminal {
+    background-color: #1e1e1e;
+    border-top: 1px solid #2d2d2d;
+}
+
+.light .terminal {
+    background-color: #f9fafb;
+    border-top: 1px solid #d1d5db;
+    color: #1f2937;
+}
+
+.active-tab {
+    border-bottom: 2px solid #22c55e;
+}
+
+.dark .active-tab {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.light .active-tab {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+.btn-primary {
+    background-color: #22c55e;
+    transition: background-color 0.2s;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #16a34a;
+}
+
+.dark .btn-outline {
+    border: 1px solid #4b5563;
+    color: #9ca3af;
+    transition: all 0.2s;
+}
+
+.dark .btn-outline:hover {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.light .btn-outline {
+    border: 1px solid #d1d5db;
+    color: #4b5563;
+    transition: all 0.2s;
+}
+
+.light .btn-outline:hover {
+    border-color: #111827;
+    color: #111827;
+}
+
+.toolbar-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dark .hero-title {
+    color: #ffffff;
+}
+
+.light .hero-title {
+    color: #111827;
+}
+
+.dark .hero-text {
+    color: #d1d5db;
+}
+
+.light .hero-text {
+    color: #4b5563;
+}
+
+.dark .section-title {
+    color: #ffffff;
+}
+
+.light .section-title {
+    color: #111827;
+}
+
+.dark .ide-container {
+    background-color: #0d0d0d;
+    border: 1px solid #2d2d2d;
+}
+
+.light .ide-container {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+}
+
+.dark .tabs-toolbar {
+    background-color: #1e1e1e;
+    border-bottom: 1px solid #2d2d2d;
+}
+
+.light .tabs-toolbar {
+    background-color: #f9fafb;
+    border-bottom: 1px solid #d1d5db;
+}
+
+.dark .tab-text {
+    color: #9ca3af;
+}
+
+.light .tab-text {
+    color: #6b7280;
+}
+
+.dark .tab-text:hover {
+    color: #ffffff;
+}
+
+.light .tab-text:hover {
+    color: #111827;
+}
+
+.dark .toolbar-text {
+    color: #9ca3af;
+}
+
+.light .toolbar-text {
+    color: #6b7280;
+}
+
+.dark .toolbar-text:hover {
+    color: #ffffff;
+}
+
+.light .toolbar-text:hover {
+    color: #111827;
+}
+
+.dark .terminal-header {
+    color: #9ca3af;
+    border-bottom: 1px solid #333;
+}
+
+.light .terminal-header {
+    color: #6b7280;
+    border-bottom: 1px solid #d1d5db;
+}
+
+.dark .terminal-badge {
+    background-color: #333;
+}
+
+.light .terminal-badge {
+    background-color: #e5e7eb;
+    color: #4b5563;
+}
+
+.dark .terminal-clear:hover {
+    color: #d1d5db;
+}
+
+.light .terminal-clear:hover {
+    color: #111827;
+}
+
+.dark .output-box {
+    color: #4ade80;
+}
+
+.light .output-box {
+    color: #16a34a;
+}
+
+.dark .sidebar {
+    background-color: #1a1a1a;
+    border-right: 1px solid #2d2d2d;
+}
+
+.light .sidebar {
+    background-color: #f9fafb;
+    border-right: 1px solid #e5e7eb;
+}
+
+.dark .doc-card {
+    background-color: #1a1a1a;
+    border: 1px solid #2d2d2d;
+}
+
+.light .doc-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+}
+
+.dark .doc-card:hover {
+    border-color: #22c55e;
+    background-color: #1e1e1e;
+}
+
+.light .doc-card:hover {
+    border-color: #22c55e;
+    background-color: #f9fafb;
+}
+
+.dark .active-doc {
+    border-left: 3px solid #22c55e;
+    background-color: #1e1e1e;
+}
+
+.light .active-doc {
+    border-left: 3px solid #22c55e;
+    background-color: #f3f4f6;
+}
+
+.sidebar {
+    width: 300px;
+    min-height: calc(100vh - 73px);
+}
+
+.doc-card {
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.dark .content-area {
+    background-color: #0d0d0d;
+}
+
+.light .content-area {
+    background-color: #ffffff;
+}
+
+.dark .markdown-content {
+    background-color: #1a1a1a;
+    border: 1px solid #2d2d2d;
+}
+
+.light .markdown-content {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+}
+
+.markdown-content {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    line-height: 1.8;
+}
+
+.markdown-content h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #22c55e;
+}
+
+.markdown-content h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.markdown-content h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.markdown-content code {
+    background-color: #2d2d2d;
+    color: #22c55e;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+}
+
+.light .markdown-content code {
+    background-color: #f3f4f6;
+    color: #16a34a;
+}
+
+.markdown-content pre {
+    background-color: #1e1e1e;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.light .markdown-content pre {
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb;
+}
+
+.markdown-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.markdown-content ul, .markdown-content ol {
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.markdown-content li {
+    margin-bottom: 0.25rem;
+}
+
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.markdown-content th, .markdown-content td {
+    border: 1px solid #4b5563;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.markdown-content th {
+    background-color: #2d2d2d;
+}
+
+.light .markdown-content th {
+    background-color: #f3f4f6;
+}
+
+.markdown-content blockquote {
+    border-left: 4px solid #22c55e;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    font-style: italic;
+}
+
+.dark .markdown-content blockquote {
+    color: #9ca3af;
+}
+
+.light .markdown-content blockquote {
+    color: #6b7280;
+}
