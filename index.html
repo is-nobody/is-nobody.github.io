@@ -180,9 +180,9 @@
         };
 
         executor.init('apex.wasm').then(() => {
-            document.getElementById('output-box').innerHTML = 'WASM ready\n';
+            document.getElementById('output-box').innerHTML = 'Apex is ready\n';
         }).catch(err => {
-            document.getElementById('output-box').innerHTML = 'Failed to load WASM: ' + err.message + '\n';
+            document.getElementById('output-box').innerHTML = 'Failed to load Apex: ' + err.message + '\n';
         });
 
         let editor;
