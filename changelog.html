@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex - Changelog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="components/common.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Main Content -->
+    <div class="flex flex-grow">
+        <!-- Content Area -->
+        <main class="flex-grow p-8 overflow-y-auto" style="max-height: calc(100vh - 73px);">
+            <div class="max-w-4xl mx-auto">
+                <div class="markdown-content" id="markdown-content">
+                    <div class="flex items-center justify-center h-64">
+                        <div class="text-center">
+                            <svg class="w-16 h-16 mx-auto text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                            <h3 class="text-xl font-semibold dark:text-white light:text-gray-900 mb-2">Loading Changelog...</h3>
+                            <p class="dark:text-gray-400 light:text-gray-500">Please wait while we load the changelog</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="components/load-navbar.js"></script>
+    
+    <script>
+        async function loadChangelog() {
+            try {
+                const response = await fetch('resources/apex-lang_changelog.md');
+                if (!response.ok) {
+                    throw new Error('Changelog not found');
+                }
+                const markdown = await response.text();
+                const html = marked.parse(markdown);
+                document.getElementById('markdown-content').innerHTML = html;
+            } catch (error) {
+                document.getElementById('markdown-content').innerHTML = `
+                    <div class="flex items-center justify-center h-64">
+                        <div class="text-center">
+                            <svg class="w-16 h-16 mx-auto text-red-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                            <h3 class="text-xl font-semibold dark:text-white light:text-gray-900 mb-2">Error Loading Changelog</h3>
+                            <p class="dark:text-gray-400 light:text-gray-500">Could not load resources/apex-lang_changelog.md. Please make sure the file exists.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        window.addEventListener('load', loadChangelog);
+    </script>
+</body>
+</html>
