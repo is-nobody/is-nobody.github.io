@@ -46,7 +46,6 @@
                 <div class="tabs-scroll-container flex-1 md:flex-none">
                     <div class="flex items-center gap-1 text-sm">
                         <div class="px-3 py-1 cursor-pointer active-tab tab-text whitespace-nowrap" onclick="switchFile('fruits.apex')">fruits.apex</div>
-                        <div class="px-3 py-1 cursor-pointer tab-text whitespace-nowrap" onclick="switchFile('calculator.apex')">calculator.apex</div>
                         <div class="px-3 py-1 cursor-pointer tab-text whitespace-nowrap" onclick="switchFile('fib.apex')">fib.apex</div>
                         <div class="px-3 py-1 cursor-pointer tab-text whitespace-nowrap" onclick="switchFile('tree.apex')">tree.apex</div>
                     </div>
@@ -153,7 +152,6 @@
     <script>
         const files = {
             'fruits.apex': `import os\n\n// create table\nfruits = ["apple", "banana", "cherry"]\n\n// iteration in table\nfor i = fruits\n    os.output(fruits[i])`,
-            'calculator.apex': `import os\n\na = number(os.input("Enter first number: "))\nb = number(os.input("Enter second number: "))\no = os.input("Operation (+, -, *, /, %): ")\n\nif a == none or o == none or b == none\n    os.output("Invalid input!")\n    os.exit(1)\n\nif o == "+"\n    result = a + b\nelif o == "-"\n    result = a - b\nelif o == "*"\n    result = a * b\nelif o == "/"\n    if b == 0\n        os.output("Error: division by zero!")\n        os.exit(1)\n    result = a / b\nelif o == "%"\n    result = a % b\nelse\n    os.output("Unknown operation!")\n    os.exit(1)\n\nos.output("{a} {o} {b} = {result}")`,
             'fib.apex': `import os\nimport sys\n\nfunction fib(n)\n    if n < 2\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nstart = sys.time()\nresult = fib(30)\nelapsed = sys.time() - start\nos.output("fib(30) = {result}, elapsed {elapsed}")`,
             'tree.apex': `import os\nimport sys\n\nfunction tree(n)\n    if n == 0\n        return 0\n    return 1 + tree(n - 1) + tree(n - 1)\n\nstart = sys.time()\nresult = tree(20)\nelapsed = sys.time() - start\nos.output("tree(20) = {result}, elapsed {elapsed}")`
         };
