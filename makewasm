@@ -1,6 +1,6 @@
-emcc -O3 \
+emcc -O0 \
     -s WASM=1 \
-    -s EXPORTED_FUNCTIONS='[_apex_execute]' \
+    -s EXPORTED_FUNCTIONS='[_apex_execute_string]' \
     -s EXPORTED_RUNTIME_METHODS='[ccall,cwrap]' \
     -s ALLOW_MEMORY_GROWTH=1 \
     -s NO_FILESYSTEM=1 \
@@ -8,7 +8,21 @@ emcc -O3 \
     --no-entry \
     -I. -I./source/core -I./source/utils -I./source/libraries \
     -o apex.wasm \
-    main.c \
-    source/utils/*.c \
-    source/core/*.c \
-    source/libraries/*.c
+    source/utils/apex_api.c \
+    source/utils/execute.c \
+    source/utils/error.c \
+    source/utils/platform.c \
+    source/core/tokenizer.c \
+    source/core/parser.c \
+    source/core/ast.c \
+    source/core/bytecode.c \
+    source/core/codegen.c \
+    source/core/vm.c \
+    source/libraries/os_module.c \
+    source/libraries/sys_module.c \
+    source/libraries/math_module.c \
+    source/libraries/string_module.c \
+    source/libraries/table_module.c \
+    source/libraries/ffi_module.c \
+    source/libraries/random_module.c \
+    source/libraries/codecs_module.c
