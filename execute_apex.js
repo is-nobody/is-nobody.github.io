@@ -86,7 +86,13 @@ class ApexExecutor {
             fd_fdstat_get: function(fd, stat) { return 0; },
             fd_readdir: function(fd, buf, buf_len, cookie, result) { return 0; },
             fd_filestat_get: function(fd, result) { return -1; },
-            clock_time_get: function(id, precision, result) { return 0; },
+            clock_time_get: function(id, precision, result) {
+                const now = Date.now() * 1000000;
+                const memory = new Uint8Array(self.wasmModule.exports.memory.buffer);
+                const view = new DataView(memory.buffer);
+                view.setBigUint64(result, BigInt(now), true);
+                return 0;
+            },
             clock_res_get: function(id, result) { return 0; },
             proc_exit: function(code) { self.isRunning = false; return 0; },
             environ_get: function(environ, environ_buf) { return 0; },
@@ -100,27 +106,6 @@ class ApexExecutor {
 
         const env = {
             memory: new WebAssembly.Memory({ initial: 256, maximum: 1024 }),
-            gettimeofday: function(tv, tz) {
-                const now = Date.now();
-                console.log('gettimeofday called, now:', now);
-                const memory = new Uint8Array(self.wasmModule.exports.memory.buffer);
-                const nowBigInt = BigInt(now) * BigInt(1000);
-                const view = new DataView(memory.buffer);
-                view.setBigUint64(tv, nowBigInt, true);
-                if (tz) view.setBigUint64(tz + 8, 0n, true);
-                return 0;
-            },
-            _gettimeofday: function(tv, tz) {
-                const now = Date.now();
-                const seconds = Math.floor(now / 1000);
-                const usec = (now % 1000) * 1000;
-                const memory = new Uint8Array(self.wasmModule.exports.memory.buffer);
-                const view = new DataView(memory.buffer);
-                view.setUint32(tv, seconds, true);
-                view.setUint32(tv + 4, usec, true);
-                if (tz) { view.setUint32(tz, 0, true); view.setUint32(tz + 4, 0, true); }
-                return 0;
-            },
             emscripten_notify_memory_growth: function(index) { return 0; },
             __syscall_getdents64: function(fd, dirp, count) { return 0; },
             __syscall_unlinkat: function(dirfd, path, flags) { return -1; },
