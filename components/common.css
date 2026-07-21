@@ -586,6 +586,43 @@ body {
         padding: 8px 16px !important;
         font-size: 14px !important;
     }
+
+    .flex-grow {
+        flex-direction: column !important;
+    }
+
+    .sidebar {
+        width: 100% !important;
+        border-right: none !important;
+        border-bottom: 1px solid #2d2d2d !important;
+        padding: 1rem !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: auto !important;
+    }
+
+    .sidebar .space-y-3 {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        padding-bottom: 0 !important;
+    }
+
+    .sidebar .space-y-3 > * {
+        margin-top: 0 !important;
+    }
+
+    .content-area {
+        width: 100% !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+        height: auto !important;
+        max-height: none !important;
+    }
+
+    .content-area[style*="max-height"] {
+        max-height: none !important;
+    }
 }
 
 .tabs-scroll-container {
