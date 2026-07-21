@@ -233,11 +233,11 @@
             const code = files[currentFile];
             
             if (!executor.isReady()) {
-                outputBox.innerHTML = 'Loading WASM...\n';
+                outputBox.innerHTML = 'Loading Apex...\n';
                 executor.init('apex.wasm').then(() => {
                     runApexCode(code);
                 }).catch(err => {
-                    outputBox.innerHTML = 'Failed to load WASM: ' + err.message + '\n';
+                    outputBox.innerHTML = 'Failed to load Apex: ' + err.message + '\n';
                 });
             } else {
                 runApexCode(code);
