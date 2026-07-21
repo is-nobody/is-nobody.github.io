@@ -135,7 +135,7 @@ body {
 .light ::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 4px; }
 
 .editor-container {
-    height: 400px;
+    height: 300px;
     border-radius: 6px;
     overflow: hidden;
 }
