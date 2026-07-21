@@ -623,6 +623,35 @@ body {
     .content-area[style*="max-height"] {
         max-height: none !important;
     }
+
+    .bar-container {
+        gap: 8px;
+    }
+    
+    .bar-label {
+        min-width: 80px;
+        max-width: 100px;
+    }
+
+    .benchmark-bar {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 0;
+    }
+    
+    .bar-value {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 4px;
+        margin-right: 4px;
+        font-size: 0.7rem;
+    }
+    
+    .bar-track {
+        min-width: 40px;
+    }
 }
 
 .tabs-scroll-container {
@@ -789,15 +818,4 @@ body {
 .light .benchmark-footer-text {
     color: #6b7280;
     font-style: italic;
-}
-
-@media (max-width: 640px) {
-    .bar-container {
-        gap: 8px;
-    }
-    
-    .bar-label {
-        min-width: 80px;
-        max-width: 100px;
-    }
 }
