@@ -683,28 +683,50 @@ body {
     border: 1px solid #e5e7eb;
 }
 
-.benchmark-bar {
-    height: 24px;
-    border-radius: 4px;
-    transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+.benchmark-desc {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 56rem;
+}
+
+.dark .benchmark-desc {
+    color: #d1d5db;
+}
+
+.light .benchmark-desc {
+    color: #4b5563;
+}
+
+.benchmark-card {
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    min-width: 0;
+}
+
+.dark .benchmark-card {
+    background-color: #1a1a1a;
+    border: 1px solid #2d2d2d;
+}
+
+.light .benchmark-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+}
+
+.bar-container {
     display: flex;
     align-items: center;
-    padding-left: 8px;
-    position: relative;
-}
-
-.benchmark-bar {
-    background-color: #22c55e;
-}
-
-.apex-bar {
-    background-color: #1b7a3d;
+    gap: 12px;
+    margin-bottom: 12px;
+    width: 100%;
 }
 
 .bar-label {
     font-size: 0.875rem;
     white-space: nowrap;
-    width: 4rem;
+    min-width: 100px;
+    max-width: 120px;
     flex-shrink: 0;
 }
 
@@ -716,26 +738,9 @@ body {
     color: #374151;
 }
 
-.bar-value {
-    font-size: 0.75rem;
-    font-weight: 600;
-    white-space: nowrap;
-    flex-shrink: 0;
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    margin-left: auto;
-    margin-right: 6px;
-}
-
-.bar-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 12px;
-}
-
 .bar-track {
-    flex-grow: 1;
+    flex: 1 1 auto;
+    min-width: 60px;
     border-radius: 4px;
     height: 24px;
     overflow: hidden;
@@ -750,6 +755,32 @@ body {
     border: 1px solid #e5e7eb;
 }
 
+.benchmark-bar {
+    height: 24px;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    position: relative;
+    min-width: fit-content;
+    background-color: #22c55e;
+}
+
+.apex-bar {
+    background-color: #1b7a3d;
+}
+
+.bar-value {
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    margin-left: auto;
+    margin-right: 6px;
+}
+
 .dark .benchmark-footer-text {
     color: #9ca3af;
     font-style: italic;
@@ -758,4 +789,15 @@ body {
 .light .benchmark-footer-text {
     color: #6b7280;
     font-style: italic;
+}
+
+@media (max-width: 640px) {
+    .bar-container {
+        gap: 8px;
+    }
+    
+    .bar-label {
+        min-width: 80px;
+        max-width: 100px;
+    }
 }
