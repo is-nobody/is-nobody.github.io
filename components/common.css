@@ -592,19 +592,6 @@ body {
     position: relative;
 }
 
-@media (max-width: 768px) {
-    .tabs-scroll-container::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: 30px;
-        background: linear-gradient(to right, transparent, rgba(30, 30, 30, 0.9));
-        pointer-events: none;
-    }
-}
-
 .dark #tagline {
     color: #ffffff;
 }
