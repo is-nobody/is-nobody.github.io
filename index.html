@@ -145,7 +145,7 @@
         <section class="mt-20 mb-16">
             <h2 class="text-3xl font-bold section-title mb-8">Benchmarks</h2>
             <p class="benchmark-desc max-w-4xl">
-                Apex is designed for speed, balancing a high-level syntax with a register-based virtual machine and nan-boxing optimizations. Below are comparisons against other lightweight, high-performance language runtimes. The bar widths represent relative execution time.
+                Apex is designed for speed, balancing a high-level syntax with a register-based virtual machine and nan-boxing optimizations. Below are comparisons against other lightweight, high-performance language runtimes. The bar widths represent relative execution time (Apex = 100% baseline).
             </p>
 
             <div class="grid md:grid-cols-2 gap-8">
@@ -156,7 +156,7 @@
                         <div class="bar-container">
                             <span class="bar-label">Apex</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar apex-bar" style="width: 14%;">
+                                <div class="benchmark-bar apex-bar" style="width: 29%;">
                                     <span class="bar-value">0.225s</span>
                                 </div>
                             </div>
@@ -164,15 +164,23 @@
                         <div class="bar-container">
                             <span class="bar-label">LuaJIT -j off</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 24%;">
+                                <div class="benchmark-bar" style="width: 49%;">
                                     <span class="bar-value">0.378s</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-container">
+                            <span class="bar-label">Node.js --jitless</span>
+                            <div class="bar-track">
+                                <div class="benchmark-bar" style="width: 71%;">
+                                    <span class="bar-value">0.549s</span>
                                 </div>
                             </div>
                         </div>
                         <div class="bar-container">
                             <span class="bar-label">Lua</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 35%;">
+                                <div class="benchmark-bar" style="width: 71%;">
                                     <span class="bar-value">0.551s</span>
                                 </div>
                             </div>
@@ -180,16 +188,8 @@
                         <div class="bar-container">
                             <span class="bar-label">Wren</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 49%;">
-                                    <span class="bar-value">0.769s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">QuickJS</span>
-                            <div class="bar-track">
                                 <div class="benchmark-bar" style="width: 100%;">
-                                    <span class="bar-value">1.582s</span>
+                                    <span class="bar-value">0.769s</span>
                                 </div>
                             </div>
                         </div>
@@ -203,7 +203,7 @@
                         <div class="bar-container">
                             <span class="bar-label">Apex</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar apex-bar" style="width: 14%;">
+                                <div class="benchmark-bar apex-bar" style="width: 30%;">
                                     <span class="bar-value">0.564s</span>
                                 </div>
                             </div>
@@ -211,15 +211,23 @@
                         <div class="bar-container">
                             <span class="bar-label">LuaJIT -j off</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 22%;">
+                                <div class="benchmark-bar" style="width: 48%;">
                                     <span class="bar-value">0.895s</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-container">
+                            <span class="bar-label">Node.js --jitless</span>
+                            <div class="bar-track">
+                                <div class="benchmark-bar" style="width: 67%;">
+                                    <span class="bar-value">1.255s</span>
                                 </div>
                             </div>
                         </div>
                         <div class="bar-container">
                             <span class="bar-label">Lua</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 36%;">
+                                <div class="benchmark-bar" style="width: 78%;">
                                     <span class="bar-value">1.461s</span>
                                 </div>
                             </div>
@@ -227,16 +235,8 @@
                         <div class="bar-container">
                             <span class="bar-label">Wren</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 46%;">
-                                    <span class="bar-value">1.864s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">QuickJS</span>
-                            <div class="bar-track">
                                 <div class="benchmark-bar" style="width: 100%;">
-                                    <span class="bar-value">4.068s</span>
+                                    <span class="bar-value">1.864s</span>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                 </div>
             </div>
             <p class="text-sm text-gray-400 mt-6 max-w-3xl benchmark-footer-text">
-                * Measured on Intel i5-12400F, Ubuntu 26.04 LTS, single-core. Lower bars = faster.
+                * Measured on Intel i5-12400F, Ubuntu 26.04 LTS, single-core. Lower bars = faster. Apex = 100% baseline.
             </p>
         </section>
     </main>
