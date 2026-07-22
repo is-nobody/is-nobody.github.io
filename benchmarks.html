@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex · Benchmarks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="components/common.css">
+</head>
+<body class="flex flex-col min-h-screen">
+    <main class="flex-grow container mx-auto px-4 py-4 max-w-5xl">
+        <div class="mb-12">
+            <h1 class="text-6xl font-bold hero-title mb-6">Benchmarks</h1>
+            <p class="text-lg hero-text mb-4 leading-relaxed max-w-3xl">
+                Apex is also a fast language due to its register-based VM and nan-boxing optimizations.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <!-- fib(35) -->
+            <div class="benchmark-card p-6 rounded-lg">
+                <h3 class="text-xl font-semibold section-title mb-5">fib(35)</h3>
+                <div class="space-y-3">
+                    <div class="bar-container">
+                        <span class="bar-label">Apex</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar apex-bar" style="width: 40%;">
+                                <span class="bar-value">0.221s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">LuaJIT -j off</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 69%;">
+                                <span class="bar-value">0.378s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Java -Xint</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 69%;">
+                                <span class="bar-value">0.381s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Node.js --jitless</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 100%;">
+                                <span class="bar-value">0.549s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Lua</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 100%;">
+                                <span class="bar-value">0.551s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- tree(25) -->
+            <div class="benchmark-card p-6 rounded-lg">
+                <h3 class="text-xl font-semibold section-title mb-5">tree(25)</h3>
+                <div class="space-y-3">
+                    <div class="bar-container">
+                        <span class="bar-label">Apex</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar apex-bar" style="width: 38%;">
+                                <span class="bar-value">0.560s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Java -Xint</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 57%;">
+                                <span class="bar-value">0.826s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">LuaJIT -j off</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 61%;">
+                                <span class="bar-value">0.895s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Node.js --jitless</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 86%;">
+                                <span class="bar-value">1.255s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Lua</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 100%;">
+                                <span class="bar-value">1.461s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ackermann(3, 10) -->
+            <div class="benchmark-card p-6 rounded-lg">
+                <h3 class="text-xl font-semibold section-title mb-5">ackermann(3, 10)</h3>
+                <div class="space-y-3">
+                    <div class="bar-container">
+                        <span class="bar-label">Apex</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar apex-bar" style="width: 43%;">
+                                <span class="bar-value">0.433s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">LuaJIT -j off</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 48%;">
+                                <span class="bar-value">0.484s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Java -Xint</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 70%;">
+                                <span class="bar-value">0.700s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Lua</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 83%;">
+                                <span class="bar-value">0.833s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Node.js --jitless</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 100%;">
+                                <span class="bar-value">1.001s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- temp tables (1M × 10) -->
+            <div class="benchmark-card p-6 rounded-lg">
+                <h3 class="text-xl font-semibold section-title mb-5">Temp tables (1M × 10)</h3>
+                <div class="space-y-3">
+                    <div class="bar-container">
+                        <span class="bar-label">Apex</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar apex-bar" style="width: 37%;">
+                                <span class="bar-value">0.105s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Java -Xint</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 49%;">
+                                <span class="bar-value">0.138s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">LuaJIT -j off</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 86%;">
+                                <span class="bar-value">0.243s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Node.js --jitless</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 92%;">
+                                <span class="bar-value">0.260s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Lua</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 100%;">
+                                <span class="bar-value">0.283s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- counter loop -->
+            <div class="benchmark-card p-6 rounded-lg">
+                <h3 class="text-xl font-semibold section-title mb-5">Counter loop (100M)</h3>
+                <div class="space-y-3">
+                    <div class="bar-container">
+                        <span class="bar-label">Apex</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar apex-bar" style="width: 22%;">
+                                <span class="bar-value">0.252s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">LuaJIT -j off</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 24%;">
+                                <span class="bar-value">0.266s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Lua</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 27%;">
+                                <span class="bar-value">0.308s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Java -Xint</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 50%;">
+                                <span class="bar-value">0.562s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Node.js --jitless</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 100%;">
+                                <span class="bar-value">1.131s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- condition loop -->
+            <div class="benchmark-card p-6 rounded-lg">
+                <h3 class="text-xl font-semibold section-title mb-5">Condition loop (100M)</h3>
+                <div class="space-y-3">
+                    <div class="bar-container">
+                        <span class="bar-label">Apex</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar apex-bar" style="width: 33%;">
+                                <span class="bar-value">0.361s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">LuaJIT -j off</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 39%;">
+                                <span class="bar-value">0.419s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Lua</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 50%;">
+                                <span class="bar-value">0.539s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Java -Xint</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 52%;">
+                                <span class="bar-value">0.569s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-container">
+                        <span class="bar-label">Node.js --jitless</span>
+                        <div class="bar-track">
+                            <div class="benchmark-bar" style="width: 100%;">
+                                <span class="bar-value">1.086s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-sm benchmark-footer-text mt-4">
+            * Measured on Intel i5-12400F, Ubuntu 26.04 LTS, single-core. Lower bars = faster.
+        </p>
+    </main>
+
+    <script src="components/load-navbar.js"></script>
+</body>
+</html>
