@@ -3,370 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex Language</title>
+    <title>Apex - Projects</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="components/common.css">
-    <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/editor/editor.main.min.css" />
 </head>
 <body class="flex flex-col min-h-screen">
-    <!-- Hero Section -->
-    <main class="flex-grow container mx-auto px-4 py-4 max-w-5xl">
-        <div class="flex flex-col-reverse md:flex-row items-center justify-between mb-16">
-            <div class="md:w-1/2">
-                <h1 class="text-6xl font-bold hero-title mb-6">Apex</h1>
-                <p class="text-lg hero-text mb-8 leading-relaxed max-w-lg">
-                    Apex is a simple, powerful, and high-performance programming language with clean, indentation-based syntax and a rich standard library.
+    <!-- hero section -->
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-5xl">
+        <!-- tagline rotator -->
+        <div class="text-center mb-8">
+            <p id="tagline" class="text-2xl md:text-3xl font-bold dark:text-white light:text-gray-900 transition-opacity duration-500" style="min-height: 3.5rem;">
+                The biggest problem with Apex? You're still using something else.
+            </p>
+        </div>
+
+        <!-- divider -->
+        <div class="w-full h-px dark:bg-[#2d2d2d] light:bg-gray-200 mb-12"></div>
+
+        <!-- projects grid -->
+        <h2 class="text-3xl font-bold section-title mb-8 text-center">Projects</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- apex language -->
+            <a href="apex-lang.html" class="block doc-card rounded-xl p-6 hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold dark:text-white light:text-gray-900">Apex Language</h3>
+                        <span class="text-xs dark:text-gray-400 light:text-gray-500">26.07</span>
+                    </div>
+                </div>
+                <p class="dark:text-gray-300 light:text-gray-600 text-sm leading-relaxed mb-4">
+                    A programming language built for speed, power, simplicity, clarity, readability, and modernity.
                 </p>
-                <div class="flex flex-wrap items-center gap-4">
-                    <a href="learn.html" class="btn-primary px-6 py-2 rounded-full font-medium inline-block">Learn</a>
-                    <a href="changelog.html" class="btn-outline px-6 py-2 rounded-full font-medium bg-transparent inline-block">Changelog</a>
+                <div class="mt-4 pt-4 border-t dark:border-[#2d2d2d] light:border-gray-200 flex items-center justify-between">
+                    <span class="text-sm text-green-500 hover:text-green-400 transition flex items-center gap-1">
+                        Explore <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </span>
                 </div>
-            </div>
-            <div class="md:w-1/2 flex justify-center md:justify-end">
-                <div class="w-96 h-96 flex items-center justify-center">
-                    <img src="resources/logo-dark.png" 
-                         alt="Apex Logo Light Theme" 
-                         class="logo-dark-img w-full h-full object-contain drop-shadow-xl"
-                         style="display: none;"
-                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-64 h-64 bg-gray-200 rounded-full flex items-center justify-center text-gray-500\'>Logo not found</div>'">
-                    <img src="resources/logo.png" 
-                         alt="Apex Logo Dark Theme" 
-                         class="logo-light-img w-full h-full object-contain drop-shadow-xl"
-                         style="display: block;"
-                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-64 h-64 bg-[#1e1e1e] rounded-full flex items-center justify-center text-gray-500\'>Logo not found</div>'">
-                </div>
-            </div>
+            </a>
         </div>
+    </main>
 
-        <!-- IDE Section -->
-        <h2 class="text-3xl font-bold section-title mb-6">Try Apex!</h2>
-        <div class="ide-container rounded-lg overflow-hidden shadow-2xl">
-            <!-- Tabs & Toolbar -->
-            <div class="flex items-center justify-between tabs-toolbar px-2 py-1">
-                <div class="tabs-scroll-container flex-1 md:flex-none">
-                    <div class="flex items-center gap-1 text-sm">
-                        <div class="px-3 py-1 cursor-pointer active-tab tab-text whitespace-nowrap" onclick="switchFile('fruits.apex')">fruits.apex</div>
-                        <div class="px-3 py-1 cursor-pointer tab-text whitespace-nowrap" onclick="switchFile('fib.apex')">fib.apex</div>
-                        <div class="px-3 py-1 cursor-pointer tab-text whitespace-nowrap" onclick="switchFile('tree.apex')">tree.apex</div>
-                    </div>
-                </div>
-                
-                <div class="toolbar-actions flex-shrink-0 ml-2 md:ml-0">
-                    <button onclick="executeCode()" class="btn-primary text-xs px-3 py-1 rounded flex items-center gap-1 whitespace-nowrap">
-                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Run
-                    </button>
-                </div>
-            </div>
-
-            <!-- Monaco Editor -->
-            <div id="editor-container" class="editor-container"></div>
-
-            <!-- Output / Terminal -->
-            <div class="terminal p-4">
-                <div class="border-t border-gray-600 pt-2"></div>
-                <div id="output-box" class="output-box whitespace-pre-wrap font-mono text-sm leading-relaxed"></div>
-                <div id="input-prompt" style="display: none; padding: 8px 0; border-top: 1px solid #333; align-items: center; gap: 8px;">
-                    <span style="color: #4ade80; font-family: monospace;">></span>
-                    <input id="input-field" type="text" 
-                        style="background: transparent; border: none; color: #e5e7eb; 
-                                font-family: monospace; font-size: 14px; width: 90%; outline: none;"
-                        onkeydown="if(event.key === 'Enter') submitInput()">
-                </div>
-            </div>
-        </div>
-
-        <!-- Why Apex Section -->
-        <section class="mt-20 mb-12">
-            <h2 class="text-3xl font-bold section-title mb-8">Why Apex?</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Simplicity -->
-                <div class="feature-card p-6 rounded-lg">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold feature-title">Simplicity</h3>
-                    </div>
-                    <p class="feature-text leading-relaxed">
-                        Clean, indentation-based syntax with no braces or semicolons. Designed to be readable and easy to learn.
-                    </p>
-                </div>
-
-                <!-- Built-in Power -->
-                <div class="feature-card p-6 rounded-lg">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold feature-title">Built-in Power</h3>
-                    </div>
-                    <p class="feature-text leading-relaxed">
-                        Comes with a comprehensive standard library (<code class="code-highlight">os</code>, <code class="code-highlight">sys</code>, <code class="code-highlight">math</code>, <code class="code-highlight">string</code>, <code class="code-highlight">table</code>, <code class="code-highlight">ffi</code>, <code class="code-highlight">random</code>, <code class="code-highlight">codecs</code>) out of the box.
-                    </p>
-                </div>
-
-                <!-- Performance -->
-                <div class="feature-card p-6 rounded-lg">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold feature-title">Performance</h3>
-                    </div>
-                    <p class="feature-text leading-relaxed">
-                        Written in C with a register-based virtual machine, nan-boxing for efficient value representation, and optimized bytecode execution.
-                    </p>
-                </div>
-
-                <!-- Bundle Binaries -->
-                <div class="feature-card p-6 rounded-lg">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold feature-title">Bundle Binaries</h3>
-                    </div>
-                    <p class="feature-text leading-relaxed">
-                        Use <code class="code-highlight">apex build</code> to package your source with interpreter into a single standalone executable.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Benchmarks Section -->
-        <section class="mt-20 mb-16">
-            <h2 class="text-3xl font-bold section-title mb-8">Benchmarks</h2>
-            <p class="benchmark-desc max-w-4xl">
-                Apex is also a fast language due to its register-based VM and nan-boxing optimizations. Below are comparisons against other high-performance language runtimes. The bar widths represent relative execution time (slowest = 100% baseline).
-            </p>
-
-            <p class="text-center my-6"><a href="benchmarks.html" class="text-sm text-gray-400 hover:text-gray-300 transition-colors">More benchmarks →</a></p>
-
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- fib(35) benchmark card -->
-                <div class="benchmark-card p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold feature-title mb-5">fib(35)</h3>
-                    <div class="space-y-3">
-                        <div class="bar-container">
-                            <span class="bar-label">Apex</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar apex-bar" style="width: 40%;">
-                                    <span class="bar-value">0.221s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">LuaJIT -j off</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 69%;">
-                                    <span class="bar-value">0.378s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">Java -Xint</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 69%;">
-                                    <span class="bar-value">0.381s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">Node.js --jitless</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 100%;">
-                                    <span class="bar-value">0.549s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">Lua</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 100%;">
-                                    <span class="bar-value">0.551s</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- tree(25) benchmark card -->
-                <div class="benchmark-card p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold feature-title mb-5">tree(25)</h3>
-                    <div class="space-y-3">
-                        <div class="bar-container">
-                            <span class="bar-label">Apex</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar apex-bar" style="width: 38%;">
-                                    <span class="bar-value">0.560s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">Java -Xint</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 57%;">
-                                    <span class="bar-value">0.826s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">LuaJIT -j off</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 61%;">
-                                    <span class="bar-value">0.895s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">Node.js --jitless</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 86%;">
-                                    <span class="bar-value">1.255s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">Lua</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 100%;">
-                                    <span class="bar-value">1.461s</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p class="text-sm text-gray-400 mt-6 max-w-3xl benchmark-footer-text">
-                * Measured on Intel i5-12400F, Ubuntu 26.04 LTS, single-core. Lower bars = faster.
-            </p>
-
-    <!-- Monaco Loader -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
     <script src="components/load-navbar.js"></script>
-    <script src="apex-language.js"></script>
-    <script src="execute_apex.js"></script>
-
     <script>
-        const files = {
-            'fruits.apex': `import os\n\n// create table\nfruits = ["apple", "banana", "cherry"]\n\n// iteration in table\nfor i = fruits\n    os.output(i)`,
-            'fib.apex': `import os\nimport sys\n\nfunction fib(n)\n    if n < 2\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nstart = sys.time()\nresult = fib(30)\nelapsed = sys.time() - start\nos.output("fib(30) = {result}, elapsed {elapsed}")`,
-            'tree.apex': `import os\nimport sys\n\nfunction tree(n)\n    if n == 0\n        return 0\n    return 1 + tree(n - 1) + tree(n - 1)\n\nstart = sys.time()\nresult = tree(20)\nelapsed = sys.time() - start\nos.output("tree(20) = {result}, elapsed {elapsed}")`
-        };
+        // tagline rotator
+        const taglines = [
+            "The biggest problem with Apex? You're still using something else.",
+            "Giants spend millions on marketing. We spend nights on code.",
+            "Apex: where every line of code does the work of ten.",
+            "Complex problems — simple solutions. That's our entire philosophy.",
+            "Code should be elegant, not bulky like a tax return manual.",
+            "Our code wasn't written for processors — it was written for people.",
+            "They dictate the rules. We give you the tools to change them.",
+            "We have no stock on the exchange. We have code that works.",
+            "Apex. Nowhere to go but up.",
+            "Apex. Power that corporations can't control."
+        ];
 
-        const executor = new ApexExecutor();
+        let currentIndex = 0;
+        const taglineElement = document.getElementById('tagline');
 
-        executor.onOutput = function(text) {
-            const outputBox = document.getElementById('output-box');
-            outputBox.innerHTML += text;
-            outputBox.scrollTop = outputBox.scrollHeight;
-        };
-
-        executor.onInput = function() {
-            const inputPrompt = document.getElementById('input-prompt');
-            inputPrompt.style.display = 'flex';
-            const inputField = document.getElementById('input-field');
-            inputField.value = '';
-            inputField.focus();
-        };
-
-        window.submitInput = function() {
-            const inputField = document.getElementById('input-field');
-            const value = inputField.value;
-            inputField.value = '';
-            document.getElementById('input-prompt').style.display = 'none';
-            executor.submitInput(value);
-        };
-
-        executor.init('apex.wasm').then(() => {
-            document.getElementById('output-box').innerHTML = 'Apex is ready\n';
-        }).catch(err => {
-            document.getElementById('output-box').innerHTML = 'Failed to load Apex: ' + err.message + '\n';
-        });
-
-        let editor;
-        let currentFile = 'fruits.apex';
-
-        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs' }});
-        require(['vs/editor/editor.main'], function() {
-            registerApexLanguage();
-            
-            const initialTheme = 'apex-dark';
-            editor = monaco.editor.create(document.getElementById('editor-container'), {
-                value: files[currentFile],
-                language: 'apex',
-                theme: initialTheme,
-                automaticLayout: true,
-                minimap: { enabled: false },
-                fontSize: 14,
-                scrollbar: { vertical: 'visible', horizontal: 'visible' }
-            });
-            window.editor = editor;
-        });
-
-        function switchFile(filename) {
-            if(!files[filename]) {
-                files[filename] = `# New file: ${filename}`;
-            }
-            if(editor) {
-                files[currentFile] = editor.getValue();
-                currentFile = filename;
-                editor.setValue(files[currentFile]);
-                document.querySelectorAll('.active-tab').forEach(el => el.classList.remove('active-tab'));
-                const tabs = document.querySelectorAll('[onclick*="switchFile"]');
-                tabs.forEach(tab => {
-                    if(tab.innerText.trim() === filename) {
-                        tab.classList.add('active-tab');
-                    }
-                });
-            }
+        function rotateTagline() {
+            taglineElement.classList.add('opacity-0');
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % taglines.length;
+                taglineElement.textContent = taglines[currentIndex];
+                taglineElement.classList.remove('opacity-0');
+            }, 500);
         }
 
-        function executeCode() {
-            const outputBox = document.getElementById('output-box');
-            outputBox.innerHTML = '';
-            
-            if(editor) files[currentFile] = editor.getValue();
-            
-            const code = files[currentFile];
-            
-            if (!executor.isReady()) {
-                outputBox.innerHTML = 'Loading Apex...\n';
-                executor.init('apex.wasm').then(() => {
-                    runApexCode(code);
-                }).catch(err => {
-                    outputBox.innerHTML = 'Failed to load Apex: ' + err.message + '\n';
-                });
-            } else {
-                runApexCode(code);
-            }
-        }
+        // initial random tagline
+        currentIndex = Math.floor(Math.random() * taglines.length);
+        taglineElement.textContent = taglines[currentIndex];
 
-        function runApexCode(code) {
-            const outputBox = document.getElementById('output-box');
-            outputBox.innerHTML = '';
-            
-            executor.onOutput = function(text) {
-                outputBox.innerHTML += text;
-                outputBox.scrollTop = outputBox.scrollHeight;
-            };
-            
-            executor.execute(code).then(result => {
-                if (result.error) {
-                    outputBox.innerHTML += '\x1b[31mError: ' + result.error + '\x1b[0m\n';
-                }
-            }).catch(err => {
-                outputBox.innerHTML += '\x1b[31mError: ' + err.message + '\x1b[0m\n';
-            });
-        }
+        // rotate every 5 seconds
+        setInterval(rotateTagline, 5000);
     </script>
 </body>
 </html>

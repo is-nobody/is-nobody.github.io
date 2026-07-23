@@ -19,7 +19,7 @@ async function loadNavbar() {
         });
         
         // Highlight current page
-        if (currentPage === 'projects.html') {
+        if (currentPage === 'index.html') {
             if (navProjects) {
                 navProjects.className = 'nav-link transition font-semibold';
                 navProjects.style.fontWeight = '600';
