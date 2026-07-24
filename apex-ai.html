@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="components/common.css">
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <nav id="navbar-container"></nav>
+
+    <!-- Hero Section -->
+    <main class="flex-grow container mx-auto px-4 py-4 max-w-5xl">
+        <div class="flex flex-col-reverse md:flex-row items-center justify-between mb-16">
+            <div class="md:w-1/2">
+                <h1 class="text-6xl font-bold hero-title mb-6">Apex AI</h1>
+                <p class="text-lg hero-text mb-8 leading-relaxed max-w-lg">
+                    Apex AI is a lightning-fast, embeddable conversational AI engine with smart matching.
+                </p>
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="https://github.com/is-nobody/apex-ai" target="_blank" class="btn-primary px-6 py-2 rounded-full font-medium inline-block">GitHub</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center md:justify-end">
+                <div class="w-96 h-96 flex items-center justify-center">
+                    <img src="resources/logo-dark.png" 
+                         alt="Apex Logo Light Theme" 
+                         class="logo-dark-img w-full h-full object-contain drop-shadow-xl"
+                         style="display: none;"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-64 h-64 bg-gray-200 rounded-full flex items-center justify-center text-gray-500\'>Logo not found</div>'">
+                    <img src="resources/logo.png" 
+                         alt="Apex Logo Dark Theme" 
+                         class="logo-light-img w-full h-full object-contain drop-shadow-xl"
+                         style="display: block;"
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-64 h-64 bg-[#1e1e1e] rounded-full flex items-center justify-center text-gray-500\'>Logo not found</div>'">
+                </div>
+            </div>
+        </div>
+
+        <!-- Why Apex AI Section -->
+        <section class="mt-20 mb-12">
+            <h2 class="text-3xl font-bold section-title mb-8">Why Apex AI?</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="feature-card p-6 rounded-lg">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold feature-title">Blazing Fast</h3>
+                    </div>
+                    <p class="feature-text leading-relaxed">
+                        Hash table O(1) lookups in &lt;20 ns. Full search pipeline under 10 µs. No GPU, no cloud, no waiting.
+                    </p>
+                </div>
+
+                <div class="feature-card p-6 rounded-lg">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold feature-title">Smart Matching</h3>
+                    </div>
+                    <p class="feature-text leading-relaxed">
+                        Porter Stemmer, synonym engine, fuzzy matching. "sorrowful" → "sad", "programmers" → "programming".
+                    </p>
+                </div>
+
+                <div class="feature-card p-6 rounded-lg">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold feature-title">Tiny & Portable</h3>
+                    </div>
+                    <p class="feature-text leading-relaxed">
+                        Pure C11, zero dependencies. Runs on Linux, macOS, Windows, and embedded.
+                    </p>
+                </div>
+
+                <div class="feature-card p-6 rounded-lg">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold feature-title">Privacy First</h3>
+                    </div>
+                    <p class="feature-text leading-relaxed">
+                        Everything runs locally. No API calls, no data collection. Your chats never leave your machine.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="components/load-navbar.js"></script>
+</body>
+</html>
