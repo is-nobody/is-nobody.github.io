@@ -1,5 +1,5 @@
-# Apex Reference Manual for Beginners (26.07)
-This manual is written with step-by-step learning in mind and strives to be minimalistic. Each section builds on the previous ones. For the best experience, follow the order. If you see a note like "see section X" — that's a hint that you might want to go here if something feels unfamiliar. Don't skip ahead to functions or loops before you understand variables and conditions. Everything connects.
+# Apex Reference Manual for Beginners (26.08)
+This manual is written with step-by-step learning in mind and strives to be minimalistic. Each section builds on the previous ones. For the best experience, follow the order. Don't skip ahead to functions or loops before you understand variables and conditions. Everything connects.
 
 ## Table of Contents
 ### Introduction
@@ -7,7 +7,7 @@ This manual is written with step-by-step learning in mind and strives to be mini
 - [Installation](#installation)
 - [Your First Code](#your-first-code)
 
-### 1. Variables & Data Types
+### 1. Data Types
 - [1.1 None](#11-none)
 - [1.2 Numbers](#12-numbers)
 - [1.3 Booleans](#13-booleans)
@@ -49,48 +49,50 @@ This manual is written with step-by-step learning in mind and strives to be mini
 
 # Introduction
 ## About the Project
-Apex is a programming language designed for simplicity and cross-platform development with built-in libraries. Apex is designed to be approachable for beginners while remaining powerful for professional developers. Apex is under the MIT License. All created by one person.
+Apex is a programming language built for speed, power, simplicity, clarity, readability, and modernity. It's under the MIT License. Created by one person.
 
 ### Installing
-Go to the [GitHub releases](https://github.com/is-nobody/apex-lang/releases) page and find the Download section. Select the file for your operating system, download it, and run it.
+Go to the [GitHub releases](https://github.com/is-nobody/apex-lang/releases) and find the Download section. Select the file for your operating system, download it, and run it.
 
-After running, you'll see the Apex REPL — an interactive environment where you can type file name for executing. REPL stands for Read, Evaluate, Print, Loop. You type something, Apex runs it, shows the result, and waits for more.
+After running, you'll see the Apex REPL — an interactive environment where you can write code for executing. You type something, Apex runs it, shows the result, and waits for new code.
+
+*Alternatively, if you don't want to install anything, you can try language on the [website](https://is-nobody.github.io/apex-lang.html).*
 
 ### Your First Code
 Paste this code into REPL:
 
 ```apex
 import os
-os.output("Hello, Friend")
+os.output("Hello, Friend!")
 ```
 
 You'll see the output:
 
 ```bash
-Hello, Friend
+Hello, Friend!
 ```
 
-Congratulations! You've successfully written and run your first Apex program.
+Congratulations! You've successfully written and run your first Apex script.
 
-### Code Breakdown: "Hello, Friend"
+### Code Breakdown: "Hello, Friend!"
 `import os` — imports the built-in OS (Operating System) library. This library provides functions for interacting with the system, such as outputting text. You can learn more about available functions in the [Library Reference](Library_Reference.md).
 
 `os.output` — calls the `output` function from the imported `os` library. This function output text to the terminal.
 
-`("Hello, Friend")` — the parentheses contain the argument passed to the function. In this case, it's a string — a sequence of text characters. Strings in Apex are enclosed in double quotes `"..."`. 
+`("Hello, Friend!")` — the parentheses contain the argument passed to the function. In this case, it's a string — a sequence of text characters. Strings in Apex are enclosed in double `"..."` or single `'...'` quotes. 
 
 Now something may be unclear, after reading the following sections everything will be crystal clear!
 
 # 1. Data Types
 Every variable has a name and a value. Every variable belongs to a specific data type. Apex determines the type automatically. Main data types in language:
 
-| Type | Description | Example |
-|------|-------------|---------|
-| `none` | Intentional absence of a value | `x = none` |
-| `number` | Numbers (Wholes and decimals) | `x = 10`, `x = 3.14` |
-| `string` | Text, sequence of characters | `x = "hello"` |
-| `boolean` | True or false | `x = true`, `x = false` |
-| `table` | Universal container | `x = [1, 2, 3]`, `x = [name = "John"]` |
+| Type      | Description                    | Example                                  |
+|-----------|--------------------------------|------------------------------------------|
+| `none`    | Intentional absence of a value | `x = none`                               |
+| `number`  | Numbers (Wholes and decimals)  | `x = 10`, `x = 3.14`                     |
+| `string`  | Text, sequence of characters   | `x = "hello"`                            |
+| `boolean` | True or false                  | `x = true`, `x = false`                  |
+| `table`   | Universal container            | `x = [1, 2, 3]`, `x = ["name" = "John"]` |
 
 The type of a variable can change over time. A variable initially created as a `none` can later become a `string`.
 
@@ -98,8 +100,8 @@ For `none`, `true` and `false` use lowercase.
 
 `//` means a comment, it has absolutely no effect for source code and will be used only for notes inside the code.
 
-### 1.1 None
-In programming, you often need to explicitly say "there's nothing here." User not found. In Apex, this is called `none`.
+## 1.1 None
+In programming, you often need to explicitly say "there's nothing here". In Apex, this is called `none`.
 
 `none` is a separate data type and the only value of that type. It means the intentional absence of any value. It's like an empty box — it exists, but it's empty.
 
@@ -108,10 +110,10 @@ user = none
 result = none
 ```
 
-Most often, `none` is used as a default value when a function returns no meaningful result, or to reset a variable's value.
+Most often, `none` is used as a default value when a function returns no meaningful result.
 
 ## 1.2 Numbers
-Numbers are everywhere: counting items, storing prices, tracking scores. In Apex, you don't need to worry about whether a number is a whole number or a decimal. Just write it, and Apex figures out the rest. There is no limit to numbers, you can write any numbers.
+Numbers are everywhere: counting items, storing prices, tracking scores. In Apex, you don't need to worry about whether a number is a whole number or a decimal. Just write it, and Apex figures out the rest.
 
 ### Whole Numbers
 Whole numbers are written without any other symbols. They can be positive or negative.
@@ -131,7 +133,7 @@ weight = 71.5
 height = 1.8
 ```
 
-Apex uses a dot, not a comma. Commas have a different job — they separate items in table lists.
+Apex uses a dot, not a comma. Commas have a different job — they separate items in table lists and function arguments.
 
 ### Declaring with Arithmetic
 You can declare variables and do math with them at the same time. Once a variable holds a number, you can use it in calculations just like a regular number. What you can do with numbers:
@@ -145,7 +147,7 @@ You can declare variables and do math with them at the same time. Once a variabl
 ```apex
 x = 10
 y = 3.5
-sum = x + y            // 13.5
+sum = x + y  // 13.5
 ```
 
 How it works:
@@ -164,52 +166,34 @@ Direct assignment:
 ```apex
 is_active = true
 has_permission = false
-is_logged_in = true
 ```
 
 Through comparisons:
 
 ```apex
 age = 25
-is_adult = age > 18        // true — because 25 is greater than 18
+is_adult = age > 18  // true — because 25 is greater than 18
 ```
 
-Whenever you use comparison operators (`==`, `!=`, `<`, `>`, `<=`, `>=`), the result is always a boolean. Booleans also come from logical operations that combine values:
+Whenever you use comparison operators (`==`, `!=`, `<`, `>`, `<=`, `>=`), the result is always a boolean.
 
-```apex
-is_weekend = true
-is_holiday = false
-can_sleep_in = is_weekend or is_holiday    // true
-```
-
-*More details about Comparison & Logical operators in section 2.2 & 2.3*
-
-### Booleans as Switches
-One common pattern is using booleans as switches that can be toggled on and off:
-
-```apex
-lights_on = true
-
-// Later, you can flip the value
-lights_on = not lights_on      // now false
-lights_on = not lights_on      // now true again
-```
-
-You'll use them constantly with `if` statements (section 3) to make decisions.
+*More details about Comparison operators in section 2.2 & 2.3*
 
 ## 1.4 Strings
 Strings are how you work with text in Apex. Names, messages, file paths, user input — anything that's words rather than numbers lives in a string. Think of a string as a sequence of characters. The word `"hello"` is five characters: `h`, `e`, `l`, `l`, `o`. A string can be one character long, a thousand characters long, or even empty.
 
 ### Creating Strings
-In Apex, strings are written inside double quotes `" "`:
+In Apex, strings are written inside double `""` or single `''` quotes:
 
 ```apex
-name = "Alice"
-message = "Hello, Friend"
+name = 'Alice'
 empty = ""
 ```
 
-### Quotes inside Quotes
+### Escape Sequences
+Sometimes you don't just need to piece a string together — you need to format it nicely: break it into lines or add indentation. Smashing Enter right into your code won't work; Apex will think the statement ended and start reading a new line of code. Instead, you use special combos called **escape sequences**.
+
+#### Quotes inside Quotes
 If you need double quotes inside a string, you can't just drop them in raw — Apex will see that second quote and think "String's over!" Then everything after it becomes gibberish that breaks your code.
 
 Here's what **doesn't** work:
@@ -218,7 +202,7 @@ Here's what **doesn't** work:
 inside = "He say: "I hate donuts!"" // NOPE
 ```
 
-Apex reads that as: string `"He say: "` ends, then random words `I hate donuts!` floating in space, then an empty string `""`. Total chaos.
+Apex reads that as: string `"He say: "` ends, then random words `I hate donuts!` floating in space, then an empty string `""`.
 
 Slap a backslash `\` in front of every inner double quote. This thing is called an **escape character**. It tells Apex: "The next character is special — treat it as a regular symbol, not as code."
 
@@ -233,54 +217,6 @@ When Apex sees `\"`, it goes: "Oh, this is just a regular double quote that shou
 ```bash
 He say: "I hate donuts!"
 ```
-
-### Escaping the Backslash Itself
-Backslash itself is a special character, so if you actually want a backslash in your string — like in a file path — you have to escape it too. Double them up:
-
-```apex
-filePath = "C:\\Users\\John\\Documents\\resume.pdf"
-```
-
-Each `\\` is Apex reading: "Okay, the first `\` means something special is coming... oh, the next character is also `\`? Got it, you want an actual backslash printed." Without doubling them, Apex would try to interpret `\U`, `\J`, `\D` as some special characters and everything breaks. Output with double slashes in code:
-
-```bash
-C:\Users\John\Documents\resume.pdf
-```
-
-### String Interpolation
-The way you combine text with variables in Apex is string interpolation — you embed variables directly inside a string by putting the variable name inside curly braces `{}`.
-
-```apex
-name = "Alice"
-age = 30
-greeting = "Hello, {name}"                    // "Hello, Alice"
-message = "{name} is {age} years old"         // "Alice is 30 years old"
-```
-
-Apex automatically converts numbers and other values to strings when you put them inside `{}`. 
-
-Inside the braces, you can also use numeric expressions — they are evaluated first, and then the result is converted to a string:
-
-```apex
-count = 5
-total = "Total: {count * 2}"  // Total: 10
-```
-
-### Curly Braces in Strings
-Curly braces `{}` have special meaning — string interpolation. When Apex sees `{someVariable}` inside a string, it tries to swap that placeholder with an actual value. Super useful, but if you literally want to print `{curly braces}` as text, Apex will freak out thinking it's a variable that doesn't exist.
-
-Escape them the exact same way — `\{` and `\}`:
-
-```apex
-String template = "Hello {0}, your balance is {1}"
-// Apex tries to find variables named "0" and "1"
-
-String template = "Hello \{0\}, your balance is \{1\}"
-// Output: Hello {0}, your balance is {1}
-```
-
-### Line Breaks and Tabs
-Sometimes you don't just need to piece a string together — you need to format it nicely: break it into lines or add indentation. Smashing Enter right into your code won't work; Apex will think the statement ended and start reading a new line of code. Instead, you use special combos called **escape sequences**.
 
 #### Line break — `\n`
 The `n` stands for *newline*. When Apex hits `\n` inside a string, it doesn't print those two characters — it inserts an actual line break:
@@ -311,18 +247,63 @@ Name    Age    City
 Alice   30     London
 ```
 
+#### Escaping the Backslash Itself
+Backslash itself is a special character, so if you actually want a backslash in your string — like in a file path — you have to escape it too. Double them up:
+
+```apex
+filePath = "C:\\Users\\John\\Documents\\resume.pdf"
+```
+
+Each `\\` is Apex reading: "Okay, the first `\` means something special is coming... oh, the next character is also `\`? Got it, you want an actual backslash printed." Without doubling them, Apex would try to interpret `\U`, `\J`, `\D` as some special characters and everything breaks. Output with double slashes in code:
+
+```bash
+C:\Users\John\Documents\resume.pdf
+```
+
+### String Interpolation
+The way you combine text with variables in Apex is string interpolation — you embed variables directly inside a string by putting the variable name inside curly braces `{}`.
+
+```apex
+name = "Alice"
+age = 30
+greeting = "Hello, {name}"                    // "Hello, Alice"
+message = "{name} is {age} years old"         // "Alice is 30 years old"
+```
+
+Apex automatically converts numbers and other values to strings when you put them inside `{}`. 
+
+Inside the braces, you can also use numeric expressions — they are evaluated first, and then the result is converted to a string:
+
+```apex
+count = 5
+total = "Total: {count * 2}"  // total: 10
+```
+
+### Curly Braces in Strings
+Curly braces `{}` have special meaning — string interpolation. When Apex sees `{someVariable}` inside a string, it tries to swap that placeholder with an actual value. Super useful, but if you literally want to print `{curly braces}` as text, Apex will freak out thinking it's a variable that doesn't exist.
+
+Escape them the exact same way — `\{` and `\}`:
+
+```apex
+template = "Hello {user}, your balance is {count}"
+// apex tries to find variables named "user" and "count"
+
+template = "Hello \{user\}, your balance is \{count\}"
+// output: Hello {user}, your balance is {count}
+```
+
 ### Multiline Strings
 Alright, `\n` is great, but if you're writing a big chunk of text — an email body, a template — sprinkling `\n` everywhere gets ugly fast. The string becomes a messy pile of backslashes and n's that's hard to read and even harder to edit.
 
-Apex has a cleaner way: **multiline strings**. You just hit Enter and keep typing in a regular string wrapped in double quotes `"`. Line breaks right there in the code become actual line breaks in the output. No `\n` needed.
+Apex has a cleaner way: **multiline strings**. You just hit Enter and keep typing in a regular string. Line breaks right there in the code become actual line breaks in the output. No `\n` needed.
 
 ```apex
-emailBody = "
-    Hello Alice,
+email = "
+    Hello,
 
     Thank you for your purchase.
 
-    Your order #12345 has been shipped.
+    Your order has been shipped.
 
     Best regards,
     The Store Team
@@ -332,10 +313,10 @@ emailBody = "
 Apex captures the text exactly as you typed it — line breaks, indentation, everything. The output looks exactly like what's between the quotes. Clean, readable, and no `\n` soup in sight. Just hit Enter where you want a new line.
 
 ## 1.5 Tables
-A table is Apex's universal container. Think of it as a box that can hold multiple values. Need a list of names? Use a table. Need to store information about a user? Use a table. Need both in one place? Table. Tables are flexible — they work as ordered lists and key-value pairs. You can even mix both styles in the same table.
+A table is Apex's universal container. Think of it as a box that can hold multiple values. Need a list of names? Use a table. Need to store information about a user? Use a table. Tables are flexible — they work as ordered lists and key-value pairs. You can even mix both styles in the same table.
 
 ### Creating Tables
-Tables are written inside square brackets `[ ]`. Values are separated by commas.
+Tables are written inside square brackets `[]`. Values are separated by commas.
 
 ```apex
 empty = []                               // empty table — nothing inside
@@ -349,7 +330,7 @@ When you list values without keys, you create an ordered list. Each value has a 
 
 ```apex
 colors = ["red", "green", "blue"]
-// Access by position
+// access by position
 first_color = colors[1]      // "red"
 second_color = colors[2]     // "green"
 third_color = colors[3]      // "blue"
@@ -360,13 +341,13 @@ When you want to label each value with a name, use keys. Keys and values are con
 
 ```apex
 user = [
-    name = "Alice",
-    age = 30,
-    active = true
+    "name" = "Alice",
+    "age" = 30,
+    "active" = true
 ]
 ```
 
-Keys are written without quotes. Apex recognizes them as names, not strings. Now you can access values by their key:
+Keys are written with quotes. Now you can access values by their key:
 
 ```apex
 user_name = user["name"]         // "Alice"
@@ -378,43 +359,42 @@ user_active = user["active"]     // true
 Once a table exists, you can working with keys:
 
 ```apex
-user = [name = "Alice"]
-// Add a new key
+user = ["name" = "Alice"]
+// add a new keys
 user["age"] = 30
 user["city"] = "Dubai"
 user["active"] = true
-// Now user has four keys
-// [name = "Alice", age = 30, city = "Dubai", active = true]
+// now user has four keys
 ```
 
-Updating a value works the same way — just assign a new value to an existing key or position. If you access a non-existent key, you will get an `none`. To remove an item from a table, use the `table.remove()` function from the table library (see section 7.5).
+Updating a value works the same way — just assign a new value to an existing key or position. If you access a non-existent key, you will get an `none`. To remove an item from a table, use the `table.remove()` function from the table library (see section [Library Reference](Library_Reference.md)).
 
 ### Mixed Tables
-You can skip this for now and come back later. Tables can combine ordered items and key-value pairs in the same table. Ordered items come first, then key-value pairs:
+Tables can combine ordered items and key-value pairs in the same table. Ordered items come first, then key-value pairs:
 
 ```apex
-person = ["Alice", "Manager", department = "Engineering", years = 5]
-// Access ordered items by position
+person = ["Alice", "Manager", "department" = "Engineering", "years" = 5]
+// access ordered items by position
 name = person[1]                 // "Alice"
 role = person[2]                 // "Manager"
-// Access key-value pairs by key
+// access key-value pairs by key
 dept = person["department"]      // "Engineering"
 experience = person["years"]     // 5
 ```
 
 ### Tables Inside Tables
-You can skip this for now and come back later. Tables can contain other tables. This lets you build complex data structures:
+Tables can contain other tables. This lets you build complex data structures:
 
 ```apex
 company = [
-    name = "Apex",
-    employees = ["Alice", "Bob", "Charlie"],
-    address = [
-        street = "1 Sheikh Mohammed bin Rashid Boulevard",
-        city = "Dubai"
+    "name" = "Apex",
+    "employees" = ["Alice", "Bob", "Charlie"],
+    "address" = [
+        "street" = "1 Sheikh Mohammed bin Rashid Boulevard",
+        "city" = "Dubai"
     ]
 ]
-// Access nested values
+// access nested values
 company_name = company["name"]                  // "Apex"
 first_employee = company["employees"][1]        // "Alice"
 city = company["address"]["city"]               // "Dubai"
@@ -431,6 +411,7 @@ Apex provides two conversion functions:
 |----------|--------------|---------|
 | `number(x)` | Converts to number | `number("42")` → `42` |
 | `string(x)` | Converts to string | `string(42)` → `"42"` |
+| `type(x)` | Returns the type name as a string | `type(42)` → `"number"` |
 
 ### number()
 Converts a value to number. You will get an `false` value if conversion fails.
@@ -599,7 +580,7 @@ Checks if two values are the same. Use `==` for comparison, not `=` (which is as
 ```
 
 ### Comparison Other Types
-Comparison operators `<`, `>`, `<=`, `>=` work only with numbers. Using them with strings, booleans, tables, functions, or none will result in a parse-time error. To check equality or inequality of any type, use `==` and `!=`.
+Comparison operators `<`, `>`, `<=`, `>=` work only with numbers. Using them with strings, booleans, tables, or none will result in a parse-time error. To check equality or inequality of any type, use `==` and `!=`.
 
 ### Operator Precedence
 Comparison operators have lower precedence than arithmetic. Math happens first, then comparisons.
@@ -662,6 +643,47 @@ Every program makes decisions. Should this user get access? Is the score high en
 | `elif` | Previous conditions were `false` AND this condition is `true` |
 | `else` | All previous conditions were `false` |
 
+### Code Blocks and Indentation
+An `if` statement decides *what* to do. The code that belongs to it is called a **block** — a group of one or more lines that run together.
+
+To show Apex which lines are "inside" the block, you **must** indent them with exactly 4 spaces.
+
+**This won't work:**
+
+```apex
+import os
+score = 85
+if score >= 80
+os.output("Grade: B")  // ERROR: Expected indented block after 'if'
+```
+
+**This is correct:**
+
+```apex
+import os
+score = 85
+if score >= 80
+    os.output("Grade: B")
+```
+
+See those 4 spaces before `os.output`? They tell Apex: "This line belongs to the `if`." If the condition is false, Apex skips the entire indented block.
+
+**Blocks don't create a new scope.** A **scope** is like a one-way mirror for variables: code inside a scope can see variables created outside, but variables created inside are invisible to the outside world. Since `if` blocks don't create a scope, any variable you make inside them is visible everywhere.
+
+```apex
+import os
+
+x = 10
+
+if x > 5
+    message = "x is big"  // Created inside if
+    os.output(message)    // Works fine inside
+
+os.output(message)        // Also works outside! Prints "x is big"
+```
+
+> **Remember:** If statements use 4-space indentation to define a block, but they do **not** create a new scope.
+
 ### Explicit Conditions Required
 In Apex, conditions must be **explicitly boolean**. You cannot use variables directly as conditions (no "truthy" or "falsy" values). 
 
@@ -669,7 +691,7 @@ In Apex, conditions must be **explicitly boolean**. You cannot use variables dir
 ```apex
 import os
 x = 10
-if x          // ERROR: If condition must be boolean, got number
+if x      // ERROR: If requires a comparison, got number
     os.output("Hello")
 ```
 
@@ -677,9 +699,8 @@ if x          // ERROR: If condition must be boolean, got number
 ```apex
 import os
 x = 10
-if x == true       // Correct for booleans
-if x != false      // Also correct
-if x > 5           // Correct because comparison returns boolean
+if x > 5  // correct because comparison returns boolean
+    os.output("Hello")
 ```
 
 Always use comparison operators (`==`, `!=`, `<`, `>`, etc.) or logical operators (`and`, `or`, `not`) to ensure your condition results in a `boolean` value.
@@ -689,8 +710,8 @@ We don't have a user, and we check: if he doesn't exist, then display output abo
 
 ```apex
 import os
-user = false
-if user == false
+user = none
+if user == none
     os.output("No user found")
 ```
 
@@ -699,7 +720,9 @@ Sometimes one condition isn't enough. What if you want to check multiple possibi
 
 ```apex
 import os
+
 score = 85
+
 if score >= 90
     os.output("Grade: A")
 elif score >= 80
@@ -756,13 +779,35 @@ What happens here:
 The ternary operator can only be used for short conditions. If the selection logic requires 2 or more checks, you must use regular `if-elif-else` blocks — 2 or more checks are not allowed in a ternary statement.
 
 # 4. For Loops
-Sometimes you need to do the same thing many times. Print "Hello" ten times. Keep asking for input until the user types something valid. Count down from 10 to 0. Apex gives you the `for` loop with four different syntaxes to handle all these situations.
+Sometimes you need to do the same thing many times. Print "Hello" ten times. Keep asking for input until the user types something valid. Apex gives you the `for` loop with three different syntaxes to handle all these situations.
 
-| Syntax | When to Use | Example |
-|--------|-------------|---------|
-| `for x = start, end` | You know the exact range | `for i = 1, 5` |
-| `for k = table` | Iterate over table items | `for k = my_table` |
-| `for condition` | Repeat while condition is true | `for counter <= 10` |
+| Syntax                | When to Use                    | Example          |
+|-----------------------|--------------------------------|------------------|
+| `for r = start, end`  | You know the exact range       | `for r = 1, 5`   |
+| `for v = table`       | Iterate over table items       | `for v = table`  |
+| `for c == true`       | Repeat while condition is true | `for c == true`  |
+
+### Blocks and Scoping in Loops
+Just like `if` statements, `for` loops define a block of code with **4-space indentation**. Everything indented after the `for` line is part of the loop and will run repeatedly.
+
+There is one critical difference: **`for` loops DO create a new scope.**
+
+```apex
+import os
+
+x = "outer"
+
+for i = 1, 1
+    y = "inner"   // Created inside the loop's scope
+    os.output(x)  // Works: can see "outer" from outside
+    os.output(y)  // Works: "y" exists here
+
+os.output(y)      // ERROR: "y" is invisible outside the loop!
+```
+
+The variable `y` is trapped inside the loop's scope. Once the loop finishes, `y` disappears. The loop counter variable (`i` in a counter loop, or the item variable in a table loop) is also local to the loop's scope.
+
+Think of a loop's scope as a private room: you can take things in, but you can't take anything new out.
 
 ## 4.1 For Counter
 The `for` statement creates a numeric loop. You specify a variable, a starting number, and an ending number. The loop runs once for each number in that range, including the end value.
@@ -799,10 +844,11 @@ for i = 5, 1, -1
 This prints 5, 4, 3, 2, 1. The loop stops when the variable goes below the `end` value.
 
 ## 4.2 For Table Iteration
-You can iterate over any table using `for variable = table`. This will give you direct access to each value inside the loop.
+You can iterate over any table using `for value = table`:
 
 ```apex
 import os
+
 fruits = ["apple", "banana", "cherry"]
 
 for fruit = fruits
@@ -817,24 +863,6 @@ banana
 cherry
 ```
 
-For tables with key-value pairs, iteration also returns values:
-
-```apex
-import os
-scores = ["alice" = 95, "bob" = 82, "charlie" = 90]
-
-for score = scores
-    os.output(score)
-```
-
-Output:
-
-```text
-82
-95
-90
-```
-
 ## 4.3 For Condition
 When you don't know how many times you need to repeat, use a condition loop. As long as the condition is `true`, the loop keeps running.
 
@@ -842,6 +870,7 @@ When you don't know how many times you need to repeat, use a condition loop. As 
 import os
 
 counter = 1
+
 for counter <= 5
     os.output(counter)
     counter = counter + 1
@@ -872,6 +901,7 @@ Use `break` when you found what you were looking for and don't need to continue.
 
 ```apex
 import os
+
 for i = 1, 5
     if i == 3
         continue
@@ -884,6 +914,28 @@ Use `continue` when you want to skip certain values but keep looping through the
 
 # 5. Functions
 Imagine you have a recipe for making a sandwich. You follow the same steps every time: take two slices of bread, spread butter on one, spread jam on the other, put them together. Now imagine you had to write out those steps every single time you wanted a sandwich. That would be tedious. Instead, you give the recipe a name — `make_sandwich` — and whenever you want a sandwich, you just say that name. That's exactly what a function is: a named block of code that you can use whenever you need it.
+
+### Blocks and Scope
+Like `if` and `for`, a function's body is a code block defined by **4-space indentation**. And just like `for` loops, **functions create a new scope.** This is the fundamental rule of functions: what happens inside a function, stays inside a function.
+
+```apex
+import os
+
+x = "global"
+
+function test()
+    y = "local"   // Created inside the function's scope
+    os.output(x)  // Works: can see "global" from outside
+    os.output(y)  // Works: "y" exists here
+    return none
+
+test()
+os.output(y)      // ERROR: "y" is invisible outside the function!
+```
+
+This is by design. Functions are meant to be independent, self-contained blocks of logic. They should not accidentally mess with variables in the rest of your program, and the rest of your program shouldn't mess with them. This is called **encapsulation**, and it's one of the most powerful concepts in programming.
+
+Parameters are also local to the function scope. They work just like variables created inside the function.
 
 ## 5.1 Function Statement
 To create a function, use the `function` keyword, then the function name, then parentheses `( )`, then the code block.
