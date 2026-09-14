@@ -56,37 +56,37 @@ if command != none
     os.output("Command exited with code: {command}")
 ```
 
-### os.terminate_process(pid)
+### os.terminate(pid)
 Terminates the process with the given PID. Returns `true` on success, `false` on failure.
 
 ```apex
 import os
 
-if os.terminate_process(123456) == false
+if os.terminate(123456) == false
     os.output("Could not terminate process")
 else
     os.output("Process terminated successfully")
 ```
 
-### os.get_current_folder()
+### os.current_folder()
 Returns the current directory as a string. Returns `none` on failure.
 
 ```apex
 import os
 
-current_folder = os.get_current_folder()
+current_folder = os.current_folder()
 
 if current_folder != none
     os.output("Running from: {current_folder}")
 ```
 
-### os.set_current_folder(path)
+### os.change_folder(path)
 Changes the current directory. Returns `true` on success, `false` on failure.
 
 ```apex
 import os
 
-if os.set_current_folder("/home") == false
+if os.change_folder("/home") == false
     os.output("Could not change directory")
 else
     os.output("Directory changed successfully")
@@ -142,25 +142,25 @@ else
     os.output("File found")
 ```
 
-### os.isfile(path)
+### os.is_file(path)
 Returns `true` if the path points to a file specifically (not a folder). Returns `false` otherwise.
 
 ```apex
 import os
 
-if os.isfile("my_file.txt") == false
+if os.is_file("my_file.txt") == false
     os.output("Not a file or doesn't exist")
 else
     os.output("It's a file")
 ```
 
-### os.isfolder(path)
+### os.is_folder(path)
 Returns `true` if the path points to a folder specifically. Returns `false` otherwise.
 
 ```apex
 import os
 
-if os.isfolder("my_folder") == false
+if os.is_folder("my_folder") == false
     os.output("Not a folder or doesn't exist")
 else
     os.output("It's a folder")
@@ -252,13 +252,13 @@ else
     os.output("Deleted successfully")
 ```
 
-### os.items(path)
+### os.list_folder(path)
 Returns a table of names — all files and folders inside the given folder. If no path is given, lists the current folder. Returns `none` on failure.
 
 ```apex
 import os
 
-items = os.items(".")
+items = os.list_folder(".")
 
 if items == none
     os.output("Could not list directory contents")
@@ -268,13 +268,13 @@ else
         os.output(item)
 ```
 
-### os.parentfolder(path)
+### os.parent_folder(path)
 Returns the parent directory of the given path. For root paths like `/` or `C:\`, returns the root itself. If no directory separator is found in the path, returns `"."`. Returns `none` on failure or if no path is provided.
 
 ```apex
 import os
 
-parent = os.parentfolder("/home/user/my_folder")
+parent = os.parent_folder("/home/user/my_folder")
 
 if parent != none
     os.output("Parent folder: {parent}")
@@ -330,7 +330,7 @@ end = sys.time()
 os.output("Took {end - start} seconds")
 ```
 
-### sys.date()
+### sys.datetime()
 Returns the current UTC date and time as a table. All values are numbers. The table contains the following keys:
 
 - `year` — The current year (e.g., 2026)
@@ -346,7 +346,7 @@ Returns the current UTC date and time as a table. All values are numbers. The ta
 import os
 import sys
 
-now = sys.date()
+now = sys.datetime()
 
 os.output("Year: {now['year']}")
 os.output("Month: {now['month']}")
@@ -388,14 +388,14 @@ if arch != none
     os.output("System Architecture: {arch}")
 ```
 
-### sys.hostname()
+### sys.host()
 Returns the system's hostname as a string. Returns `none` on failure.
 
 ```apex
 import os
 import sys
 
-host = sys.hostname()
+host = sys.host()
 
 if host != none
     os.output("Hostname: {host}")
@@ -414,27 +414,27 @@ if user != none
     os.output("Logged in as: {user}")
 ```
 
-### sys.homedir()
+### sys.home()
 Returns the current user's home directory path as a string. Returns `none` if it can't be determined.
 
 ```apex
 import os
 import sys
 
-home = sys.homedir()
+home = sys.home()
 
 if home != none
     os.output("Home folder: {home}")
 ```
 
-### sys.isterminal(fd)
+### sys.is_terminal(fd)
 Checks if the file descriptor goes to a terminal. By default checks stdout (fd 1). Pass a number to check a different file descriptor: `0` for stdin, `2` for stderr. Returns `true` if the output goes to a terminal, `false` if it's redirected to a file or pipe. Always succeeds.
 
 ```apex
 import os
 import sys
 
-if sys.isterminal() == true
+if sys.is_terminal() == true
     os.output("Output is a terminal")
 else
     os.output("Output is not a terminal")
@@ -463,7 +463,7 @@ if path != none
     os.output("Running from: {path}")
 ```
 
-### sys.disksize(path)
+### sys.disk(path)
 Returns a table with disk usage information for the volume containing the given path. If no path is provided, uses the current directory. The table contains:
 - `total` — Total size in MB
 - `used` — Used space in MB
@@ -475,21 +475,21 @@ Returns a table on success, `none` on failure.
 import os
 import sys
 
-info = sys.disksize()
+info = sys.disk()
 
 if info != none
     os.output("Total: {info['total'] / 1024} GB")
     os.output("Free: {info['free'] / 1024} GB")
 ```
 
-### sys.tempdir()
+### sys.temp()
 Returns the path to the system's temporary directory. On Unix-like systems, checks the `TMPDIR`, `TMP`, and `TEMP` environment variables, falling back to `/tmp`. Returns `none` on failure.
 
 ```apex
 import os
 import sys
 
-temp_dir = sys.tempdir()
+temp_dir = sys.temp()
 
 if temp_dir != none
     os.output("Temporary directory: {temp_dir}")
@@ -556,24 +556,24 @@ math.abs(-5)     // 5
 math.abs(-3.14)  // 3.14
 ```
 
-### math.floor(x)
+### math.round_down(x)
 Rounds a number down to the nearest whole number. Returns `none` if the argument is not a number.
 
 ```apex
 import math
-math.floor(3.7)   // 3
-math.floor(3.1)   // 3
-math.floor(-2.3)  // -3 (goes down, so more negative)
+math.round_down(3.7)   // 3
+math.round_down(3.1)   // 3
+math.round_down(-2.3)  // -3 (goes down, so more negative)
 ```
 
-### math.ceil(x)
+### math.round_up(x)
 Rounds a number up to the nearest whole number. Returns `none` if the argument is not a number.
 
 ```apex
 import math
-math.ceil(3.1)   // 4
-math.ceil(3.7)   // 4
-math.ceil(-2.3)  // -2 (goes up toward zero)
+math.round_up(3.1)   // 4
+math.round_up(3.7)   // 4
+math.round_up(-2.3)  // -2 (goes up toward zero)
 ```
 
 ### math.round(x, digits)
@@ -588,18 +588,18 @@ math.round(3.14159, 2)  // 3.14
 math.round(3.14159, 3)  // 3.142
 ```
 
-### math.trunc(x)
+### math.drop_decimal(x)
 Truncates a number by removing the decimal part. Returns `none` if the argument is not a number.
 
 ```apex
 import math
-math.trunc(3.7)   // 3
-math.trunc(-3.7)  // -3
-math.trunc(0.9)   // 0
+math.drop_decimal(3.7)   // 3
+math.drop_decimal(-3.7)  // -3
+math.drop_decimal(0.9)   // 0
 ```
 
 ### math.sqrt(x)
-Returns the square root of a number. Returns `nan` for negative numbers. Returns `none` if the argument is not a number. You can check the result with `math.isnan()`.
+Returns the square root of a number. Returns `nan` for negative numbers. Returns `none` if the argument is not a number. You can check the result with `math.is_nan()`.
 
 ```apex
 import math
@@ -608,34 +608,34 @@ math.sqrt(2)   // 1.4142135623730951
 math.sqrt(-1)  // nan
 ```
 
-### math.pow(base, exponent)
+### math.power(base, exponent)
 Raises a number to a power. Returns `base` raised to the `exponent`. Returns `none` on error.
 
 ```apex
 import math
-math.pow(2, 3)    // 8
-math.pow(4, 0.5)  // 2 (same as square root)
-math.pow(10, -1)  // 0.1
+math.power(2, 3)    // 8
+math.power(4, 0.5)  // 2 (same as square root)
+math.power(10, -1)  // 0.1
 ```
 
-### math.exp(x)
+### math.exponent(x)
 Returns `e` raised to the power of `x`. Returns `none` if the argument is not a number.
 
 ```apex
 import math
-math.exp(1)  // 2.718281828459045
-math.exp(0)  // 1
-math.exp(2)  // 7.38905609893065
+math.exponent(1)  // 2.718281828459045
+math.exponent(0)  // 1
+math.exponent(2)  // 7.38905609893065
 ```
 
-### math.hypot(x, y)
+### math.hypotenuse(x, y)
 Returns the hypotenuse of a right triangle given the lengths of the two legs. Returns `none` on error.
 
 ```apex
 import math
-math.hypot(3, 4)   // 5
-math.hypot(5, 12)  // 13
-math.hypot(1, 1)   // 1.4142135623730951
+math.hypotenuse(3, 4)   // 5
+math.hypotenuse(5, 12)  // 13
+math.hypotenuse(1, 1)   // 1.4142135623730951
 ```
 
 ### math.log(x, base)
@@ -762,25 +762,27 @@ math.factorial(2.5)  // none
 math.factorial(171)  // inf (too large)
 ```
 
-### math.isnan(x)
-Returns `true` if the value is NaN (Not a Number), `false` otherwise. NaN typically results from operations like `sqrt(-1)` or `0/0`. Returns `none` if the argument is not a number.
+### math.is_nan(x)
+Returns `true` if the value is NaN (Not a Number), `false` otherwise. NaN typically results from operations like `sqrt(-1)` or `0/0`. Returns `false` if the argument is not a number.
 
 ```apex
 import math
-math.isnan(math.sqrt(-1))  // true
-math.isnan(0)              // false
-math.isnan(42)             // false
+math.is_nan(math.sqrt(-1))  // true
+math.is_nan(0)              // false
+math.is_nan(42)             // false
+math.is_nan("42")           // false
 ```
 
-### math.isinf(x)
-Returns `true` if the value is positive or negative infinity, `false` otherwise. Infinity often results from division by zero or overflowing calculations. Returns `none` if the argument is not a number.
+### math.is_inf(x)
+Returns `true` if the value is positive or negative infinity, `false` otherwise. Infinity often results from division by zero or overflowing calculations. Returns `false` if the argument is not a number.
 
 ```apex
 import math
-math.isinf(math.inf())   // true
-math.isinf(-math.inf())  // true
-math.isinf(1000)         // false
-math.isinf(0)            // false
+math.is_inf(math.inf())   // true
+math.is_inf(-math.inf())  // true
+math.is_inf(1000)         // false
+math.is_inf(0)            // false
+math.is_inf("0")          // false
 ```
 
 ## String Library (string)
@@ -817,7 +819,7 @@ import string
 os.output(string.upper("hello"))     // "HELLO"
 ```
 
-### string.sub(s, start, end)
+### string.slice(s, start, end)
 Extracts a portion of a string — from `start` to `end`, but not including `end`. Positions start counting from `1`. Returns `none` on error.
 
 ```apex
@@ -825,7 +827,7 @@ import os
 import string
 
 text = "Hello, World"
-result = string.sub(text, 1, 5)
+result = string.slice(text, 1, 5)
 
 if result != none
     os.output(result)  // "Hello"
@@ -837,7 +839,7 @@ If `start` is negative, it's treated as `1`. If `end` is larger than the string 
 import os
 import string
 
-sub = string.sub("Apex", 2, 10)
+sub = string.slice("Apex", 2, 10)
 
 os.output(sub)  // "pex" (end is bigger than string, stops at end)
 ```
@@ -891,45 +893,16 @@ if result != none
 ```
 
 ### string.replace(s, old, new)
-Replaces the **first** occurrence of `old` with `new` in the string. If `old` isn't found, returns the original string unchanged. Returns `none` on error.
+Replaces **all** occurrences of `old` with `new` in the string. If `old` isn't found, returns the original string unchanged. Returns `none` on error.
 
 ```apex
 import os
 import string
 
-result = string.replace("Hello World", "World", "Apex")
+result = string.replace("Hello World Hello", "Hello", "Apex")
 
 if result != none
-    os.output(result)  // "Hello Apex"
-```
-
-### string.isletter(s)
-Checks if the first character of the string is a letter (supports all modern writing systems: Latin, Cyrillic, Arabic, Chinese, Japanese, Korean, Hebrew, Greek, Devanagari, and many more). Returns `false` on failure.
-
-```apex
-import os
-import string
-
-os.output(string.isletter("Hello"))   // true
-os.output(string.isletter("Привет"))  // true (Cyrillic)
-os.output(string.isletter("مرحبا"))   // true (Arabic)
-os.output(string.isletter("你好"))     // true (Chinese)
-os.output(string.isletter("123"))     // false (number)
-os.output(string.isletter("!"))       // false (punctuation)
-os.output(string.isletter(""))        // false (empty string)
-```
-
-### string.isnumber(s)
-Checks if the first character of the string is a digit (0-9). Returns `false` on failure.
-
-```apex
-import os
-import string
-
-os.output(string.isnumber("123"))     // true
-os.output(string.isnumber("5hello"))  // true (first char is '5')
-os.output(string.isnumber("abc"))     // false
-os.output(string.isnumber(""))        // false
+    os.output(result)  // "Apex World Apex"
 ```
 
 ## Table Library (table)
@@ -964,7 +937,7 @@ result = table.has(user, "name")
 
 if result == none
     os.output("Invalid key type")
-elif result == true
+else if result == true
     os.output("Key exists")
 else
     os.output("Key does not exist")
@@ -1180,34 +1153,34 @@ import os
 import random
 
 random.seed(12345)
-r1 = random.random()
+r1 = random.float()
 
 random.seed(12345)
-r2 = random.random()
+r2 = random.float()
 
 if r1 == r2
     os.output("Seeds match!")
 ```
 
-### random.random()
+### random.float()
 Returns a random floating-point number in the range `[0.0, 1.0)`. Always succeeds.
 
 ```apex
 import os
 import random
 
-val = random.random()
+val = random.float()
 os.output("Random float: {val}")
 ```
 
-### random.randint(a, b)
+### random.integer(a, b)
 Returns a random integer `N` such that `a <= N <= b`. If `a > b`, the bounds are swapped automatically. Returns `none` if arguments are not numbers.
 
 ```apex
 import os
 import random
 
-dice = random.randint(1, 6)
+dice = random.integer(1, 6)
 
 if dice != none
     os.output("You rolled a {dice}")
@@ -1263,14 +1236,14 @@ else
     os.output("Winners: {winners}")
 ```
 
-### random.gauss(mu, sigma)
+### random.normal(mu, sigma)
 Returns a random floating-point number from a Gaussian (normal) distribution with mean `mu` and standard deviation `sigma`. Returns `none` if arguments are not numbers.
 
 ```apex
 import os
 import random
 
-height = random.gauss(175, 10)
+height = random.normal(175, 10)
 
 if height != none
     os.output("Simulated height: {height} cm")
@@ -1315,120 +1288,18 @@ if probability != none
     os.output("Beta sample: {probability}")
 ```
 
-### random.secure_token_hex(nbytes)
-Returns a hexadecimal string representation of `nbytes` random bytes generated using a cryptographically secure source. Defaults to 16 bytes if no argument is provided. Returns `none` on failure.
+## JSON Library (json)
+The JSON library provides encoding and decoding functions for JSON format. Import it with `import json`.
 
-```apex
-import os
-import random
-
-token = random.secure_token_hex(16)
-
-if token != none
-    os.output("Hex Token: {token}")
-```
-
-### random.secure_randint(n)
-Returns a secure random integer in the range `[0, n)`. Uses a cryptographically secure source. Returns `none` on failure or if `n <= 0`.
-
-```apex
-import os
-import random
-
-val = random.secure_randint(100)
-
-if val != none
-    os.output("Secure random int: {val}")
-```
-
-### random.compare_digest(a, b)
-Compares two strings in constant time to prevent timing attacks. Useful for comparing security tokens or hashes. Returns `true` if they match, `false` otherwise. Both arguments must be strings. Always succeeds.
-
-```apex
-import os
-import random
-
-secret = "my_secret_token"
-input = "my_secret_token"
-
-if random.compare_digest(secret, input) == true
-    os.output("Access granted")
-else
-    os.output("Access denied")
-```
-
-## Codecs Library (codecs)
-The Codecs library provides encoding and decoding functions for various formats. Import it with `import codecs`.
-
-### codecs.base_write(data)
-Encodes a string to standard Base64. Returns the encoded string, or `none` on failure.
-
-```apex
-import os
-import codecs
-
-encoded = codecs.base_write("Hello, Friend!")
-
-if encoded == none
-    os.output("Encoding failed")
-else
-    os.output(encoded)  // SGVsbG8sIEZyaWVuZCE=
-```
-
-### codecs.base_read(data)
-Decodes a standard Base64 string. Returns the decoded string, or `none` on failure.
-
-```apex
-import os
-import codecs
-
-decoded = codecs.base_read("SGVsbG8sIEZyaWVuZCE=")
-
-if decoded == none
-    os.output("Decoding failed")
-else
-    os.output(decoded)  // Hello, Friend!
-```
-
-### codecs.baseurl_write(data)
-Encodes a string to URL-safe Base64. Returns the encoded string, or `none` on failure.
-
-```apex
-import os
-import codecs
-
-encoded = codecs.baseurl_write("Hello, Friend!")
-
-if encoded == none
-    os.output("Encoding failed")
-else
-    os.output(encoded) // SGVsbG8sIEZyaWVuZCE
-```
-
-### codecs.baseurl_read(data)
-Decodes a URL-safe Base64 string. Returns the decoded string, or `none` on failure.
-
-```apex
-import os
-import codecs
-
-decoded = codecs.baseurl_read("SGVsbG8sIEZyaWVuZCE")
-
-if decoded == none
-    os.output("Decoding failed")
-else
-    os.output(decoded)  // Hello, Friend!
-```
-
-### codecs.json_write(value)
+### json.encode(value)
 Converts an Apex value (none, boolean, number, string, table) to a JSON string. Returns the JSON string, or `none` on failure. Tables are encoded as objects `{}` if they have named keys, or arrays `[]` if they only have sequential numeric keys.
 
 ```apex
 import os
-import codecs
+import json
 
 data = ["name" = "Alice", "age" = 30]
-json_str = codecs.json_write(data)
+json_str = json.encode(data)
 
 if json_str == none
     os.output("JSON encoding failed")
@@ -1436,15 +1307,15 @@ else
     os.output(json_str)  // {"age": 30, "name": "Alice"}
 ```
 
-### codecs.json_read(json_string)
+### json.decode(json_string)
 Parses a JSON string into an Apex value. Returns the parsed value (table, number, bool, string), or `none` on failure.
 
 ```apex
 import os
-import codecs
+import json
 
 json_str = '\{"name": "Alice", "age": 30\}'
-data = codecs.json_read(json_str)
+data = json.decode(json_str)
 
 if data == none
     os.output("JSON parsing failed")
@@ -1452,48 +1323,15 @@ else
     os.output("Name: {data['name']}")  // Name: Alice
 ```
 
-### codecs.csv_write(table, has_header, delimiter)
-Converts a table of tables to a CSV string. `has_header` (bool) determines if the first row is treated as headers. `delimiter` (string) specifies the separator (default `,`). Returns the CSV string, or `none` on failure.
+## XML Library (xml)
+The XML library provides encoding and decoding functions for XML format. Import it with `import xml`.
 
-```apex
-import os
-import codecs
-
-data = [
-    1 = ["name" = "Alice", "age" = 30],
-    2 = ["name" = "Bob", "age" = 25]
-]
-
-csv_str = codecs.csv_write(data, true, ",")
-
-if csv_str == none
-    os.output("CSV encoding failed")
-else
-    os.output(csv_str)
-```
-
-### codecs.csv_read(csv_string, has_header, delimiter)
-Parses a CSV string into a table of tables. `has_header` (bool) determines if the first row contains column names. `delimiter` (string) specifies the separator (default `,`). Returns a table of rows, or `none` on failure.
-
-```apex
-import os
-import codecs
-
-csv_str = "name,age\nAlice,30\nBob,25"
-data = codecs.csv_read(csv_str, true, ",")
-
-if data == none
-    os.output("CSV parsing failed")
-else
-    os.output("First name: {data[1]['name']}")
-```
-
-### codecs.xml_write(table)
+### xml.encode(table)
 Converts a table representing an XML structure to an XML string. The table should have a `__tag` key for the element name, `@key` keys for attributes, and `#text` for text content. Nested elements are stored with numeric keys. Returns the XML string, or `none` on failure.
 
 ```apex
 import os
-import codecs
+import xml
 
 xml_data = [
     "__tag" = "root",
@@ -1504,7 +1342,7 @@ xml_data = [
     ]
 ]
 
-xml_str = codecs.xml_write(xml_data)
+xml_str = xml.encode(xml_data)
 
 if xml_str == none
     os.output("XML encoding failed")
@@ -1512,18 +1350,839 @@ else
     os.output(xml_str)
 ```
 
-### codecs.xml_read(xml_string)
+### xml.decode(xml_string)
 Parses an XML string into a table structure. Returns the root element as a table, or `none` on failure.
 
 ```apex
 import os
-import codecs
+import xml
 
 xml_str = '<root id="1"><child>Hello</child></root>'
-data = codecs.xml_read(xml_str)
+data = xml.decode(xml_str)
 
 if data == none
     os.output("XML parsing failed")
 else
     os.output("Tag: {data['__tag']}")
+```
+
+## CSV Library (csv)
+The CSV library provides encoding and decoding functions for RFC 4180 compliant CSV format. Import it with `import csv`.
+
+### csv.encode(table)
+Converts a table of tables to a CSV string. The first row's keys are used as column headers. Returns the CSV string, or `none` on failure.
+
+```apex
+import os
+import csv
+
+data = [
+    1 = ["name" = "Alice", "age" = 30],
+    2 = ["name" = "Bob", "age" = 25]
+]
+
+csv_str = csv.encode(data)
+
+if csv_str == none
+    os.output("CSV encoding failed")
+else
+    os.output(csv_str)
+```
+
+### csv.decode(csv_string)
+Parses an RFC 4180 compliant CSV string into a table of tables. The first row is used as column headers for all subsequent rows. Returns a table of rows, or `none` on failure.
+
+```apex
+import os
+import csv
+
+csv_str = "name,age\nAlice,30\nBob,25"
+data = csv.decode(csv_str)
+
+if data == none
+    os.output("CSV parsing failed")
+else
+    os.output("First name: {data[1]['name']}")
+```
+
+## Base Library (base)
+The Base library provides encoding and decoding functions for Base16, Base32, Base32Hex, Base64, and Base64URL formats. Import it with `import base`.
+
+### base.encode_64(data)
+Encodes a string to standard Base64. Returns the encoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+encoded = base.encode_64("Hello, Friend!")
+
+if encoded == none
+    os.output("Encoding failed")
+else
+    os.output(encoded)  // SGVsbG8sIEZyaWVuZCE=
+```
+
+### base.decode_64(data)
+Decodes a standard Base64 string. Returns the decoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+decoded = base.decode_64("SGVsbG8sIEZyaWVuZCE=")
+
+if decoded == none
+    os.output("Decoding failed")
+else
+    os.output(decoded)  // Hello, Friend!
+```
+
+### base.encode_64url(data)
+Encodes a string to URL-safe Base64. Returns the encoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+encoded = base.encode_64url("Hello, Friend!")
+
+if encoded == none
+    os.output("Encoding failed")
+else
+    os.output(encoded) // SGVsbG8sIEZyaWVuZCE
+```
+
+### base.decode_64url(data)
+Decodes a URL-safe Base64 string. Returns the decoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+decoded = base.decode_64url("SGVsbG8sIEZyaWVuZCE")
+
+if decoded == none
+    os.output("Decoding failed")
+else
+    os.output(decoded)  // Hello, Friend!
+```
+
+### base.encode_16(data)
+Encodes a string to Base16 (hexadecimal). Returns the encoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+encoded = base.encode_16("Hello, Friend!")
+
+if encoded == none
+    os.output("Encoding failed")
+else
+    os.output(encoded)  // 48656C6C6F2C20467269656E6421
+```
+
+### base.decode_16(data)
+Decodes a Base16 (hexadecimal) string. Returns the decoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+decoded = base.decode_16("48656C6C6F2C20467269656E6421")
+
+if decoded == none
+    os.output("Decoding failed")
+else
+    os.output(decoded)  // Hello, Friend!
+```
+
+### base.encode_32(data)
+Encodes a string to standard Base32. Returns the encoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+encoded = base.encode_32("Hello, Friend!")
+
+if encoded == none
+    os.output("Encoding failed")
+else
+    os.output(encoded)  // JBSWY3DPFQQEM4TJMVXGIII=
+```
+
+### base.decode_32(data)
+Decodes a standard Base32 string. Returns the decoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+decoded = base.decode_32("JBSWY3DPFQQEM4TJMVXGIII=")
+
+if decoded == none
+    os.output("Decoding failed")
+else
+    os.output(decoded)  // Hello, Friend!
+```
+
+### base.encode_32hex(data)
+Encodes a string to Base32Hex (extended hex alphabet). Returns the encoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+encoded = base.encode_32hex("Hello, Friend!")
+
+if encoded == none
+    os.output("Encoding failed")
+else
+    os.output(encoded)  // 91IMOR3F5GG4CSJ9CLN6888=
+```
+
+### base.decode_32hex(data)
+Decodes a Base32Hex string. Returns the decoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+decoded = base.decode_32hex("91IMOR3F5GG4CSJ9CLN6888=")
+
+if decoded == none
+    os.output("Decoding failed")
+else
+    os.output(decoded)  // Hello, Friend!
+```
+
+### base.encode_62(data)
+Encodes a string to Base62 (alphanumeric characters 0-9, A-Z, a-z). Returns the encoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+encoded = base.encode_62("Hello, Friend!")
+
+if encoded == none
+    os.output("Encoding failed")
+else
+    os.output(encoded)  // 80nEsxhzYSyNfj8Z0hl
+```
+
+### base.decode_62(data)
+Decodes a Base62 string. Returns the decoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+decoded = base.decode_62("80nEsxhzYSyNfj8Z0hl")
+
+if decoded == none
+    os.output("Decoding failed")
+else
+    os.output(decoded)  // Hello, Friend!
+```
+
+### base.encode_85(data)
+Encodes a string to Ascii85 (also known as Base85). Returns the encoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+encoded = base.encode_85("Hello, Friend!")
+
+if encoded == none
+    os.output("Encoding failed")
+else
+    os.output(encoded)  // 87cURD_*##EbT*&A0C
+```
+
+### base.decode_85(data)
+Decodes an Ascii85 string. Returns the decoded string, or `none` on failure.
+
+```apex
+import os
+import base
+
+decoded = base.decode_85("87cURD_*##EbT*&A0C")
+
+if decoded == none
+    os.output("Decoding failed")
+else
+    os.output(decoded)  // Hello, Friend!
+```
+
+## Regex Library (regex)
+The Regex library provides functions for working with regular expressions: searching, matching, replacing, and splitting text. Import it with `import regex`.
+
+### regex.search(pattern, text, options)
+Searches for the **first** match of a pattern in the text. Returns a table with information about the match, or an empty table if no match is found. The returned table contains:
+- `start` — The starting position of the match (1-based index)
+- `end` — The ending position of the match
+- `match` — The matched string
+
+Returns `none` on error.
+
+```apex
+import os
+import table
+import regex
+
+result = regex.search("\\d+", "Order #12345")
+
+if result == none
+    os.output("Search failed")
+else if table.size(result) > 0
+    os.output("Found: '{result['match']}' at position {result['start']}-{result['end']}")
+else
+    os.output("No match found")
+```
+
+### regex.find_all(pattern, text, options)
+Finds **all non-overlapping** matches of a pattern in the text. Returns a table of matched strings, indexed by numbers starting from `1`. Returns an empty table if no matches are found, or `none` on error.
+
+```apex
+import os
+import regex
+
+words = regex.find_all("\\w+", "Hello, World! 123")
+
+if words == none
+    os.output("Find failed")
+else
+    for word = words
+        os.output(word)
+```
+
+### regex.replace(pattern, replacement, text, options)
+Replaces **all** occurrences of the pattern in the text with the replacement string. Returns the resulting string. If no matches are found, the original text is returned unchanged. Returns `none` on error.
+
+```apex
+import os
+import regex
+
+text = "The quick brown fox jumps over the lazy dog"
+result = regex.replace("\\s+", "-", text)
+
+if result == none
+    os.output("Substitution failed")
+else
+    os.output(result)
+```
+
+### regex.split(pattern, text, options)
+Splits the text at each match of the pattern. Returns a table of substrings, indexed by numbers starting from `1`. Returns a table containing the original text if the pattern is not found, or `none` on error.
+
+```apex
+import os
+import regex
+
+parts = regex.split(",\\s*", "apple, banana, orange, grape")
+
+if parts == none
+    os.output("Split failed")
+else
+    for part = parts
+        os.output(part)
+```
+
+## Crypto Library (crypto)
+The Crypto library provides cryptographic functions for hashing, HMAC, key derivation, AES encryption, and secure random generation. It supports MD5, SHA-1, SHA-256, SHA-512, and AES-128-CBC. Import it with `import crypto`.
+
+### crypto.random_hex(nbytes)
+Returns a hexadecimal string representation of `nbytes` random bytes generated using a cryptographically secure source. The argument `nbytes` is required and must be a positive integer. Returns `none` on failure or if `nbytes <= 0`.
+
+```apex
+import os
+import crypto
+
+token = crypto.random_hex(16)
+
+if token != none
+    os.output("Hex Token: {token}")
+```
+
+### crypto.random_integer(n)
+Returns a secure random integer in the range `[0, n)`. Uses a cryptographically secure source. Returns `none` on failure or if `n <= 0`.
+
+```apex
+import os
+import crypto
+
+val = crypto.random_integer(100)
+
+if val != none
+    os.output("Secure random int: {val}")
+```
+
+### crypto.random_float()
+Returns a cryptographically secure random floating-point number in the range `[0, 1)`. The function uses 53 bits of randomness for uniform distribution. Takes no arguments. Always succeeds.
+
+```apex
+import os
+import crypto
+
+val = crypto.random_float()
+
+if val != none
+    os.output("Secure random float: {val}")
+```
+
+### crypto.compare_strings(a, b)
+Compares two strings in constant time to prevent timing attacks. Useful for comparing security tokens or hashes. Returns `true` if they match, `false` otherwise. Both arguments must be strings. Always succeeds.
+
+```apex
+import os
+import crypto
+
+secret = "my_secret_token"
+input = "my_secret_token"
+
+if crypto.compare_strings(secret, input) == true
+    os.output("Access granted")
+else
+    os.output("Access denied")
+```
+
+### crypto.md5(str)
+Computes the MD5 hash of a string. Returns a 32-character lowercase hexadecimal string (128 bits). Returns `none` if the argument is not a string.
+
+```apex
+import os
+import crypto
+
+file = os.read("main.c")
+hash = crypto.md5(file)
+
+if hash == none
+    os.output("Could not hash file")
+else
+    os.output("MD5: {hash}")
+```
+
+### crypto.sha1(str)
+Computes the SHA-1 hash of a string. Returns a 40-character lowercase hexadecimal string (160 bits). Returns `none` if the argument is not a string.
+
+```apex
+import os
+import crypto
+
+file = os.read("main.c")
+hash = crypto.sha1(file)
+
+if hash == none
+    os.output("Could not hash file")
+else
+    os.output("SHA-1: {hash}")
+```
+
+### crypto.sha256(str)
+Computes the SHA-256 hash of a string. Returns a 64-character lowercase hexadecimal string (256 bits). Returns `none` if the argument is not a string.
+
+```apex
+import os
+import crypto
+
+file = os.read("main.c")
+hash = crypto.sha256(file)
+
+if hash == none
+    os.output("Could not hash file")
+else
+    os.output("SHA-256: {hash}")
+```
+
+### crypto.sha384(str)
+Computes the SHA-384 hash of a string. Returns a 96-character lowercase hexadecimal string (384 bits). Returns `none` if the argument is not a string.
+
+```apex
+import os
+import crypto
+
+file = os.read("main.c")
+hash = crypto.sha384(file)
+
+if hash == none
+    os.output("Could not hash file")
+else
+    os.output("SHA-384: {hash}")
+```
+
+### crypto.sha512(str)
+Computes the SHA-512 hash of a string. Returns a 128-character lowercase hexadecimal string (512 bits). Returns `none` if the argument is not a string.
+
+```apex
+import os
+import crypto
+
+file = os.read("main.c")
+hash = crypto.sha512(file)
+
+if hash == none
+    os.output("Could not hash file")
+else
+    os.output("SHA-512: {hash}")
+```
+
+### crypto.hmac_md5(key, msg)
+Computes the HMAC MD5 of a message using a secret key. Both arguments must be strings. Returns a 32-character lowercase hexadecimal string. Returns `none` if either argument is not a string.
+
+```apex
+import os
+import crypto
+
+secret = "my-secret-key"
+file = os.read("main.c")
+signature = crypto.hmac_md5(secret, file)
+
+if signature == none
+    os.output("Could not sign file")
+else
+    os.output("HMAC MD5: {signature}")
+```
+
+### crypto.hmac_sha1(key, msg)
+Computes the HMAC SHA1- of a message using a secret key. Both arguments must be strings. Returns a 40-character lowercase hexadecimal string. Returns `none` if either argument is not a string.
+
+```apex
+import os
+import crypto
+
+secret = "my-secret-key"
+file = os.read("main.c")
+signature = crypto.hmac_sha1(secret, file)
+
+if signature == none
+    os.output("Could not sign file")
+else
+    os.output("HMAC SHA-1: {signature}")
+```
+
+### crypto.hmac_sha256(key, msg)
+Computes the HMAC SHA-256 of a message using a secret key. Both arguments must be strings. Returns a 64-character lowercase hexadecimal string. Returns `none` if either argument is not a string.
+
+```apex
+import os
+import crypto
+
+secret = "my-secret-key"
+file = os.read("main.c")
+signature = crypto.hmac_sha256(secret, file)
+
+if signature == none
+    os.output("Could not sign file")
+else
+    os.output("HMAC SHA-256: {signature}")
+```
+
+### crypto.hmac_sha384(key, msg)
+Computes the HMAC SHA-384 of a message using a secret key. Both arguments must be strings. Returns a 96-character lowercase hexadecimal string. Returns `none` if either argument is not a string.
+
+```apex
+import os
+import crypto
+
+secret = "my-secret-key"
+file = os.read("main.c")
+signature = crypto.hmac_sha384(secret, file)
+
+if signature == none
+    os.output("Could not sign file")
+else
+    os.output("HMAC SHA-384: {signature}")
+```
+
+### crypto.hmac_sha512(key, msg)
+Computes the HMAC SHA-512 of a message using a secret key. Both arguments must be strings. Returns a 128-character lowercase hexadecimal string. Returns `none` if either argument is not a string.
+
+```apex
+import os
+import crypto
+
+secret = "my-secret-key"
+file = os.read("main.c")
+signature = crypto.hmac_sha512(secret, file)
+
+if signature == none
+    os.output("Could not sign file")
+else
+    os.output("HMAC SHA-512: {signature}")
+```
+
+### crypto.pbkdf2_md5(password, salt, iterations, key_len)
+Derives a key from a password and salt using PBKDF2-HMAC-MD5. Returns a lowercase hexadecimal string of `key_len` bytes. Returns `none` if any argument is invalid or `iterations < 1`.
+
+```apex
+import os
+import crypto
+
+key = crypto.pbkdf2_md5("password", "salt", 100000, 16)
+
+if key == none
+    os.output("Could not derive key")
+else
+    os.output("PBKDF2 MD5: {key}")
+```
+
+### crypto.pbkdf2_sha1(password, salt, iterations, key_len)
+Derives a key from a password and salt using PBKDF2-HMAC-SHA1. Returns a lowercase hexadecimal string of `key_len` bytes. Returns `none` if any argument is invalid or `iterations < 1`.
+
+```apex
+import os
+import crypto
+
+key = crypto.pbkdf2_sha1("password", "salt", 100000, 20)
+
+if key == none
+    os.output("Could not derive key")
+else
+    os.output("PBKDF2 SHA-1: {key}")
+```
+
+### crypto.pbkdf2_sha256(password, salt, iterations, key_len)
+Derives a key from a password and salt using PBKDF2-HMAC-SHA256. Returns a lowercase hexadecimal string of `key_len` bytes. Returns `none` if any argument is invalid or `iterations < 1`.
+
+```apex
+import os
+import crypto
+
+key = crypto.pbkdf2_sha256("password", "salt", 100000, 32)
+
+if key == none
+    os.output("Could not derive key")
+else
+    os.output("PBKDF2 SHA-256: {key}")
+```
+
+### crypto.pbkdf2_sha384(password, salt, iterations, key_len)
+Derives a key from a password and salt using PBKDF2-HMAC-SHA384. Returns a lowercase hexadecimal string of `key_len` bytes. Returns `none` if any argument is invalid or `iterations < 1`.
+
+```apex
+import os
+import crypto
+
+key = crypto.pbkdf2_sha384("password", "salt", 100000, 48)
+
+if key == none
+    os.output("Could not derive key")
+else
+    os.output("PBKDF2 SHA-384: {key}")
+```
+
+### crypto.pbkdf2_sha512(password, salt, iterations, key_len)
+Derives a key from a password and salt using PBKDF2-HMAC-SHA512. Returns a lowercase hexadecimal string of `key_len` bytes. Returns `none` if any argument is invalid or `iterations < 1`.
+
+```apex
+import os
+import crypto
+
+key = crypto.pbkdf2_sha512("password", "salt", 100000, 64)
+
+if key == none
+    os.output("Could not derive key")
+else
+    os.output("PBKDF2 SHA-512: {key}")
+```
+
+
+### crypto.aes128_encrypt(key, plaintext, iv)
+Encrypts a string using AES-128-CBC. The `key` must be a 32-character hexadecimal string (16 bytes). The `plaintext` is the string to encrypt. The `iv` is optional and must be a 32-character hexadecimal string (16 bytes) if provided; defaults to all zeros. Returns the encrypted data as a lowercase hexadecimal string. Uses PKCS7 padding. Returns `none` if any argument is invalid.
+
+```apex
+import os
+import crypto
+
+key = crypto.random_hex(16)
+iv = crypto.random_hex(16)
+plaintext = "Hello World!"
+
+encrypted = crypto.aes128_encrypt(key, plaintext, iv)
+
+if encrypted == none
+    os.output("Could not encrypt data")
+else
+    os.output("Encrypted: {encrypted}")
+```
+
+### crypto.aes128_decrypt(key, ciphertext, iv)
+Decrypts a string previously encrypted with AES-128-CBC. The `key` must be a 32-character hexadecimal string (16 bytes). The `ciphertext` must be a hexadecimal string (as returned by `aes128_encrypt`). The `iv` is optional and must be a 32-character hexadecimal string (16 bytes) if provided; must match the IV used during encryption. Returns the decrypted plaintext string. Validates PKCS7 padding. Returns `none` if any argument is invalid or if the padding is corrupted (wrong key or IV).
+
+```apex
+import os
+import crypto
+
+key = crypto.random_hex(16)
+iv = crypto.random_hex(16)
+plaintext = "Secret message"
+
+encrypted = crypto.aes128_encrypt(key, plaintext, iv)
+decrypted = crypto.aes128_decrypt(key, encrypted, iv)
+
+if decrypted == none
+    os.output("Could not decrypt data")
+else
+    os.output("Decrypted: {decrypted}")
+```
+
+### crypto.aes192_encrypt(key, plaintext, iv)
+Encrypts a string using AES-192-CBC. The `key` must be a 48-character hexadecimal string (24 bytes). The `plaintext` is the string to encrypt. The `iv` is optional and must be a 32-character hexadecimal string (16 bytes) if provided; defaults to all zeros. Returns the encrypted data as a lowercase hexadecimal string. Uses PKCS7 padding. Returns `none` if any argument is invalid.
+
+```apex
+import os
+import crypto
+
+key = crypto.random_hex(24)
+iv = crypto.random_hex(16)
+plaintext = "Hello World!"
+
+encrypted = crypto.aes192_encrypt(key, plaintext, iv)
+
+if encrypted == none
+    os.output("Could not encrypt data")
+else
+    os.output("Encrypted: {encrypted}")
+```
+
+### crypto.aes192_decrypt(key, ciphertext, iv)
+Decrypts a string previously encrypted with AES-192-CBC. The `key` must be a 48-character hexadecimal string (24 bytes). The `ciphertext` must be a hexadecimal string (as returned by `aes192_encrypt`). The `iv` is optional and must be a 32-character hexadecimal string (16 bytes) if provided; must match the IV used during encryption. Returns the decrypted plaintext string. Validates PKCS7 padding. Returns `none` if any argument is invalid or if the padding is corrupted (wrong key or IV).
+
+```apex
+import os
+import crypto
+
+key = crypto.random_hex(24)
+iv = crypto.random_hex(16)
+plaintext = "Secret message"
+
+encrypted = crypto.aes192_encrypt(key, plaintext, iv)
+decrypted = crypto.aes192_decrypt(key, encrypted, iv)
+
+if decrypted == none
+    os.output("Could not decrypt data")
+else
+    os.output("Decrypted: {decrypted}")
+```
+
+### crypto.aes256_encrypt(key, plaintext, iv)
+Encrypts a string using AES-256-CBC. The `key` must be a 64-character hexadecimal string (32 bytes). The `plaintext` is the string to encrypt. The `iv` is optional and must be a 32-character hexadecimal string (16 bytes) if provided; defaults to all zeros. Returns the encrypted data as a lowercase hexadecimal string. Uses PKCS7 padding. Returns `none` if any argument is invalid.
+
+```apex
+import os
+import crypto
+
+key = crypto.random_hex(32)
+iv = crypto.random_hex(16)
+plaintext = "Hello World!"
+
+encrypted = crypto.aes256_encrypt(key, plaintext, iv)
+
+if encrypted == none
+    os.output("Could not encrypt data")
+else
+    os.output("Encrypted: {encrypted}")
+```
+
+### crypto.aes256_decrypt(key, ciphertext, iv)
+Decrypts a string previously encrypted with AES-256-CBC. The `key` must be a 64-character hexadecimal string (32 bytes). The `ciphertext` must be a hexadecimal string (as returned by `aes256_encrypt`). The `iv` is optional and must be a 32-character hexadecimal string (16 bytes) if provided; must match the IV used during encryption. Returns the decrypted plaintext string. Validates PKCS7 padding. Returns `none` if any argument is invalid or if the padding is corrupted (wrong key or IV).
+
+```apex
+import os
+import crypto
+
+key = crypto.random_hex(32)
+iv = crypto.random_hex(16)
+plaintext = "Secret message"
+
+encrypted = crypto.aes256_encrypt(key, plaintext, iv)
+decrypted = crypto.aes256_decrypt(key, encrypted, iv)
+
+if decrypted == none
+    os.output("Could not decrypt data")
+else
+    os.output("Decrypted: {decrypted}")
+```
+
+## ZIP Library (zip)
+The ZIP library provides functions for creating and extracting ZIP archives. Import it with `import zip`.
+
+### zip.pack(path)
+Creates a ZIP archive from a file or directory. If `path` is a file, creates a ZIP containing just that file. If `path` is a directory, recursively packs all files and subdirectories. Returns `true` on success, `none` on failure.
+
+```apex
+import os
+import zip
+
+result = zip.pack("file.txt")
+
+if result == none
+    os.output("Failed to pack file")
+else
+    os.output("Packed successfully")
+```
+
+### zip.unpack(path)
+Extracts all files and directories from a ZIP archive. Preserves original file permissions and modification times. Creates necessary subdirectories automatically. Returns `true` on success, `none` on failure.
+
+```apex
+import os
+import zip
+
+result = zip.unpack("file.zip")
+
+if result == none
+    os.output("Failed to unpack archive")
+else
+    os.output("Extracted successfully")
+```
+
+# Network Library (network)
+The Network library provides HTTP client functions for making web requests. It supports HTTP GET and POST methods. Import it with `import network`.
+
+**Note:** This library only supports plain HTTP (not HTTPS). URLs must start with `http://`. Connections use TCP and responses are capped at 16 MB to prevent runaway memory allocation.
+
+### network.get(url)
+Performs an HTTP GET request to the specified URL. Returns a table with the response, or `none` on failure (invalid URL, DNS failure, connection failure, send/receive error, or oversized response).
+
+The returned table contains:
+- `status` — The HTTP status code as a number (e.g., 200, 404, 500)
+- `body` — The response body as a string
+
+```apex
+import os
+import network
+
+response = network.get("http://httpforever.com/")
+
+if response == none
+    os.output("Request failed")
+else
+    os.output("Status: {response['status']}")
+    os.output("Body: {response['body']}")
+```
+
+### network.post(url, body, content_type)
+Performs an HTTP POST request to the specified URL. The `body` and `content_type` arguments are optional. If `body` is provided without a `content_type`, the default is `"application/x-www-form-urlencoded"`. Returns a table with the response, or `none` on failure.
+
+The returned table contains the same keys as `http_get`:
+- `status` — The HTTP status code as a number
+- `body` — The response body as a string
+
+```apex
+import os
+import network
+
+data = '\{"name": "Alice", "age": 30\}'
+response = network.post("http://httpforever.com/", data, "application/json")
+
+if response == none
+    os.output("Request failed")
+else
+    os.output("Status: {response['status']}")
+    os.output("Response: {response['body']}")
 ```

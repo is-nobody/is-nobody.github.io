@@ -1,4 +1,4 @@
-# Apex in Three Pages (26.08)
+# Apex in Three Pages (26.09)
 ## Types & Variables
 Dynamic typing: type can change on reassignment.
 
@@ -10,8 +10,10 @@ x = none        // none (intentional absence)
 x = []          // table (universal container)
 ```
 
+Also, `constant` is a modifier that makes a variable read-only after declaration.
+
 - **Conversion:** `number("10")`, `string(10)`. Returns `none` on failure.
-- **Scope:** `function` and `for` create new scopes, top-level variables are optimized as locals, `if`/`elif`/`else` don't create scope.
+- **Scope:** `function` and `for` create new scopes, top-level variables are optimized as locals, `if`/`else` don't create scope.
 
 ## Operators & Precedence
 | Level |     Ops     |           Notes           |
@@ -49,15 +51,15 @@ data["new_key"] = 69  // add
 - **Utilities:** `table.size(t)`, `table.keys(t)`, `table.has(t, "k")`, `table.remove(t, index)`.
 
 ## Control Flow
-**Indentation:** Next line after `if`/`elif`/`else`, `for`, `function` require 4 spaces exactly.
+**Indentation:** Next line after `if`/`else`, `for`, `function` require 4 spaces exactly.
 
-**If/Elif/Else:**
+**If/Else-If/Else:**
 ```apex
 import os
 x = 15
 if x == 10
     os.output("Ten")
-elif x > 10
+else if x > 10
     os.output("More")
 else
     os.output("Less")
@@ -71,7 +73,7 @@ result = "Pass" if score >= 50 else "Fail"
 os.output(result)
 ```
 
-Single condition only. For 2+ checks, use `if-elif-else`.
+Single condition only. For 2+ checks, use `if-else if-else`.
 
 **For Loop Counter:**
 
@@ -97,7 +99,7 @@ for running == true
 ```apex
 import os
 table = ["apple", "banana", "cherry"]
-for fruit = table    // iterates over values
+for fruit in table    // iterates over values
     os.output(fruit)
 ```
 
@@ -111,16 +113,15 @@ result = calculate(5, 10)
 ```
 
 - **Return:** Defaults to `none` if omitted.
-- **Recursion:** Supported up to depth 8192.
-- **Built-ins:** Organized in modules (`os`, `math`, `string`, `table`, `sys`, `ffi`, `random`, `codecs`).
+- **Built-ins:** Organized in modules (`os`, `sys`, `math`, `string`, `table`, `ffi`, `random`, `json`, `xml`, `csv`, `base`, `regex`, `crypto`, `zip`, `network`).
 
 ## Modules & Imports
 Paths are relative to the **entry point** file.
 
 ```apex
-import os             // built-in
-import utils.helper   // loads 'utils/helper.apex'
+import os                 // built-in
+import utils/helper.apex  // loads 'utils/helper.apex'
 ```
 
-- **Access:** `helper.my_func()`.
+- **Access:** `utils.helper.my_func()`.
 - **Dot Restriction:** Dot access (`mod.func`) is reserved **strictly** for imported modules. Use brackets `t["key"]` for table keys.

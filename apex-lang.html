@@ -9,7 +9,6 @@
     <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/editor/editor.main.min.css" />
 </head>
 <body class="flex flex-col min-h-screen">
-    <!-- Hero Section -->
     <main class="flex-grow container mx-auto px-4 py-4 max-w-5xl">
         <div class="flex flex-col-reverse md:flex-row items-center justify-between mb-16">
             <div class="md:w-1/2">
@@ -38,10 +37,8 @@
             </div>
         </div>
 
-        <!-- IDE Section -->
         <h2 class="text-3xl font-bold section-title mb-6">Try Apex!</h2>
         <div class="ide-container rounded-lg overflow-hidden shadow-2xl">
-            <!-- Tabs & Toolbar -->
             <div class="flex items-center justify-between tabs-toolbar px-2 py-1">
                 <div class="tabs-scroll-container flex-1 md:flex-none">
                     <div class="flex items-center gap-1 text-sm">
@@ -58,28 +55,17 @@
                 </div>
             </div>
 
-            <!-- Monaco Editor -->
             <div id="editor-container" class="editor-container"></div>
 
-            <!-- Output / Terminal -->
             <div class="terminal p-4">
                 <div class="border-t border-gray-600 pt-2"></div>
                 <div id="output-box" class="output-box whitespace-pre-wrap font-mono text-sm leading-relaxed"></div>
-                <div id="input-prompt" style="display: none; padding: 8px 0; border-top: 1px solid #333; align-items: center; gap: 8px;">
-                    <span style="color: #4ade80; font-family: monospace;">></span>
-                    <input id="input-field" type="text" 
-                        style="background: transparent; border: none; color: #e5e7eb; 
-                                font-family: monospace; font-size: 14px; width: 90%; outline: none;"
-                        onkeydown="if(event.key === 'Enter') submitInput()">
-                </div>
             </div>
         </div>
 
-        <!-- Why Apex Section -->
         <section class="mt-20 mb-12">
             <h2 class="text-3xl font-bold section-title mb-8">Why Apex?</h2>
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Simplicity -->
                 <div class="feature-card p-6 rounded-lg">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
@@ -94,7 +80,6 @@
                     </p>
                 </div>
 
-                <!-- Built-in Power -->
                 <div class="feature-card p-6 rounded-lg">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
@@ -105,11 +90,10 @@
                         <h3 class="text-xl font-semibold feature-title">Built-in Power</h3>
                     </div>
                     <p class="feature-text leading-relaxed">
-                        Comes with a comprehensive standard library (<code class="code-highlight">os</code>, <code class="code-highlight">sys</code>, <code class="code-highlight">math</code>, <code class="code-highlight">string</code>, <code class="code-highlight">table</code>, <code class="code-highlight">ffi</code>, <code class="code-highlight">random</code>, <code class="code-highlight">codecs</code>) out of the box.
+                        Comes with a comprehensive standard library (<code class="code-highlight">os</code>, <code class="code-highlight">sys</code>, <code class="code-highlight">math</code>, <code class="code-highlight">string</code>, <code class="code-highlight">table</code>, <code class="code-highlight">ffi</code>, <code class="code-highlight">random</code>, <code class="code-highlight">json</code>, <code class="code-highlight">xml</code>, <code class="code-highlight">csv</code>, <code class="code-highlight">base</code>, <code class="code-highlight">regex</code>, <code class="code-highlight">crypto</code>, <code class="code-highlight">zip</code>, <code class="code-highlight">network</code>) out of the box.
                     </p>
                 </div>
 
-                <!-- Performance -->
                 <div class="feature-card p-6 rounded-lg">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
@@ -120,11 +104,10 @@
                         <h3 class="text-xl font-semibold feature-title">Performance</h3>
                     </div>
                     <p class="feature-text leading-relaxed">
-                        Written in C with a register-based virtual machine, nan-boxing for efficient value representation, and optimized bytecode execution.
+                        Written in C with a register-based virtual machine, NaN-boxing, optimized bytecode execution, and an x86-64 JIT compiler.
                     </p>
                 </div>
 
-                <!-- Bundle Binaries -->
                 <div class="feature-card p-6 rounded-lg">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
@@ -135,108 +118,141 @@
                         <h3 class="text-xl font-semibold feature-title">Bundle Binaries</h3>
                     </div>
                     <p class="feature-text leading-relaxed">
-                        Use <code class="code-highlight">apex build</code> to package your source with interpreter into a single standalone executable.
+                        Use <code class="code-highlight">apex build</code> to compile your source to bytecode and embed it with the interpreter for instant startup.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Benchmarks Section -->
         <section class="mt-20 mb-16">
             <h2 class="text-3xl font-bold section-title mb-8">Benchmarks</h2>
             <p class="benchmark-desc max-w-4xl">
-                Apex is also a fast language due to its register-based VM and nan-boxing optimizations. Below are comparisons against other high-performance language runtimes. The bar widths represent relative execution time (slowest = 100% baseline).
+                Apex is a fast language thanks to its register-based VM, nan-boxing, and an optional JIT compiler. Below are comparisons against other high-performance runtimes, grouped by execution mode. The bar widths represent relative execution time (slowest = 100% baseline).
             </p>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- fib(35) benchmark card -->
+                <div class="md:col-span-2 mt-2">
+                    <h3 class="text-2xl font-semibold feature-title mb-4">JIT mode</h3>
+                </div>
+
                 <div class="benchmark-card p-6 rounded-lg">
                     <h3 class="text-xl font-semibold feature-title mb-5">fib(35)</h3>
                     <div class="space-y-3">
                         <div class="bar-container">
                             <span class="bar-label">Apex</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar apex-bar" style="width: 51%;">
-                                    <span class="bar-value">0.279s</span>
+                                <div class="benchmark-bar apex-bar" style="width: 79.07%;">
+                                    <span class="bar-value">0.057s</span>
                                 </div>
                             </div>
                         </div>
                         <div class="bar-container">
-                            <span class="bar-label">LuaJIT -j off</span>
+                            <span class="bar-label">Node.js</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 69%;">
-                                    <span class="bar-value">0.378s</span>
+                                <div class="benchmark-bar" style="width: 85.40%;">
+                                    <span class="bar-value">0.062s</span>
                                 </div>
                             </div>
                         </div>
                         <div class="bar-container">
-                            <span class="bar-label">Java -Xint</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 69%;">
-                                    <span class="bar-value">0.381s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">Node.js --jitless</span>
+                            <span class="bar-label">LuaJIT</span>
                             <div class="bar-track">
                                 <div class="benchmark-bar" style="width: 100%;">
-                                    <span class="bar-value">0.549s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">Lua</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 100%;">
-                                    <span class="bar-value">0.551s</span>
+                                    <span class="bar-value">0.073s</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- tree(25) benchmark card -->
                 <div class="benchmark-card p-6 rounded-lg">
                     <h3 class="text-xl font-semibold feature-title mb-5">tree(25)</h3>
                     <div class="space-y-3">
                         <div class="bar-container">
                             <span class="bar-label">Apex</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar apex-bar" style="width: 50%;">
-                                    <span class="bar-value">0.731s</span>
+                                <div class="benchmark-bar apex-bar" style="width: 74.87%;">
+                                    <span class="bar-value">0.123s</span>
                                 </div>
                             </div>
                         </div>
                         <div class="bar-container">
-                            <span class="bar-label">Java -Xint</span>
+                            <span class="bar-label">Node.js</span>
                             <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 57%;">
-                                    <span class="bar-value">0.826s</span>
+                                <div class="benchmark-bar" style="width: 80.09%;">
+                                    <span class="bar-value">0.131s</span>
                                 </div>
                             </div>
                         </div>
                         <div class="bar-container">
-                            <span class="bar-label">LuaJIT -j off</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 61%;">
-                                    <span class="bar-value">0.895s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">Node.js --jitless</span>
-                            <div class="bar-track">
-                                <div class="benchmark-bar" style="width: 86%;">
-                                    <span class="bar-value">1.255s</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bar-container">
-                            <span class="bar-label">Lua</span>
+                            <span class="bar-label">LuaJIT</span>
                             <div class="bar-track">
                                 <div class="benchmark-bar" style="width: 100%;">
-                                    <span class="bar-value">1.461s</span>
+                                    <span class="bar-value">0.164s</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 mt-8">
+                    <h3 class="text-2xl font-semibold feature-title mb-4">Interpreted mode</h3>
+                </div>
+
+                <div class="benchmark-card p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold feature-title mb-5">fib(35)</h3>
+                    <div class="space-y-3">
+                        <div class="bar-container">
+                            <span class="bar-label">Apex</span>
+                            <div class="bar-track">
+                                <div class="benchmark-bar apex-bar" style="width: 51.79%;">
+                                    <span class="bar-value">0.284s</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-container">
+                            <span class="bar-label">LuaJIT</span>
+                            <div class="bar-track">
+                                <div class="benchmark-bar" style="width: 57.29%;">
+                                    <span class="bar-value">0.314s</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-container">
+                            <span class="bar-label">Node.js</span>
+                            <div class="bar-track">
+                                <div class="benchmark-bar" style="width: 100%;">
+                                    <span class="bar-value">0.549s</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="benchmark-card p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold feature-title mb-5">tree(25)</h3>
+                    <div class="space-y-3">
+                        <div class="bar-container">
+                            <span class="bar-label">Apex</span>
+                            <div class="bar-track">
+                                <div class="benchmark-bar apex-bar" style="width: 52.91%;">
+                                    <span class="bar-value">0.691s</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-container">
+                            <span class="bar-label">LuaJIT</span>
+                            <div class="bar-track">
+                                <div class="benchmark-bar" style="width: 57.88%;">
+                                    <span class="bar-value">0.756s</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-container">
+                            <span class="bar-label">Node.js</span>
+                            <div class="bar-track">
+                                <div class="benchmark-bar" style="width: 100%;">
+                                    <span class="bar-value">1.306s</span>
                                 </div>
                             </div>
                         </div>
@@ -244,18 +260,20 @@
                 </div>
             </div>
             <p class="text-sm text-gray-400 mt-6 max-w-3xl benchmark-footer-text">
-                * Measured on Intel i5-12400F, Ubuntu 26.04 LTS, single-core. Lower bars = faster.
+                * Measured on Intel i5-12400F, Ubuntu 26.04 LTS, single-core. Lower bars = faster. LuaJIT runs with the JIT enabled in the JIT group and with <code class="code-highlight">-j off</code> in the interpreted group.
             </p>
+        </section>
+    </main>
 
-    <!-- Monaco Loader -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
     <script src="components/load-navbar.js"></script>
     <script src="apex-language.js"></script>
-    <script src="execute_apex.js"></script>
 
-    <script>
+    <script type="module">
+        import { ApexExecutor } from './execute_apex.js';
+
         const files = {
-            'fruits.apex': `import os\n\n// create table\nfruits = ["apple", "banana", "cherry"]\n\n// iteration in table\nfor i = fruits\n    os.output(i)`,
+            'fruits.apex': `import os\n\n// create table\nfruits = ["apple", "banana", "cherry"]\n\n// iteration in table\nfor i in fruits\n    os.output(i)`,
             'fib.apex': `import os\nimport sys\n\nfunction fib(n)\n    if n < 2\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nstart = sys.time()\nresult = fib(30)\nelapsed = sys.time() - start\nos.output("fib(30) = {result}, elapsed {elapsed}")`,
             'tree.apex': `import os\nimport sys\n\nfunction tree(n)\n    if n == 0\n        return 0\n    return 1 + tree(n - 1) + tree(n - 1)\n\nstart = sys.time()\nresult = tree(20)\nelapsed = sys.time() - start\nos.output("tree(20) = {result}, elapsed {elapsed}")`
         };
@@ -266,22 +284,6 @@
             const outputBox = document.getElementById('output-box');
             outputBox.innerHTML += text;
             outputBox.scrollTop = outputBox.scrollHeight;
-        };
-
-        executor.onInput = function() {
-            const inputPrompt = document.getElementById('input-prompt');
-            inputPrompt.style.display = 'flex';
-            const inputField = document.getElementById('input-field');
-            inputField.value = '';
-            inputField.focus();
-        };
-
-        window.submitInput = function() {
-            const inputField = document.getElementById('input-field');
-            const value = inputField.value;
-            inputField.value = '';
-            document.getElementById('input-prompt').style.display = 'none';
-            executor.submitInput(value);
         };
 
         executor.init('apex.wasm').then(() => {
@@ -310,7 +312,7 @@
             window.editor = editor;
         });
 
-        function switchFile(filename) {
+        window.switchFile = function(filename) {
             if(!files[filename]) {
                 files[filename] = `# New file: ${filename}`;
             }
@@ -326,36 +328,15 @@
                     }
                 });
             }
-        }
+        };
 
-        function executeCode() {
+        window.executeCode = function() {
             const outputBox = document.getElementById('output-box');
             outputBox.innerHTML = '';
             
             if(editor) files[currentFile] = editor.getValue();
             
             const code = files[currentFile];
-            
-            if (!executor.isReady()) {
-                outputBox.innerHTML = 'Loading Apex...\n';
-                executor.init('apex.wasm').then(() => {
-                    runApexCode(code);
-                }).catch(err => {
-                    outputBox.innerHTML = 'Failed to load Apex: ' + err.message + '\n';
-                });
-            } else {
-                runApexCode(code);
-            }
-        }
-
-        function runApexCode(code) {
-            const outputBox = document.getElementById('output-box');
-            outputBox.innerHTML = '';
-            
-            executor.onOutput = function(text) {
-                outputBox.innerHTML += text;
-                outputBox.scrollTop = outputBox.scrollHeight;
-            };
             
             executor.execute(code).then(result => {
                 if (result.error) {
@@ -364,7 +345,7 @@
             }).catch(err => {
                 outputBox.innerHTML += '\x1b[31mError: ' + err.message + '\x1b[0m\n';
             });
-        }
+        };
     </script>
 </body>
 </html>

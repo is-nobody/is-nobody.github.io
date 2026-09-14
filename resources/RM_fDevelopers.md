@@ -1,4 +1,4 @@
-# Apex Reference Manual for Developers (26.08)
+# Apex Reference Manual for Developers (26.09)
 This manual is minimalistic. Each section builds on the previous ones. For the best experience, follow the order.
 
 ## Table of Contents
@@ -12,7 +12,8 @@ This manual is minimalistic. Each section builds on the previous ones. For the b
 - [1.3 Booleans](#13-booleans)
 - [1.4 Strings](#14-strings)
 - [1.5 Tables](#15-tables)
-- [1.6 Type Functions](#16-type-functions)
+- [1.6 Constants](#16-constants)
+- [1.7 Type Functions](#17-type-functions)
 
 ### 2. Operators
 - [2.1 Arithmetic Operators](#21-arithmetic-operators)
@@ -21,7 +22,7 @@ This manual is minimalistic. Each section builds on the previous ones. For the b
 
 ### 3. If Statements
 - [3.1 If Statement](#31-if-statement)
-- [3.2 Elif Statement](#32-elif-statement)
+- [3.2 Else-If Statement](#32-elseif-statement)
 - [3.3 Else Statement](#33-else-statement)
 - [3.4 Ternary Statement](#34-ternary-statement)
 
@@ -282,13 +283,13 @@ When you want to label each value with a name, use keys. Keys and values are con
 
 ```apex
 user = [
-    name = "Alice",
-    age = 30,
-    active = true
+    "name" = "Alice",
+    "age" = 30,
+    "active" = true
 ]
 ```
 
-Keys are written without quotes. Apex recognizes them as names, not strings. Now you can access values by their key:
+Keys are written with quotes. Apex recognizes them as names, not strings. Now you can access values by their key:
 
 ```apex
 user_name = user["name"]         // "Alice"
@@ -341,7 +342,15 @@ first_employee = company["employees"][1]        // "Alice"
 city = company["address"]["city"]               // "Dubai"
 ```
 
-## 1.6 Type Functions
+## 1.6 Constant
+Constants makes a variable read-only after declaration.
+
+```apex
+constant APP_NAME = "MyApp"
+APP_NAME = none  // ERROR: Cannot reassign constant 'APP_NAME'
+```
+
+## 1.7 Type Functions
 Apex provides two built-in functions for explicit type conversion:
 
 | Function | What it does | Example |
@@ -424,11 +433,13 @@ Comparison operators `<`, `>`, `<=`, `>=` work only with numbers. Using them wit
 ## 2.3 Logical Operators
 Logical operators combine boolean values (`true` or `false`) to create more complex conditions.
 
-| Operator | Name | What It Does | Example | Result |
-|----------|------|--------------|---------|--------|
-| `and` | AND | Both sides must be true | `true and true` | `true` |
-| `or` | OR | At least one side must be true | `true or false` | `true` |
-| `not` | NOT | Reverses the value | `not true` | `false` |
+| Operator |          What It Does          |         Example        |
+|----------|--------------------------------|------------------------|
+| `and`    | Both sides must be true        | `(5 < 10) and (2 > 1)` |
+| `or`     | At least one side must be true | `(2 > 1) or (2 < 1)`   |
+| `not`    | Reverses the value             | `not true`             |
+
+> Logical operators `and` & `or` requires explicit condition
 
 ### Operator Precedence
 Logical operators have their own order. `not` happens first, then `and`, then `or`.
@@ -447,14 +458,14 @@ Full precedence order (highest to lowest):
 # 3. If Statements
 If statements are how you tell Apex to make decisions.
 
-| Statement | When It Runs |
-|-----------|--------------|
-| `if` | Condition is `true` |
-| `elif` | Previous conditions were `false` AND this condition is `true` |
-| `else` | All previous conditions were `false` |
+| Statement | When It Runs                                                  |
+|-----------|---------------------------------------------------------------|
+| `if`      | Condition is `true`                                           |
+| `else if` | Previous conditions were `false` AND this condition is `true` |
+| `else`    | All previous conditions were `false`                          |
 
 ### Blocks and Indentation
-The body of an `if`/`elif`/`else` is a **block** — code that executes conditionally. Blocks are defined by **4-space indentation**. No braces, no `end` keyword — just indentation.
+The body of an `if`/`else` is a **block** — code that executes conditionally. Blocks are defined by **4-space indentation**. No braces, no `end` keyword — just indentation.
 
 ```apex
 import os
@@ -488,7 +499,7 @@ if x > 5  // correct because comparison returns boolean
     os.output("Hello")
 ```
 
-Always use comparison operators (`==`, `!=`, `<`, `>`, etc.) or logical operators (`and`, `or`, `not`) to ensure your condition results in a `boolean` value.
+Always use comparison operators (`==`, `!=`, `<`, `>`, etc.) to create boolean values, then combine them with logical operators (`and`, `or`, `not`) if needed.
 
 ## 3.1 If Statement
 ```apex
@@ -498,22 +509,20 @@ if user == none
     os.output("No user found")
 ```
 
-## 3.2 Elif Statement
-`elif` — short for "else if".
-
+## 3.2 Else-If Statement
 ```apex
 import os
 score = 85
 if score >= 90
     os.output("Grade: A")
-elif score >= 80
+else if score >= 80
     os.output("Grade: B")
 ```
 
-Apex checks conditions in order from top to bottom. As soon as one condition is `true`, it runs that block and skips the rest. The remaining elif blocks are never checked.
+Apex checks conditions in order from top to bottom. As soon as one condition is `true`, it runs that block and skips the rest. The remaining `else if` blocks are never checked.
 
 ## 3.3 Else Statement
-`else` catches everything that wasn't caught by `if` or `elif`. It runs when no other condition was `true`.
+`else` catches everything that wasn't caught by `if` or `else if`. It runs when no other condition was `true`.
 
 ```apex
 import os
@@ -536,7 +545,7 @@ weather = "hot" if temperature > 20 else "cold"
 os.output(weather)   // Output: hot
 ```
 
-The ternary operator can only be used for short conditions. If the selection logic requires 2 or more checks, you must use regular `if-elif-else` blocks — 2 or more checks are not allowed in a ternary statement.
+The ternary operator can only be used for short conditions. If the selection logic requires 2 or more checks, you must use regular `if-else if-else` blocks — 2 or more checks are not allowed in a ternary statement.
 
 # 4. For Loops
 Apex gives you the `for` loop with three different syntaxes to handle all these situations.
@@ -544,7 +553,7 @@ Apex gives you the `for` loop with three different syntaxes to handle all these 
 | Syntax                | When to Use                    | Example          |
 |-----------------------|--------------------------------|------------------|
 | `for r = start, end`  | You know the exact range       | `for r = 1, 5`   |
-| `for v = table`       | Iterate over table items       | `for v = table`  |
+| `for v in table`      | Iterate over table items       | `for v in table` |
 | `for c == true`       | Repeat while condition is true | `for c == true`  |
 
 ### Blocks and Scoping
@@ -592,14 +601,14 @@ for i = 5, 1, -1
 This prints 5, 4, 3, 2, 1. The loop stops when the variable goes below the `end` value.
 
 ## 4.2 For Table Iteration
-You can iterate over any table using `for value = table`:
+You can iterate over any table using `for value in table`:
 
 ```apex
 import os
 
 fruits = ["apple", "banana", "cherry"]
 
-for fruit = fruits
+for fruit in fruits
     os.output(fruit)
 ```
 
@@ -749,7 +758,7 @@ final_price = calculate_total(100, 3)   // 100 * 3 = 300, then 300 * 0.9 = 270
 ```
 
 # 6. Imports
-Imports give you the ability to use code from other files. Every import path is relative to the main file — the file you run with `apex filename.apex`.
+Imports give you the ability to use code from other files. Every import path is relative to the main file — the file you run with `apex file.apex`.
 
 ## 6.1 Importing an Entire File
 To import everything from a file in the same folder:
@@ -758,15 +767,15 @@ To import everything from a file in the same folder:
 import os
 import database
 
-// Use items with the filename as a prefix
+// use items with the filename as a prefix
 database.connect()
-os.output(database.APP_NAME)
+os.output(database["APP_NAME"])
 ```
 
 When you import a file, you must use the filename as a prefix to access its contents.
 
 ## 6.2 Importing from Sub-folders
-Use dots (`.`) to navigate into folders:
+Use dots (`/`) to navigate into folders:
 
 ```
 my_project/
@@ -777,10 +786,8 @@ my_project/
 ```
 
 ```apex
-import utils.math
+import utils/math.apex
 ```
-
-Each dot in imports means "go inside this folder." `utils.math` looks for `utils/math.apex`.
 
 ## 6.3 Importing from One Sub-folder into Another
 You have this structure:

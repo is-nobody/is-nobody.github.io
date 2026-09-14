@@ -1,4 +1,4 @@
-# Apex Reference Manual for Beginners (26.08)
+# Apex Reference Manual for Beginners (26.09)
 This manual is written with step-by-step learning in mind and strives to be minimalistic. Each section builds on the previous ones. For the best experience, follow the order. Don't skip ahead to functions or loops before you understand variables and conditions. Everything connects.
 
 ## Table of Contents
@@ -13,7 +13,8 @@ This manual is written with step-by-step learning in mind and strives to be mini
 - [1.3 Booleans](#13-booleans)
 - [1.4 Strings](#14-strings)
 - [1.5 Tables](#15-tables)
-- [1.6 Type Functions](#16-type-functions)
+- [1.6 Constants](#16-constants)
+- [1.7 Type Functions](#17-type-functions)
 
 ### 2. Operators
 - [2.1 Arithmetic Operators](#21-arithmetic-operators)
@@ -22,7 +23,7 @@ This manual is written with step-by-step learning in mind and strives to be mini
 
 ### 3. If Statements
 - [3.1 If Statement](#31-if-statement)
-- [3.2 Elif Statement](#32-elif-statement)
+- [3.2 Else-If Statement](#32-elseif-statement)
 - [3.3 Else Statement](#33-else-statement)
 - [3.4 Ternary Statement](#34-ternary-statement)
 
@@ -400,7 +401,22 @@ first_employee = company["employees"][1]        // "Alice"
 city = company["address"]["city"]               // "Dubai"
 ```
 
-## 1.6 Type Functions
+## 1.6 Constant
+Constants are variables that cannot be reassigned after their initial declaration. They're useful for values that should never change during program execution — configuration settings, mathematical constants, fixed limits.
+
+> Keep in mind: `constant` doesn't define a new **data type**, it's a modifier that makes a variable read-only after declaration.
+
+```apex
+constant APP_NAME = "MyApp"
+APP_NAME = none  // ERROR: Cannot reassign constant 'APP_NAME'
+```
+
+### When to Use Constants
+- Values that never change (PI, gravity, speed of light)
+- Configuration limits (max retries, timeout durations)
+- Preventing accidental modification of critical values
+
+## 1.7 Type Functions
 Sometimes you have a value of one type but need it in another.
 `os.input()` always returns a string — even if the user types `42`.
 To do math with it, convert to number first.
@@ -588,11 +604,11 @@ Comparison operators have lower precedence than arithmetic. Math happens first, 
 ## 2.3 Logical Operators
 Logical operators combine boolean values (`true` or `false`) to create more complex conditions.
 
-| Operator | Name | What It Does | Example | Result |
-|----------|------|--------------|---------|--------|
-| `and` | AND | Both sides must be true | `true and true` | `true` |
-| `or` | OR | At least one side must be true | `true or false` | `true` |
-| `not` | NOT | Reverses the value | `not true` | `false` |
+| Operator |          What It Does          |         Example        |
+|----------|--------------------------------|------------------------|
+| `and`    | Both sides must be true        | `(5 < 10) and (2 > 1)` |
+| `or`     | At least one side must be true | `(2 > 1) or (2 < 1)`   |
+| `not`    | Reverses the value             | `not true`             |
 
 ### AND (`and`)
 Both conditions must be true for the result to be true.
@@ -600,7 +616,7 @@ Both conditions must be true for the result to be true.
 ```apex
 age = 25
 has_license = true
-can_drive = age >= 18 and has_license     // true
+can_drive = age >= 18 and has_license == true  // true
 ```
 
 ### OR (`or`)
@@ -609,7 +625,7 @@ At least one condition must be true for the result to be true.
 ```apex
 day = "Saturday"
 is_holiday = false
-can_relax = day == "Saturday" or is_holiday     // true
+can_relax = day == "Saturday" or is_holiday == true  // true
 ```
 
 ### NOT (`not`)
@@ -637,11 +653,11 @@ Full precedence order (highest to lowest):
 # 3. If Statements
 Every program makes decisions. Should this user get access? Is the score high enough? Does the file exist? If statements are how you tell Apex to make these decisions. Without if statements, your program runs the same way every time — like a train on a track. With if statements, it becomes a car that can turn left or right depending on what happens.
 
-| Statement | When It Runs |
-|-----------|--------------|
-| `if` | Condition is `true` |
-| `elif` | Previous conditions were `false` AND this condition is `true` |
-| `else` | All previous conditions were `false` |
+| Statement | When It Runs                                                  |
+|-----------|---------------------------------------------------------------|
+| `if`      | Condition is `true`                                           |
+| `else if` | Previous conditions were `false` AND this condition is `true` |
+| `else`    | All previous conditions were `false`                          |
 
 ### Code Blocks and Indentation
 An `if` statement decides *what* to do. The code that belongs to it is called a **block** — a group of one or more lines that run together.
@@ -703,7 +719,7 @@ if x > 5  // correct because comparison returns boolean
     os.output("Hello")
 ```
 
-Always use comparison operators (`==`, `!=`, `<`, `>`, etc.) or logical operators (`and`, `or`, `not`) to ensure your condition results in a `boolean` value.
+Always use comparison operators (`==`, `!=`, `<`, `>`, etc.) to create boolean values, then combine them with logical operators (`and`, `or`, `not`) if needed.
 
 ## 3.1 If Statement
 We don't have a user, and we check: if he doesn't exist, then display output about him. But if we have user, we does nothing and moves on.
@@ -715,8 +731,8 @@ if user == none
     os.output("No user found")
 ```
 
-## 3.2 Elif Statement
-Sometimes one condition isn't enough. What if you want to check multiple possibilities? Use `elif` — short for "else if".
+## 3.2 Else-If Statement
+Sometimes one condition isn't enough. What if you want to check multiple possibilities? Use `else if`.
 
 ```apex
 import os
@@ -725,11 +741,11 @@ score = 85
 
 if score >= 90
     os.output("Grade: A")
-elif score >= 80
+else if score >= 80
     os.output("Grade: B")
-elif score >= 70
+else if score >= 70
     os.output("Grade: C")
-elif score >= 60
+else if score >= 60
     os.output("Grade: D")
 ```
 
@@ -737,10 +753,10 @@ Apex checks conditions in order from top to bottom. As soon as one condition is 
 
 - Checks: is it >= 90? No — move on
 - Checks: is it >= 80? Yes — prints "Grade: B" and stops
-- The remaining elif blocks are never checked
+- The remaining else if blocks are never checked
 
 ## 3.3 Else Statement
-`else` catches everything that wasn't caught by `if` or `elif`. It runs when no other condition was `true`.
+`else` catches everything that wasn't caught by `if` or `else if`. It runs when no other condition was `true`.
 
 ```apex
 import os
@@ -776,7 +792,7 @@ What happens here:
 2. Since the condition is true, the variable `weather` gets the value on the left of `if` — the string `"hot"`.
 3. If the temperature were 15, the condition would be false, and `weather` would get the value on the right of `else` — `"cold"`.
 
-The ternary operator can only be used for short conditions. If the selection logic requires 2 or more checks, you must use regular `if-elif-else` blocks — 2 or more checks are not allowed in a ternary statement.
+The ternary operator can only be used for short conditions. If the selection logic requires 2 or more checks, you must use regular `if-else if-else` blocks — 2 or more checks are not allowed in a ternary statement.
 
 # 4. For Loops
 Sometimes you need to do the same thing many times. Print "Hello" ten times. Keep asking for input until the user types something valid. Apex gives you the `for` loop with three different syntaxes to handle all these situations.
@@ -784,7 +800,7 @@ Sometimes you need to do the same thing many times. Print "Hello" ten times. Kee
 | Syntax                | When to Use                    | Example          |
 |-----------------------|--------------------------------|------------------|
 | `for r = start, end`  | You know the exact range       | `for r = 1, 5`   |
-| `for v = table`       | Iterate over table items       | `for v = table`  |
+| `for v in table`      | Iterate over table items       | `for v in table` |
 | `for c == true`       | Repeat while condition is true | `for c == true`  |
 
 ### Blocks and Scoping in Loops
@@ -844,14 +860,14 @@ for i = 5, 1, -1
 This prints 5, 4, 3, 2, 1. The loop stops when the variable goes below the `end` value.
 
 ## 4.2 For Table Iteration
-You can iterate over any table using `for value = table`:
+You can iterate over any table using `for value in table`:
 
 ```apex
 import os
 
 fruits = ["apple", "banana", "cherry"]
 
-for fruit = fruits
+for fruit in fruits
     os.output(fruit)
 ```
 
@@ -1089,24 +1105,24 @@ When your project grows beyond a few dozen lines, keeping everything in one file
 Imports solve all of this by letting you organize your code across multiple files.
 
 ### How Apex Finds Files
-Every import path is relative to the main file — the file you run with `apex filename.apex`. Think of your main file as the front door. All imports are paths from that front door, not from wherever you're standing.
+Every import path is relative to the main file — the file you run with `apex file.apex`. Think of your main file as the front door. All imports are paths from that front door, not from wherever you're standing.
 
 ## 6.1 Importing an Entire File
 To import everything from a file in the same folder:
 
 ```apex
 import os
-import database
+import database.apex
 
-// Use items with the filename as a prefix
+// use items with the filename as a prefix
 database.connect()
-os.output(database.APP_NAME)
+os.output(database["APP_NAME"])
 ```
 
 When you import a file, you must use the filename as a prefix to access its contents.
 
 ## 6.2 Importing from Sub-folders
-Use dots (`.`) to navigate into folders:
+Use dots (`/`) to navigate into folders:
 
 ```
 my_project/
@@ -1117,10 +1133,10 @@ my_project/
 ```
 
 ```apex
-import utils.math
+import utils/math.apex
 ```
 
-Each dot in imports means "go inside this folder." `utils.math` looks for `utils/math.apex`.
+Each `/` in imports means "go inside this folder."
 
 ## 6.3 Importing from One Sub-folder into Another
 Here's where beginners often get confused. You have this structure:
@@ -1137,8 +1153,8 @@ my_project/
 You want to use `math.apex` inside `calculator.apex`. What path do you use? Always write the path as if you were importing from `main.apex`.
 
 ```apex
-// Inside features/calculator.apex
-import helpers.math         // Same as you would in main.apex!
+// inside features/calculator.apex
+import helpers/math.apex  // same as you would in main.apex!
 ```
 
 Apex always starts looking from the main file's folder. This keeps your imports consistent — no matter how deep your folder structure gets, you always know exactly how to import any file.
