@@ -36,7 +36,7 @@ function registerApexLanguage() {
             'import', 'as', 'match', 'case', 'await'
         ],
         constants: [
-            'function', 'true', 'false', 'none', 'constant', 'and', 'or', 'not', 'async'
+            'function', 'true', 'false', 'none', 'constant', 'and', 'or', 'async'
         ],
         libraries: [
             'os', 'sys', 'math', 'string', 'table', 'random',

@@ -80,10 +80,9 @@
   - [Operator Precedence](#operator-precedence)
   - [Chaining Comparisons](#chaining-comparisons)
 - [Logical Operators](#logical-operators)
-  - [The Three Logical Operators](#the-three-logical-operators)
+  - [The Two Logical Operators](#the-two-logical-operators)
   - [The AND Operator](#the-and-operator)
   - [The OR Operator](#the-or-operator)
-  - [The NOT Operator](#the-not-operator)
   - [Combining Logical Operators](#combining-logical-operators)
 
 ### If Statements
@@ -245,9 +244,9 @@ That might sound like an odd way to start a book about a programming language. A
 
 Apex was created to change that.
 
-This book is for anyone who wants to learn to program, whether you've never written a line of code in your life or you've used other languages and walked away feeling exhausted. It's also for experienced programmers who want a language that gets out of the way and lets them focus on the actual work.
+This book is for anyone who wants to learn to program, whether you've never written a line of code in your life or you've used other languages and walked away feeling exhausted.
 
-The philosophy of Apex is simple: **programming should feel natural**. The language should work the way you think, not the other way around. It should be readable, predictable, and forgiving. It should let you express your ideas clearly without forcing you to memorize arcane rules or write boilerplate that serves no purpose.
+The philosophy of Apex is simple: **programming should feel natural**. The language should work the way you think, not the other way around. It should be readable, predictable, and forgiving. It should let you express your ideas clearly without forcing you to memorize arcane rules.
 
 Throughout this book, you'll notice a recurring theme: we'll explain not just *how* to do something in Apex, but *why* it works that way. Understanding the reasoning behind a design choice makes it easier to remember and apply. You won't just be memorizing syntax—you'll be building a mental model of how programs work.
 
@@ -296,13 +295,9 @@ Apex is the result of that idea. It's a language built on a few core principles:
 
 3. **Predictability**: The same code should always do the same thing. There should be no hidden behavior, no magic, no surprises.
 
-4. **Forgiveness**: Mistakes should be easy to find and easy to fix. Error messages should explain what went wrong and how to fix it, not just point at a line number and say "syntax error."
+4. **Performance**: Simplicity shouldn't come at the cost of speed. A language that's easy to write but too slow to use isn't helpful—it's just a different kind of painful.
 
-5. **Performance**: Simplicity shouldn't come at the cost of speed. A language that's easy to write but too slow to use isn't helpful—it's just a different kind of painful.
-
-Apex was written in C, which means it can run just about anywhere. It's fast—really fast—thanks to a register-based virtual machine and an optional just-in-time compiler. But you don't need to know any of that to use it. Those details are implementation details, hidden behind a clean, simple interface.
-
-The language has been in development for several years, refined through use and feedback. It's not the work of a large corporation or a committee—it's the work of people who genuinely care about making programming accessible and enjoyable. Every design decision has been made with the user in mind, asking "does this make programming easier or harder?" and choosing the path that makes it easier.
+The language has been in development for several months, refined through use and feedback. It's not the work of a large corporation or a committee—it's the work of people who genuinely care about making programming accessible and enjoyable. Every design decision has been made with the user in mind, asking "does this make programming easier or harder?" and choosing the path that makes it easier.
 
 ### Preparation for development
 Before you can start writing Apex programs, you need to set up your development environment. Don't worry—this is much simpler than it sounds. You need two things:
@@ -361,7 +356,13 @@ For this book, we'll assume you're using VS Code, since it's the most beginner-f
 Go to [https://code.visualstudio.com/](https://code.visualstudio.com/) and download the version for your operating system. Follow the installation instructions.
 
 **Step 2: Install the Apex extension.**
-Open VS Code and click on the Extensions icon in the sidebar (it looks like a square puzzle piece). In the search box, type "apex-lang" and look for the extension published by "is-nobody." Click "Install."
+Open VS Code and click on the Extensions icon in the sidebar (it looks like a square puzzle piece). In the search box, type `apex-lang` and download the extension published by `is-nobody`. Click **Install**.
+
+Alternatively, launch VS Code Quick Open (`Ctrl+P`), paste the following command, and press Enter:
+
+```
+ext install is-nobody.apex-lang
+```
 
 This extension provides:
 - Syntax highlighting (your code will be colored to make it easier to read)
@@ -436,20 +437,12 @@ Now that you have a working program, try changing it. Here are some ideas:
   os.output("This is my first program.")
   os.output("I'm learning Apex!")
   ```
-- Use string interpolation to include a variable:
-  ```apex
-  import os
-  name = "Alice"
-  os.output("Hello, {name}!")
-  ```
 
-The last example introduces a new concept: **variables**. A variable is a named container for a value. In this case, we create a variable called `name` and give it the value `"Alice"`. Then, inside the string, we use `{name}` to insert the value of the variable into the text.
-
-We'll explore variables in much more detail in the next section. For now, the important thing is that you've written and run your first program. You've taken the first step on a journey that will change how you think about computers and problem-solving.
+The important thing is that you've written and run your first program. You've taken the first step on a journey that will change how you think about computers and problem-solving.
 
 Every expert programmer started exactly where you are now. The only difference between you and them is practice. So keep experimenting, keep asking questions, and don't be afraid to make mistakes. Mistakes are how we learn.
 
-Welcome to Apex. Let's build something amazing together.
+Welcome to Apex.
 
 ## Variables & Data Types
 Every program you will ever write is, at its core, about doing things with information. That information might be a username, a price, a list of high scores, or whether a button has been clicked. But before your program can do anything useful, it needs a way to hold onto that information and know what kind of information it is. That's where variables and data types come in.
@@ -1897,14 +1890,13 @@ Comparison operators let you ask single questions: "Is this age greater than 18?
 
 Logical operators are the tools that combine booleans into more complex conditions. They take boolean values as input and produce a boolean value as output. Since comparisons produce booleans, you can combine comparisons with logical operators to build up rich, nuanced conditions.
 
-### The Three Logical Operators
-Apex provides three logical operators:
+### The Two Logical Operators
+Apex provides two logical operators:
 
 | Operator | What It Does                   | Example                |
 |----------|--------------------------------|------------------------|
 | `and`    | Both sides must be true        | `(5 < 10) and (2 > 1)` |
 | `or`     | At least one side must be true | `(2 > 1) or (2 < 1)`   |
-| `not`    | Reverses the value             | `not true`             |
 
 Let's explore each one.
 
@@ -1994,63 +1986,15 @@ can_relax = (day == "Saturday") or (is_holiday == true)    // false
 
 Now both sides are `false`: it's not Saturday, and it's not a holiday. So `false or false` gives `false`. No relaxing today.
 
-### The NOT Operator
-The `not` operator is different from `and` and `or`. It takes **one** boolean value — not two — and flips it. If the value is `true`, `not` makes it `false`. If it's `false`, `not` makes it `true`.
-
-Here's the truth table for `not`:
-
-| Value   | Result  |
-|---------|---------|
-| `true`  | `false` |
-| `false` | `true`  |
-
-```apex
-not true   // false
-not false  // true
-```
-
-Think of `not` as the word "isn't" or "doesn't." If `is_raining` is `true`, then `not is_raining` is `false` — because it's not the case that it isn't raining.
-
-**Using `not` with comparisons:**
-```apex
-is_raining = false
-can_walk = not is_raining    // true — it's not raining, so we can walk
-```
-
-Here, `is_raining` is `false`, so `not is_raining` is `true`. The variable `can_walk` becomes `true`.
-
-```apex
-is_raining = true
-can_walk = not is_raining    // false — it's raining, so we can't walk
-```
-
-Now `is_raining` is `true`, so `not is_raining` is `false`. `can_walk` is `false`.
-
-**A common use of `not`:**
-`not` is often used to check that something is *not* the case:
-
-```apex
-user = none
-has_user = not (user == none)  // false — user is none, so it's not the case that user exists
-```
-
-Wait, let's trace this carefully:
-
-1. `user == none` evaluates to `true` (the user variable holds `none`)
-2. `not true` evaluates to `false`
-
-So `has_user` becomes `false`, which makes sense: if `user` is `none`, then there is no user, so `has_user` should be false.
-
 ### Combining Logical Operators
-You can combine `and`, `or`, and `not` to build complex conditions. Just like with arithmetic, logical operators have a precedence order that determines how expressions are evaluated.
+You can combine `and` and `or` to build complex conditions. Just like with arithmetic, logical operators have a precedence order that determines how expressions are evaluated.
 
 The precedence from highest to lowest is:
 
-1. `not` — happens first
-2. `and` — happens second
-3. `or` — happens last
+1. `and` — happens first
+2. `or` — happens last
 
-This means `not` binds most tightly, `and` next, `or` least tightly. Consider this expression:
+This means `and` binds more tightly than `or`. Consider this expression:
 
 ```apex
 true or false and false
@@ -2089,9 +2033,8 @@ The full precedence order — including the operators from earlier sections — 
 3. `+`, `-` — addition, subtraction
 4. `<`, `>`, `<=`, `>=` — ordering comparisons
 5. `==`, `!=` — equality comparisons
-6. `not` — logical NOT
-7. `and` — logical AND
-8. `or` — logical OR
+6. `and` — logical AND
+7. `or` — logical OR
 
 When in doubt, use parentheses. They cost nothing and make your intention obvious.
 
@@ -2231,14 +2174,14 @@ if day == "Saturday" or is_holiday == true
 
 Here, if either condition is true, the block runs. Since `day == "Saturday"` is true (and `is_holiday == true` is false), the block runs anyway, and `can_relax` becomes `true`.
 
-And you can combine `and`, `or`, and `not`:
+And you can combine `and` and `or`:
 
 ```apex
 is_weekend = true
 has_work = false
 can_relax = false
 
-if (is_weekend == true or has_work == false) and not (has_work == true)
+if (is_weekend == true or has_work == false) and (has_work == false)
     can_relax = true
 ```
 
@@ -3443,7 +3386,7 @@ Notice that `counter` is declared **before** the loop. The loop body modifies it
 Always make sure something inside the loop body changes the condition. Common patterns are incrementing a counter, decrementing a counter, or reading new input each time.
 
 #### The Condition Can Be Any Boolean Expression
-The condition can be any boolean expression, including comparisons with `and`, `or`, and `not`. For example:
+The condition can be any boolean expression, including comparisons with `and` and `or`. For example:
 
 ```apex
 x = 1
