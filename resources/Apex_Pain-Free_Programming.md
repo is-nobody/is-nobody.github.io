@@ -1,13 +1,13 @@
 # Apex: Pain-Free Programming
 ## Table of Contents
 ### Introduction
-- [Preface](#section)
-- [What is a "programming language"?](#section)
-- [A bit of history about Apex](#section)
-- [Preparation for development](#section)
-  - [Installing the Apex Language](#section)
-  - [Installing the Apex Code](#section)
-- [First Program](#section)
+- [Preface](#preface)
+- [What is a "programming language"?](#what-is-a-programming-language)
+- [A bit of history about Apex](#a-bit-of-history-about-apex)
+- [Preparation for development](#preparation-for-development)
+  - [Installing the Apex Language](#installing-the-apex-language)
+  - [Installing the Apex Code](#installing-the-apex-code)
+- [First Program](#first-program)
 
 ### Variables & Data Types
 - [Numbers](#numbers)
@@ -87,28 +87,369 @@
   - [Combining Logical Operators](#combining-logical-operators)
 
 ### If Statements
-- [If Statement](#section)
-- [Else-If Statement](#section)
-- [Else Statement](#section)
-- [Ternary Statement](#section)
+- [If Statement](#if-statement)
+  - [A Note on the Block](#a-note-on-the-block)
+  - [Multiple Conditions](#multiple-conditions)
+- [Else-If Statement](#else-if-statement)
+  - [Order Matters](#order-matters)
+  - [Each Branch Is Its Own Scope](#each-branch-is-its-own-scope)
+- [Else Statement](#else-statement)
+  - [When to Use Else](#when-to-use-else)
+  - [A Common Pattern: Validation](#a-common-pattern-validation)
+  - [No Else Needed for Simple Cases](#no-else-needed-for-simple-cases)
+- [Ternary Expression](#ternary-expression)
+  - [Ternary vs. If Statement](#ternary-vs-if-statement)
+  - [Cannot Chain Ternaries](#cannot-chain-ternaries)
+  - [A Word on Apex's Ternary Order](#a-word-on-apexs-ternary-order)
+  - [Boolean Conditions Need Explicit Comparison](#boolean-conditions-need-explicit-comparison)
+  - [A Practical Example](#a-practical-example)
+
+### Match / Case
+- [Match Statement](#match-statement)
+  - [A Note on the Block](#a-note-on-the-block)
+  - [Cases Are Checked from Top to Bottom](#cases-are-checked-from-top-to-bottom)
+- [Case Patterns](#case-patterns)
+  - [Patterns Must Match the Subject's Type](#patterns-must-match-the-subjects-type)
+  - [Constants Only, No Variables or Expressions](#constants-only-no-variables-or-expressions)
+  - [Empty String and Zero Are Valid Patterns](#empty-string-and-zero-are-valid-patterns)
+- [Default Case](#default-case)
+  - [The Default Case Must Be Last](#the-default-case-must-be-last)
+  - [Only One Default Case](#only-one-default-case)
+  - [When to Use a Default Case](#when-to-use-a-default-case)
+- [Rules and Restrictions](#rules-and-restrictions)
+  - [1. Subject Type](#1-subject-type)
+  - [2. Pattern Type](#2-pattern-type)
+  - [3. Constants Only](#3-constants-only)
+  - [4. Order Matters](#4-order-matters)
+  - [5. Default Case](#5-default-case)
+  - [6. Scope](#6-scope)
+  - [7. Not an Expression](#7-not-an-expression)
+  - [8. No Tables](#8-no-tables)
+  - [9. No Range Patterns](#9-no-range-patterns)
+  - [10. No Compound Patterns](#10-no-compound-patterns)
+  - [11. No Fallthrough](#11-no-fallthrough)
+  - [12. Empty Case Bodies Are Allowed](#12-empty-case-bodies-are-allowed)
+- [Putting It Together](#putting-it-together)
+  - [When to Use Match vs. If](#when-to-use-match-vs-if)
+  - [A Reminder About Comparison Semantics](#a-reminder-about-comparison-semantics)
 
 ### For Loops
-- [For Counter](#section)
-- [For Table Iteration](#section)
-- [For Condition](#section)
-- [Break](#section)
-- [Continue](#section)
+- [For Counter](#for-counter)
+  - [Counting Down with a Step](#counting-down-with-a-step)
+  - [The Loop Variable Is a Number](#the-loop-variable-is-a-number)
+  - [Using a Decimal Start or End](#using-a-decimal-start-or-end)
+  - [The Loop Variable Cannot Be Modified Inside the Loop](#the-loop-variable-cannot-be-modified-inside-the-loop)
+  - [Nested Counter Loops](#nested-counter-loops)
+- [For Table Iteration](#for-table-iteration)
+  - [Iterating Over Key-Value Tables](#iterating-over-key-value-tables)
+  - [Iterating Over Mixed Tables](#iterating-over-mixed-tables)
+  - [Iterating Over an Empty Table](#iterating-over-an-empty-table)
+  - [The Loop Variable Holds a Reference](#the-loop-variable-holds-a-reference)
+  - [You Cannot Iterate Over Strings](#you-cannot-iterate-over-strings)
+- [For Condition](#for-condition)
+  - [The Condition Can Be Any Boolean Expression](#the-condition-can-be-any-boolean-expression)
+  - [The Condition Is Re-Evaluated Before Each Iteration](#the-condition-is-re-evaluated-before-each-iteration)
+  - [Counting Down](#counting-down)
+  - [A Warning About Infinite Loops](#a-warning-about-infinite-loops)
+  - [The Condition Must Be Boolean](#the-condition-must-be-boolean)
+  - [Zero Iterations](#zero-iterations)
+- [Break](#break)
+  - [Break in Counter Loops](#break-in-counter-loops)
+  - [Break in Condition Loops](#break-in-condition-loops)
+  - [Break Only Exits the Innermost Loop](#break-only-exits-the-innermost-loop)
+- [Continue](#continue)
+  - [Continue in Table Iteration](#continue-in-table-iteration)
+  - [Continue Only Affects the Innermost Loop](#continue-only-affects-the-innermost-loop)
+  - [Continue vs. Break](#continue-vs-break)
+  - [A Common Pattern: Filtering](#a-common-pattern-filtering)
+  - [When to Use Continue](#when-to-use-continue)
 
 ### Functions
-- [Function Statement](#section)
-- [Parameters](#section)
-- [Return Value](#section)
-- [Call](#section)
+- [Why Functions Exist](#why-functions-exist)
+- [Function Statement](#function-statement)
+  - [Naming Functions](#naming-functions)
+  - [Functions Are Values](#functions-are-values)
+- [Parameters](#parameters)
+  - [Parameters Are Local](#parameters-are-local)
+  - [Parameters Must Be Provided](#parameters-must-be-provided)
+  - [Parameters Are Copies](#parameters-are-copies)
+- [Return Value](#return-value)
+  - [Returning Early](#returning-early)
+  - [Functions Without a Return](#functions-without-a-return)
+  - [Return Ends the Function](#return-ends-the-function)
+  - [A Function Returns Exactly One Value](#a-function-returns-exactly-one-value)
+- [Call](#call)
+- [Scope and Blocks](#scope-and-blocks)
+  - [Functions Inside Functions](#functions-inside-functions)
+  - [Blocks Inside Functions](#blocks-inside-functions)
+- [Early Return](#early-return)
+- [Recursion](#recursion)
+
+### Async / Await
+- [Why Async Exists](#why-async-exists)
+- [What Is a Future](#what-is-a-future)
+- [Async Function](#async-function)
+  - [Why Mark a Function Async?](#why-mark-a-function-async)
+  - [Async Functions Return Futures](#async-functions-return-futures)
+- [Await](#await)
+  - [Await Does Not Block Everything](#await-does-not-block-everything)
+  - [Await Always Gives a Value](#await-always-gives-a-value)
+- [Where Await Can Be Used](#where-await-can-be-used)
+  - [Top-Level Await](#top-level-await)
+  - [Await Inside Async Functions](#await-inside-async-functions)
+- [What Can Be Awaited](#what-can-be-awaited)
+  - [Awaiting Builtins](#awaiting-builtins)
+  - [Awaiting Without Awaiting](#awaiting-without-awaiting)
+  - [When You Don't Need to Await](#when-you-dont-need-to-await)
+- [Running in the Background](#running-in-the-background)
+  - [Example: A Chain of Awaits](#example-a-chain-of-awaits)
+  - [The Scheduler](#the-scheduler)
 
 ### Imports
-- [Importing an Entire File](#section)
-- [Importing from Sub-folders](#section)
-- [Importing from One Sub-folder into Another](#section)
+- [Why Imports Exist](#why-imports-exist)
+- [Importing an Entire File](#importing-an-entire-file)
+  - [The `.apex` Extension Is Required](#the-apex-extension-is-required)
+  - [Where Does Apex Look for the File?](#where-does-apex-look-for-the-file)
+- [What Gets Imported](#what-gets-imported)
+  - [Modules Run Once](#modules-run-once)
+- [Importing from Sub-folders](#importing-from-sub-folders)
+  - [A Caution About Names](#a-caution-about-names)
+- [Importing from One Sub-folder into Another](#importing-from-one-sub-folder-into-another)
+- [Aliasing](#aliasing)
+  - [Aliases Must Be Unique](#aliases-must-be-unique)
+  - [Aliases Are Only for User Modules](#aliases-are-only-for-user-modules)
+- [Built-in Modules Are Different](#built-in-modules-are-different)
+  - [Built-in Modules Do Not End with `.apex`](#built-in-modules-do-not-end-with-apex)
+  - [Accessing Built-in Contents](#accessing-built-in-contents)
+  - [One Built-in Module at a Time](#one-built-in-module-at-a-time)
+- [Rules and Restrictions](#rules-and-restrictions)
+  - [1. Import at the Top](#1-import-at-the-top)
+  - [2. Import Paths Are Relative to the Main File](#2-import-paths-are-relative-to-the-main-file)
+  - [3. `.apex` for User Files, Nothing for Built-in Modules](#3-apex-for-user-files-nothing-for-built-in-modules)
+  - [4. No Aliasing Built-in Modules](#4-no-aliasing-built-in-modules)
+  - [5. Aliases Must Be Unique and Valid](#5-aliases-must-be-unique-and-valid)
+  - [6. No Multiple Modules Per Import](#6-no-multiple-modules-per-import)
+  - [7. Only Top-Level Definitions Are Imported](#7-only-top-level-definitions-are-imported)
+  - [8. Module Names Come from File Names](#8-module-names-come-from-file-names)
+  - [9. Files Must Exist and Be Readable](#9-files-must-exist-and-be-readable)
+  - [10. Built-in Modules Must Be Imported Before Use](#10-built-in-modules-must-be-imported-before-use)
+
+### Conclusion
+- [Conclusion](#conclusion)
+
+## Introduction
+### Preface
+Programming doesn't have to be painful.
+
+That might sound like an odd way to start a book about a programming language. After all, many people who try to learn programming find it frustrating, confusing, and just plain hard. They wrestle with strange symbols, cryptic error messages, and rules that seem designed to trip them up. They spend more time fighting the language than solving problems.
+
+Apex was created to change that.
+
+This book is for anyone who wants to learn to program, whether you've never written a line of code in your life or you've used other languages and walked away feeling exhausted. It's also for experienced programmers who want a language that gets out of the way and lets them focus on the actual work.
+
+The philosophy of Apex is simple: **programming should feel natural**. The language should work the way you think, not the other way around. It should be readable, predictable, and forgiving. It should let you express your ideas clearly without forcing you to memorize arcane rules or write boilerplate that serves no purpose.
+
+Throughout this book, you'll notice a recurring theme: we'll explain not just *how* to do something in Apex, but *why* it works that way. Understanding the reasoning behind a design choice makes it easier to remember and apply. You won't just be memorizing syntax—you'll be building a mental model of how programs work.
+
+This book assumes no prior programming experience. Every concept is introduced from scratch, with plenty of examples and explanations. If you already know another language, you'll find that Apex's simplicity makes it easy to pick up, and the explanations of *why* things work the way they do will deepen your understanding of programming in general.
+
+Let's begin.
+
+### What is a "programming language"?
+Before we dive into Apex specifically, let's take a step back and answer a more fundamental question: what exactly is a programming language?
+
+At its core, a **programming language** is a way to give instructions to a computer. It's a formal system of symbols and rules that lets you describe what you want the computer to do. When you write a program, you're essentially writing a detailed set of directions—like a recipe—that the computer will follow step by step.
+
+But why do we need special languages for this? Why can't we just tell the computer in plain English what we want?
+
+The answer is that computers are incredibly literal and incredibly fast, but they're also incredibly dumb. They can only do a handful of very simple things: add numbers, compare values, move data around, and make basic decisions. They have no intuition, no common sense, and no ability to guess what you meant if you're ambiguous. If you told a computer to "make me a sandwich," it would have no idea where to start.
+
+A programming language bridges this gap. It provides a structured way to express your intentions that's precise enough for the computer to understand, but also readable enough for humans to work with. It's a compromise between the rigid binary that the machine actually executes (ones and zeros) and the flexible, ambiguous language we use with each other.
+
+Here's a useful analogy: think of a programming language as a set of LEGO bricks. Each brick is a simple, well-defined piece. On its own, a single brick doesn't do much. But when you combine bricks in the right way, you can build anything—a house, a car, a spaceship. The bricks give you structure and predictability, but they also give you freedom to create.
+
+Different programming languages provide different sets of bricks. Some give you thousands of specialized pieces and expect you to learn them all. Others give you a few basic pieces and let you combine them in creative ways. Apex falls into the second category. It gives you a small, focused set of tools and trusts you to use them well.
+
+Every programming language has two audiences:
+
+1. **The computer**, which needs precise, unambiguous instructions it can execute.
+2. **The programmer** (you), who needs to read, write, and modify those instructions.
+
+A well-designed language serves both audiences. It's precise enough for the machine, but clear enough for humans. This is sometimes called the "readability" of a language, and it's one of the most important qualities a language can have. After all, you'll spend far more time *reading* code than writing it—your own code from last week, your teammate's code, code from an open-source project. A language that's hard to read is a language that's hard to maintain.
+
+Apex was designed with both audiences in mind. It's simple enough to learn quickly, but powerful enough to build real software. It's precise enough for the computer, but readable enough that you can come back to your code months later and still understand what it does.
+
+### A bit of history about Apex
+Apex began with a simple frustration: programming languages had become too complicated.
+
+The creator of Apex had worked with many languages over the years—languages that promised power and flexibility but delivered complexity and confusion. Languages that required pages of configuration before you could write a single line of code. Languages that had dozens of ways to do the same thing, none of them obviously better than the others. Languages where simple ideas were expressed in obscure syntax, and where the rules seemed designed to catch you off guard.
+
+The breaking point came when trying to teach someone to program. The person was smart and motivated, but every step of the way, the language itself got in the way. They'd write something that seemed perfectly reasonable, only to be told it was wrong for a reason that made no sense. They'd spend hours debugging a missing semicolon or a mismatched bracket. They'd ask "why does it work this way?" and the only answer was "because that's how it's always been."
+
+That's when the idea for Apex was born: what if a programming language was actually designed to be *helpful*? What if it was designed around the way humans think, rather than the way machines work? What if it eliminated all the unnecessary complexity and kept only what was essential?
+
+Apex is the result of that idea. It's a language built on a few core principles:
+
+1. **Simplicity**: The language should be small enough to learn completely. There should be one obvious way to do things, not five.
+
+2. **Clarity**: Code should read like a description of what it does. If you have to puzzle over what a line of code means, the language has failed.
+
+3. **Predictability**: The same code should always do the same thing. There should be no hidden behavior, no magic, no surprises.
+
+4. **Forgiveness**: Mistakes should be easy to find and easy to fix. Error messages should explain what went wrong and how to fix it, not just point at a line number and say "syntax error."
+
+5. **Performance**: Simplicity shouldn't come at the cost of speed. A language that's easy to write but too slow to use isn't helpful—it's just a different kind of painful.
+
+Apex was written in C, which means it can run just about anywhere. It's fast—really fast—thanks to a register-based virtual machine and an optional just-in-time compiler. But you don't need to know any of that to use it. Those details are implementation details, hidden behind a clean, simple interface.
+
+The language has been in development for several years, refined through use and feedback. It's not the work of a large corporation or a committee—it's the work of people who genuinely care about making programming accessible and enjoyable. Every design decision has been made with the user in mind, asking "does this make programming easier or harder?" and choosing the path that makes it easier.
+
+### Preparation for development
+Before you can start writing Apex programs, you need to set up your development environment. Don't worry—this is much simpler than it sounds. You need two things:
+
+1. The Apex interpreter, which reads your code and runs it.
+2. A place to write your code (a text editor or IDE).
+
+Let's take care of both.
+
+#### Installing the Apex Language
+The Apex interpreter is the program that reads your Apex code and executes it. You can't run Apex programs without it, so this is the first thing we need to install.
+
+**Step 1: Download the interpreter.**
+Go to the Apex releases page on GitHub: [https://github.com/is-nobody/apex-lang/releases](https://github.com/is-nobody/apex-lang/releases)
+
+You'll see a list of releases. Find the most recent one and download the file that matches your operating system:
+
+- **Windows**: Look for a file ending in `.exe`
+- **macOS**: Look for a file with `macos` in the name
+- **Linux**: Look for a file with `linux` in the name
+
+**Step 2: Place the interpreter somewhere convenient.**
+Once you've downloaded the file, move it to a location where you can easily access it from the command line. On Windows, you might create a folder like `C:\apex\` and put the file there. On macOS or Linux, you might put it in `/usr/local/bin/` or `~/bin/`.
+
+**Step 3: Add Apex to your system's PATH (optional but recommended).**
+If you want to be able to run `apex` from any directory without typing the full path, you need to add its location to your system's PATH environment variable. The exact steps depend on your operating system:
+
+- **Windows**: Search for "Environment Variables" in the Start menu, edit the `Path` variable, and add the folder where you put the Apex interpreter.
+- **macOS/Linux**: Edit your shell configuration file (like `.bashrc` or `.zshrc`) and add a line like `export PATH="$PATH:/path/to/apex/folder"`.
+
+If you're not sure how to do this, don't worry—you can always run Apex by typing the full path to the interpreter.
+
+**Step 4: Verify the installation.**
+Open a terminal (Command Prompt on Windows, Terminal on macOS/Linux) and type:
+
+```
+apex version
+```
+
+If everything is set up correctly, you should see output like:
+
+```
+Apex 26.09 [GCC 15.2.0] on Linux x86-64
+```
+
+The exact details will vary depending on your system, but if you see "Apex" followed by a version number, you're good to go.
+
+If you see an error message like "command not found" or "apex is not recognized," it means the interpreter isn't in your PATH. Either add it to your PATH as described above, or use the full path to the interpreter when running commands.
+
+#### Installing the Apex Code
+Now that you have the interpreter installed, you need a place to write your code. Technically, you could use any text editor—even Notepad on Windows or TextEdit on macOS. But a good code editor will make your life much easier by providing features like syntax highlighting, auto-completion, and error detection.
+
+For this book, we'll assume you're using VS Code, since it's the most beginner-friendly option. Here's how to set it up:
+
+**Step 1: Download and install VS Code.**
+Go to [https://code.visualstudio.com/](https://code.visualstudio.com/) and download the version for your operating system. Follow the installation instructions.
+
+**Step 2: Install the Apex extension.**
+Open VS Code and click on the Extensions icon in the sidebar (it looks like a square puzzle piece). In the search box, type "apex-lang" and look for the extension published by "is-nobody." Click "Install."
+
+This extension provides:
+- Syntax highlighting (your code will be colored to make it easier to read)
+- Auto-completion (the editor will suggest what to type next)
+- Hover documentation (hover over a function to see what it does)
+- A command to run your code directly from the editor
+
+**Step 3: Create a workspace.**
+Create a folder somewhere on your computer where you'll keep your Apex projects. For example, you might create a folder called `apex-projects` in your home directory. Open this folder in VS Code using File > Open Folder.
+
+That's it! You're ready to start writing Apex code.
+
+### First Program
+Now for the moment you've been waiting for: writing your first Apex program.
+
+By tradition, the first program in any language is "Hello, World!"—a program that simply prints those words to the screen. It's a simple task, but it introduces several fundamental concepts: how to write a program, how to run it, and how to see output.
+
+Let's create the program step by step.
+
+**Step 1: Create a new file.**
+In VS Code, create a new file by clicking File > New File. Then save it with the name `hello.apex`. The `.apex` extension tells VS Code that this is an Apex file, so it will apply the right syntax highlighting.
+
+**Step 2: Write the program.**
+Type the following code into the file:
+
+```apex
+import os
+
+os.output("Hello, World!")
+```
+
+That's it—two lines of code. Let's break down what each line does.
+
+The first line, `import os`, tells Apex that we want to use the `os` module. A **module** is a collection of related functions and values. The `os` module contains functions for interacting with the operating system—reading files, writing to the screen, getting the current directory, and so on.
+
+The second line, `os.output("Hello, World!")`, calls the `output` function from the `os` module. This function takes a value (in this case, the string `"Hello, World!"`) and prints it to the screen, followed by a newline.
+
+Notice the syntax:
+- `os.output` is the function's name. The dot `.` separates the module name (`os`) from the function name (`output`).
+- The parentheses `()` contain the **arguments**—the values we're passing to the function. In this case, there's one argument: the string `"Hello, World!"`.
+- The quotes `""` around `Hello, World!` indicate that it's a string—a piece of text.
+
+**Step 3: Run the program.**
+There are two ways to run your program:
+
+**Option A: From the terminal.**
+Open a terminal in VS Code by clicking Terminal > New Terminal. Then type:
+
+```
+apex hello.apex
+```
+
+You should see:
+
+```
+Hello, World!
+```
+
+Congratulations—you've just run your first Apex program!
+
+**Option B: From VS Code.**
+If you installed the Apex extension, you can run the program by pressing `F5` or by opening the Command Palette (Ctrl+Shift+P on Windows/Linux, Cmd+Shift+P on macOS), typing "Apex: Run Current File," and pressing Enter.
+
+**Step 4: Experiment.**
+Now that you have a working program, try changing it. Here are some ideas:
+
+- Change the message to say something else: `os.output("Apex is awesome!")`
+- Print multiple lines:
+  ```apex
+  import os
+  os.output("Hello, World!")
+  os.output("This is my first program.")
+  os.output("I'm learning Apex!")
+  ```
+- Use string interpolation to include a variable:
+  ```apex
+  import os
+  name = "Alice"
+  os.output("Hello, {name}!")
+  ```
+
+The last example introduces a new concept: **variables**. A variable is a named container for a value. In this case, we create a variable called `name` and give it the value `"Alice"`. Then, inside the string, we use `{name}` to insert the value of the variable into the text.
+
+We'll explore variables in much more detail in the next section. For now, the important thing is that you've written and run your first program. You've taken the first step on a journey that will change how you think about computers and problem-solving.
+
+Every expert programmer started exactly where you are now. The only difference between you and them is practice. So keep experimenting, keep asking questions, and don't be afraid to make mistakes. Mistakes are how we learn.
+
+Welcome to Apex. Let's build something amazing together.
 
 ## Variables & Data Types
 Every program you will ever write is, at its core, about doing things with information. That information might be a username, a price, a list of high scores, or whether a button has been clicked. But before your program can do anything useful, it needs a way to hold onto that information and know what kind of information it is. That's where variables and data types come in.
@@ -1753,3 +2094,2789 @@ The full precedence order — including the operators from earlier sections — 
 8. `or` — logical OR
 
 When in doubt, use parentheses. They cost nothing and make your intention obvious.
+
+## If Statements
+So far, every line of code you've written has run from top to bottom, one after another. That's fine for simple calculations, but real programs need to make decisions. They need to do one thing if a condition is true, and another thing if it's false. That's where if statements come in.
+
+Think of an if statement like a fork in the road. You stand at the fork, and you ask a yes-or-no question. If the answer is yes, you take the left path. If the answer is no, you take the right path (or just stay put). The question you ask is called a condition, and it must be something that can be answered with a boolean: either true or false.
+
+In Apex, an if statement looks like this:
+
+```apex
+if condition
+    // do something
+```
+
+The condition is an expression that evaluates to a boolean. It could be a comparison, like `age > 18`, or a logical combination. It cannot be a number or a string. Apex requires you to be explicit: you must write a comparison or a boolean variable compared to `true` or `false`. You cannot write `if x` and expect it to mean "if x is not zero" or "if x is not none". That's not allowed. You must write `if x > 0` or `if x != none` or whatever makes sense.
+
+After the condition, you put an indented block of code. That block runs only if the condition is true. The indentation is four spaces. Apex uses indentation to know which lines belong to the if block.
+
+Let's look at a simple example:
+
+```apex
+can_vote = none
+age = 20
+if age >= 18
+    can_vote = true
+```
+
+After this code runs, `can_vote` is `true`. If `age` were 16, the condition `age >= 18` would be false, and the indented block would be skipped. `can_vote` would remain `none`.
+
+Notice that the condition `age >= 18` is a comparison. It produces a boolean. That's exactly what Apex wants.
+
+Now let's explore the different forms of if statements.
+
+### If Statement
+The simplest if statement has just one branch: the code that runs when the condition is true. If the condition is false, nothing happens.
+
+Syntax:
+```apex
+if condition
+    // code to run if condition is true
+```
+
+You can have as many lines as you want inside the block, as long as they are all indented by four spaces. For example:
+
+```apex
+temperature = 30
+message = ""
+advice = ""
+if temperature > 25
+    message = "It's hot outside"
+    advice = "Drink plenty of water"
+```
+
+After this, `message` is `"It's hot outside"` and `advice` is `"Drink plenty of water"`. Both lines ran because the condition was true. If the condition were false, neither line would run.
+
+Remember: the condition must be a boolean expression. You cannot write `if temperature` because `temperature` is a number, not a boolean. You must write a comparison. You also cannot write `if is_ready` if `is_ready` is a boolean variable. You must write `if is_ready == true` or `if is_ready == false`. Apex does not have truthy or falsy values.
+
+Let's see an example with a boolean variable:
+
+```apex
+is_raining = true
+action = ""
+if is_raining == true
+    action = "Take an umbrella"
+```
+
+Here, `is_raining == true` is a comparison that yields `true`. The block runs, and `action` becomes `"Take an umbrella"`. If `is_raining` were `false`, the block would be skipped.
+
+You can also use logical operators to combine conditions. For example:
+
+```apex
+age = 25
+has_license = true
+can_drive = false
+if age >= 18 and has_license == true
+    can_drive = true
+```
+
+Here, both conditions must be true for the block to run. Since `age >= 18` is true and `has_license == true` is true, `can_drive` becomes `true`.
+
+#### A Note on the Block
+The block after an `if` is a **scope** — just like the body of a function or a loop. Variables you declare inside the block live only inside the block. When the block ends, they're gone.
+
+```apex
+import os
+
+x = 5
+if x < 10
+    y = 42
+    os.output(y)  // 42
+
+os.output(y)  // ERROR — y is not defined here
+```
+
+The variable `y` is created inside the if block. It's visible only there. Once the if statement finishes, `y` no longer exists. This is a general rule in Apex: **indentation defines scope**. Every time you indent, you enter a new scope.
+
+If you need a variable to survive past the if statement, declare it before the `if`:
+
+```apex
+import os
+
+x = 5
+y = 0
+if x < 10
+    y = 42
+os.output(y)  // 42 — y survives
+```
+
+Now `y` is declared outside, and the assignment inside the block modifies the outer `y`. The value survives.
+
+#### Multiple Conditions
+You can combine any number of comparisons with logical operators. For example:
+
+```apex
+age = 25
+has_license = true
+is_sober = true
+can_drive = false
+
+if age >= 18 and has_license == true and is_sober == true
+    can_drive = true
+```
+
+All three conditions must be true. If any one of them is false, the block is skipped. The `and` operator chains them together, and the whole expression is a boolean.
+
+You can use `or` to allow alternatives:
+
+```apex
+day = "Saturday"
+is_holiday = false
+can_relax = false
+
+if day == "Saturday" or is_holiday == true
+    can_relax = true
+```
+
+Here, if either condition is true, the block runs. Since `day == "Saturday"` is true (and `is_holiday == true` is false), the block runs anyway, and `can_relax` becomes `true`.
+
+And you can combine `and`, `or`, and `not`:
+
+```apex
+is_weekend = true
+has_work = false
+can_relax = false
+
+if (is_weekend == true or has_work == false) and not (has_work == true)
+    can_relax = true
+```
+
+Don't worry too much about this last example — it's just to show that you can combine as much as you need. Use parentheses when the logic gets complex; they cost nothing and make your intention obvious.
+
+### Else-If Statement
+Sometimes you have more than two possibilities. You want to check a second condition if the first one is false, and a third condition if the second is false, and so on. That's what `else if` is for.
+
+Syntax:
+```apex
+if condition1
+    // code if condition1 is true
+else if condition2
+    // code if condition1 is false and condition2 is true
+else if condition3
+    // code if condition1 and condition2 are false, and condition3 is true
+```
+
+You can have as many `else if` blocks as you need. Each one is checked in order, from top to bottom. As soon as one condition is true, its block runs, and all the remaining `else if` and `else` blocks are skipped.
+
+Let's look at an example that assigns a grade based on a score:
+
+```apex
+score = 85
+grade = none
+
+if score >= 90
+    grade = "A"
+else if score >= 80
+    grade = "B"
+else if score >= 70
+    grade = "C"
+```
+
+After this code runs, `grade` is `"B"`. Let's trace through:
+- `score >= 90` is false (85 is not >= 90), so we skip the first block.
+- `score >= 80` is true, so we run that block and set `grade = "B"`.
+- The remaining `else if` blocks are skipped.
+
+If `score` were 95, `grade` would be `"A"`. If `score` were 75, `grade` would be `"C"`. If `score` were 65, none of the conditions would be true, and `grade` would remain `none`.
+
+Notice that each `else if` is on the same indentation level as the original `if`. The blocks are indented four spaces. This indentation tells Apex which code belongs to which branch.
+
+**Important:** The conditions are checked in order. Once a condition is true, the rest are ignored. So you should order your conditions from most specific to least specific, or from highest to lowest, as in the grade example.
+
+#### Order Matters
+Here's an example where the wrong order causes a bug:
+
+```apex
+score = 85
+grade = none
+
+if score >= 70
+    grade = "C"
+else if score >= 80
+    grade = "B"
+else if score >= 90
+    grade = "A"
+```
+
+If you run this with `score = 85`, the first condition `score >= 70` is true (85 is at least 70). So `grade` becomes `"C"`. The remaining `else if` blocks are skipped, and the fact that 85 is also >= 80 never gets a chance. The result is wrong.
+
+The problem is that the conditions aren't specific enough. The first one catches too many cases. By ordering from highest to lowest — `>= 90` first, then `>= 80`, then `>= 70` — you make sure each score lands in the correct bracket.
+
+Always think about the ordering when you write an `else if` chain. Ask yourself: "Could an earlier condition steal a case meant for a later one?"
+
+#### Each Branch Is Its Own Scope
+Just like with a plain `if`, each branch in an `else if` chain creates its own scope. Variables declared inside a branch are local to that branch. You can even reuse the same variable name in different branches, and they won't conflict.
+
+```apex
+import os
+
+score = 85
+
+if score >= 90
+    grade = "A"
+    os.output(grade)
+else if score >= 80
+    grade = "B"
+    os.output(grade)
+else
+    grade = "C"
+    os.output(grade)
+
+os.output(grade)  // ERROR — grade is not defined here
+```
+
+The variable `grade` is declared inside each branch. Each branch has its own `grade`. None of them are visible after the entire chain is finished. If you want `grade` to survive, declare it outside the chain.
+
+### Else Statement
+The `else` block runs when none of the previous conditions were true. It's the catch-all. You can have at most one `else`, and it must be the last branch.
+
+Syntax:
+```apex
+if condition
+    // code if condition is true
+else
+    // code if condition is false
+```
+
+You can combine `else if` and `else`:
+
+```apex
+if condition1
+    // code if condition1 is true
+else if condition2
+    // code if condition1 is false and condition2 is true
+else
+    // code if all conditions are false
+```
+
+Let's extend the grade example with an `else`:
+
+```apex
+score = 65
+grade = none
+
+if score >= 90
+    grade = "A"
+else if score >= 80
+    grade = "B"
+else if score >= 70
+    grade = "C"
+else
+    grade = "F"
+```
+
+Now, if `score` is 65, none of the `if` or `else if` conditions are true, so the `else` block runs and `grade` becomes `"F"`. If `score` were 75, `grade` would be `"C"` and the `else` would be skipped.
+
+The `else` block has no condition. It simply runs when all previous conditions were false. It's a good way to handle the "everything else" case.
+
+#### When to Use Else
+Not every `if` chain needs an `else`. If there's nothing meaningful to do when all conditions fail, you can leave it out. Execution just continues with the code after the chain.
+
+Use `else` when:
+- You want to handle the "everything else" case explicitly.
+- You want to make sure at least one branch always runs.
+- You want the reader to see that all possibilities are covered.
+
+If you don't need it, skip it. Simpler code is usually better.
+
+#### A Common Pattern: Validation
+A common pattern is to use `if`/`else if`/`else` for validation — checking a series of conditions and reporting the first one that fails.
+
+```apex
+import os
+
+username = "ab"
+
+if string.length(username) < 3
+    os.output("Username too short")
+else if string.length(username) > 20
+    os.output("Username too long")
+else
+    os.output("Username is valid")
+```
+
+Here, the first condition fails (length is 2, which is < 3), so the first branch runs and prints `"Username too short"`. The remaining branches are skipped. If the username were longer than 3 and shorter than 20, the `else` branch would run.
+
+This pattern — checking each rule in turn and reporting the first failure — is very common. It's clear, easy to read, and easy to extend.
+
+#### No Else Needed for Simple Cases
+If you have a single `if` and nothing needs to happen when the condition is false, don't add an `else`. Just let the code continue.
+
+```apex
+balance = 100
+if balance < 0
+    balance = 0
+os.output(balance)
+```
+
+Here, if `balance` is negative, we clamp it to zero. If it's already non-negative, nothing changes. There's no need for an `else` — the "do nothing" case is handled by simply not running the block.
+
+### Ternary Expression
+The ternary expression is a shorthand for a simple if-else that chooses between two values. It's an expression, so it produces a value. You can use it anywhere you can use a value, such as on the right side of an assignment.
+
+The syntax is a bit different from some other languages. In Apex, you write:
+
+```apex
+value_if_true if condition else value_if_false
+```
+
+Notice the order: first the value for when the condition is true, then the word `if`, then the condition, then the word `else`, then the value for when the condition is false.
+
+For example:
+
+```apex
+age = 20
+status = "adult" if age >= 18 else "minor"
+```
+
+After this, `status` is `"adult"`. If `age` were 16, `status` would be `"minor"`.
+
+You can use the ternary anywhere you need to choose between two values. For example:
+
+```apex
+price = 100
+discount = 20
+final_price = price - discount if discount > 0 else price
+```
+
+Here, `final_price` becomes 80 because `discount > 0` is true, so the expression before `if` is used (`price - discount`). If `discount` were 0, `final_price` would be `price`.
+
+The condition in a ternary must be a boolean expression, just like in a regular if statement. The two values can be of any type, but they should be compatible for the context.
+
+#### Ternary vs. If Statement
+The ternary is not a replacement for an `if` statement. It's a tool for a specific situation: choosing between two values. It cannot contain multiple statements, and it cannot be used when you need to do different things (rather than produce different values).
+
+Use a ternary when:
+- You need to pick one of two values based on a condition.
+- The condition is short and simple.
+- Both branches are simple expressions, not multi-statement blocks.
+
+Use an `if` statement when:
+- You need to run multiple statements in one or both branches.
+- The logic requires more than two branches.
+- The condition is complex enough that it deserves its own line.
+
+#### Cannot Chain Ternaries
+You cannot chain ternary expressions. This is not allowed:
+
+```apex
+// NOT ALLOWED
+grade = "A" if score >= 90 else "B" if score >= 80 else "C"
+```
+
+Apex requires you to use a regular `if`/`else if`/`else` statement for cases that involve more than two possibilities. The ternary is strictly a two-way choice.
+
+```apex
+// CORRECT WAY
+if score >= 90
+    grade = "A"
+else if score >= 80
+    grade = "B"
+else
+    grade = "C"
+```
+
+This restriction is deliberate. The ternary is meant to be short and readable. Chaining them turns them into a hard-to-read puzzle. If you have more than two branches, use the statement form.
+
+#### A Word on Apex's Ternary Order
+If you're coming from another language, you might be used to writing the condition first: `condition ? value_if_true : value_if_false`. Apex flips this around. The value comes first, then the condition, then the alternative.
+
+```apex
+// Apex
+status = "adult" if age >= 18 else "minor"
+```
+
+Read it out loud: "adult if age is at least 18, else minor." That reads naturally, like English. The order is a design choice to make the expression easier to read aloud. Once you get used to it, you may find it clearer than the traditional form.
+
+#### Boolean Conditions Need Explicit Comparison
+As with all conditions in Apex, the ternary condition must be an explicit boolean. You cannot write:
+
+```apex
+status = "yes" if is_active else "no"  // ERROR — is_active is a boolean, but not a comparison
+```
+
+You must write:
+
+```apex
+status = "yes" if is_active == true else "no"
+```
+
+This is consistent with the rest of the language. Apex never treats a bare boolean as a condition; it always requires a comparison (`== true`, `== false`, `!= none`, etc.).
+
+#### A Practical Example
+Here's an example that puts everything together. A function that returns a friendly greeting based on the time of day:
+
+```apex
+import os
+
+function greeting(hour)
+    time_of_day = "morning" if hour < 12 else "afternoon" if hour < 18 else "evening"
+    return "Good {time_of_day}"
+```
+
+Wait — that example chains ternaries, which Apex doesn't allow. Let's rewrite it with an if statement:
+
+```apex
+import os
+
+function greeting(hour)
+    time_of_day = ""
+    if hour < 12
+        time_of_day = "morning"
+    else if hour < 18
+        time_of_day = "afternoon"
+    else
+        time_of_day = "evening"
+    return "Good {time_of_day}"
+
+os.output(greeting(10))  // Good morning
+os.output(greeting(15))  // Good afternoon
+os.output(greeting(20))  // Good evening
+```
+
+This is the correct way to handle three or more possibilities. The ternary works for two; the if statement works for any number.
+
+## Match / Case
+Sometimes you have a single value that you need to compare against many different possibilities. You could write a long chain of `if` and `else if` statements, but that gets messy quickly. Apex gives you a cleaner tool for this exact situation: the `match` statement.
+
+Think of `match` as a specialized decision-maker. You give it one value — the subject — and then you list a series of constant patterns. Apex checks the subject against each pattern in order. As soon as it finds a match, it runs the corresponding block of code and then skips the rest of the `match`. It's like a multi-way fork in the road, but much more readable than a pile of `else if`s.
+
+`match` is not an expression. It doesn't produce a value you can assign. It's a statement, just like `if`. You use it when you want to *do* different things based on a value, not when you want to compute a result.
+
+### Match Statement
+The `match` keyword is followed by the value you want to check — the subject. Then you write an indented block containing `case` branches. Each `case` has a constant pattern, and below it (indented further) is the code that runs when the subject equals that pattern.
+
+Syntax:
+```apex
+match subject
+    case pattern1
+        // code to run if subject equals pattern1
+    case pattern2
+        // code to run if subject equals pattern2
+    // ... more cases ...
+```
+
+Let's look at a simple example. Suppose you have a numeric status code and you want to set a message based on it.
+
+```apex
+status = 404
+message = ""
+
+match status
+    case 200
+        message = "OK"
+    case 404
+        message = "Not Found"
+    case 500
+        message = "Server Error"
+```
+
+After this runs, `message` is `"Not Found"`. Here's what happens:
+- Apex looks at `status`, which is `404`.
+- It checks `case 200`: 404 is not 200, so it moves on.
+- It checks `case 404`: 404 equals 404, so it runs the block `message = "Not Found"`.
+- It then skips the remaining cases (there's only `case 500` left, which is ignored).
+
+If `status` were `200`, `message` would be `"OK"`. If `status` were `500`, `message` would be `"Server Error"`. If `status` were something else, like `302`, none of the cases would match, and `message` would stay `""`.
+
+Notice the indentation. The `match` line is at the current indentation. The `case` lines are indented four spaces. The code inside each case is indented another four spaces. This is how Apex knows which code belongs to which case. Just like with `if`, indentation defines the blocks.
+
+You can have as many `case` branches as you need. They are checked from top to bottom. The first one that matches wins, and the rest are ignored.
+
+#### A Note on the Block
+Just like with `if`, each `case` body is its own **scope**. Variables declared inside a case live only inside that case. When the case ends, they're gone.
+
+```apex
+import os
+
+code = 200
+
+match code
+    case 200
+        message = "OK"
+        os.output(message)
+    case 404
+        message = "Not Found"  // same name, different case — OK
+        os.output(message)
+
+os.output(message)  // ERROR — message is not defined here
+```
+
+The variable `message` is declared inside each case. Each case has its own `message`. None of them are visible after the `match` is finished. If you want a variable to survive past the match, declare it before the `match`.
+
+```apex
+import os
+
+code = 200
+message = ""
+
+match code
+    case 200
+        message = "OK"
+    case 404
+        message = "Not Found"
+
+os.output(message)  // OK — message was declared outside
+```
+
+Now `message` is declared outside the `match`, so the assignment inside the case modifies the outer variable. The value survives.
+
+This is consistent with the rest of Apex: **indentation defines scope**. Every time you indent, you enter a new scope. Every time you dedent, you leave it.
+
+#### Cases Are Checked from Top to Bottom
+The order of cases matters. Apex checks them one at a time, starting from the top. As soon as one matches, its block runs, and the rest are skipped.
+
+This means that if two patterns could match the same subject, only the first one will ever run. Consider this:
+
+```apex
+grade = 85
+result = ""
+
+match grade
+    case 85
+        result = "exact"
+    case 85
+        result = "duplicate"
+```
+
+The subject is `85`. The first case matches, and `result` becomes `"exact"`. The second case is never reached. It's not an error to have duplicate patterns, but it's pointless — the second one is dead code.
+
+More commonly, the order matters when patterns overlap in *meaning*, not in literal value. For instance, if you're matching against status codes and you have a case for `200` and a case for `200`, the second one is unreachable. But if you're matching against strings and you have a case for `"hello"` and a case for `"hello world"`, they're different patterns, and both can match. Which one runs depends on which one appears first.
+
+Apex will actually warn you when a case can never match. If your patterns are mutually exclusive (as they should be for clean code), you won't see any warnings.
+
+### Case Patterns
+A pattern is the value you compare against. It must be a **constant** — something that never changes. You cannot use a variable as a pattern, because the whole point of `match` is to compare against fixed, known values.
+
+The allowed constant patterns are:
+- **Number literals**: like `42`, `3.14`, or negative numbers like `-1`.
+- **String literals**: like `"hello"`, `"error"`, or `""` (empty string).
+- **Boolean literals**: `true` or `false`.
+- **None**: the special value `none`.
+
+Here's an example with string patterns:
+
+```apex
+command = "quit"
+action = ""
+
+match command
+    case "start"
+        action = "Starting..."
+    case "stop"
+        action = "Stopping..."
+    case "quit"
+        action = "Goodbye!"
+```
+
+After this, `action` is `"Goodbye!"`. The subject `command` is a string, and the patterns are string literals. They match by exact text. Case matters: `"Start"` would not match `"start"`.
+
+You can also use booleans:
+
+```apex
+is_enabled = false
+status = ""
+
+match is_enabled
+    case true
+        status = "Enabled"
+    case false
+        status = "Disabled"
+```
+
+Here, `status` becomes `"Disabled"`.
+
+And you can match against `none`:
+
+```apex
+result = none
+message = ""
+
+match result
+    case none
+        message = "No result"
+    case 0
+        message = "Zero"
+```
+
+Since `result` is `none`, it matches `case none`, and `message` becomes `"No result"`.
+
+Negative numbers are allowed too:
+
+```apex
+temperature = -5
+feeling = ""
+
+match temperature
+    case -10
+        feeling = "Freezing"
+    case -5
+        feeling = "Very cold"
+    case 0
+        feeling = "Cold"
+```
+
+Here, `feeling` becomes `"Very cold"`.
+
+#### Patterns Must Match the Subject's Type
+The type of the pattern must match the type of the subject. You cannot match a number against a string pattern. If you try, Apex will warn you that the case can never match.
+
+```apex
+value = 42
+result = ""
+
+match value
+    case "42"           // WARNING — string pattern, number subject
+        result = "string"
+    case 42
+        result = "number"
+```
+
+The first case can never match, because the subject is a number and `"42"` is a string. Apex will tell you this. The second case works fine.
+
+So if your subject is a number, all patterns must be numbers. If it's a string, all patterns must be strings. If it's a boolean, all patterns must be booleans. And so on.
+
+#### Constants Only, No Variables or Expressions
+Patterns must be literal constants. You cannot use a variable, a function call, or any expression as a pattern.
+
+```apex
+key = 42
+value = 10
+result = ""
+
+match value
+    case key            // ERROR — key is a variable, not a constant
+        result = "matched key"
+    case 10
+        result = "matched ten"
+```
+
+The `case key` line is not allowed. Apex requires the pattern to be a known value at the time the program is compiled. A variable could change at runtime, and that would make the match unpredictable.
+
+Similarly, you cannot use an expression:
+
+```apex
+match value
+    case 40 + 2         // ERROR — expression, not a constant literal
+        result = "matched 42"
+```
+
+You could write `case 42` directly, but not `case 40 + 2`.
+
+#### Empty String and Zero Are Valid Patterns
+An empty string `""` is a valid string pattern. Zero is a valid number pattern. They are not the same as `none`.
+
+```apex
+text = ""
+result = ""
+
+match text
+    case ""
+        result = "empty string"
+    case none
+        result = "none"
+```
+
+Since `text` is `""` (a string with zero characters), the first case matches, and `result` becomes `"empty string"`. If `text` were `none`, the second case would match instead.
+
+This is a useful distinction to keep in mind. An empty string is still a string. `none` is not a string at all.
+
+### Default Case
+What if none of the patterns match? You can provide a default case that runs when nothing else matches. A default case is written as `case` with no value after it. It's like the `else` in an if-else chain.
+
+The default case must be the **last** case in the `match`. You can only have one default case.
+
+Example:
+
+```apex
+code = 302
+description = ""
+
+match code
+    case 200
+        description = "OK"
+    case 404
+        description = "Not Found"
+    case
+        description = "Unknown status"
+```
+
+After this, `description` is `"Unknown status"` because `302` didn't match `200` or `404`, so the default case ran.
+
+If you omit the default case and no pattern matches, then the `match` statement simply does nothing. Execution continues with the code after the `match`. That might be fine if you only care about specific values. But if you want to handle "everything else," use a default case.
+
+```apex
+code = 302
+description = "initial"
+
+match code
+    case 200
+        description = "OK"
+    case 404
+        description = "Not Found"
+
+// No default. Nothing matches 302, so description stays "initial"
+```
+
+Here, since no case matched and there's no default, `description` remains `"initial"`. The `match` simply did nothing.
+
+#### The Default Case Must Be Last
+The default case must come last. If you put any case after it, Apex will report an error. That's because once you have a default, any case below it would be unreachable — the default would always run first.
+
+```apex
+match value
+    case 1
+        // ...
+    case                 // default
+        // ...
+    case 2               // ERROR — case after default
+        // ...
+```
+
+This rule exists to prevent mistakes. If you could put cases after the default, you might accidentally think they're reachable when they're not. Apex stops you before that happens.
+
+#### Only One Default Case
+You can have at most one default case. Two defaults would be ambiguous — which one should run when nothing matches? So Apex allows only one.
+
+```apex
+match value
+    case 1
+        // ...
+    case                 // default
+        // ...
+    case                 // ERROR — second default
+        // ...
+```
+
+If you have two defaults, Apex will report an error on the second one.
+
+#### When to Use a Default Case
+Use a default case when you want to handle the "everything else" scenario. This is common when the subject can take on many values and you only care about a few specific ones.
+
+For example, if you're processing commands and you handle a few known ones, the default catches typos or unsupported commands:
+
+```apex
+import os
+
+command = "restart"
+handled = true
+
+match command
+    case "start"
+        os.output("Starting...")
+    case "stop"
+        os.output("Stopping...")
+    case
+        handled = false
+        os.output("Unknown command")
+```
+
+Since `"restart"` isn't `"start"` or `"stop"`, the default runs, and `handled` becomes `false`.
+
+You don't always need a default. If your cases cover every possible value (for a boolean subject, for instance), a default is redundant. If you're fine with "do nothing" when nothing matches, skip the default.
+
+### Rules and Restrictions
+To use `match` correctly, keep these rules in mind:
+
+#### 1. Subject Type
+The subject must be a `number`, `string`, `boolean`, or `none`. You cannot match against a table or any other complex type.
+
+```apex
+t = [1, 2, 3]
+
+match t              // ERROR — table subject not allowed
+    case 1
+        // ...
+```
+
+Apex will report an error saying the subject must be a number, string, boolean, or none. Tables and functions are not allowed as subjects.
+
+#### 2. Pattern Type
+Each pattern must be a constant of the same type as the subject. You cannot mix types.
+
+```apex
+value = 42
+
+match value
+    case "42"        // WARNING — string pattern, number subject
+        // ...
+    case 42
+        // ...
+```
+
+Apex will warn you that the first case can never match. It's not a hard error, but it's a bug in your code, and Apex helps you see it.
+
+#### 3. Constants Only
+Patterns must be literal constants. You cannot use variables, expressions, or function calls.
+
+```apex
+x = 42
+
+match 10
+    case x           // ERROR — x is a variable
+        // ...
+    case 10
+        // ...
+```
+
+The `case x` line is not allowed. Use only literal values.
+
+#### 4. Order Matters
+Cases are checked from top to bottom. The first matching case wins. Once a case runs, the rest of the `match` is skipped. There is no fall-through like in some other languages' switch statements.
+
+#### 5. Default Case
+You may have at most one default case, written as `case` with no value. It must be the last case. If no case matches and there is no default, the `match` does nothing.
+
+#### 6. Scope
+Each `case` body has its own scope. Variables declared inside a case are local to that case and are not visible after the `match`. You can reuse the same variable name in different cases without conflict.
+
+#### 7. Not an Expression
+`match` is a statement, not an expression. It does not produce a value. You cannot write `x = match ...` or use it inside another expression.
+
+```apex
+// NOT ALLOWED
+result = match value
+    case 1
+        // ...
+```
+
+If you need to compute a value based on a set of cases, use an if-else chain instead. The ternary won't help either — it only handles two branches. For multiple branches that produce a value, the if/else if/else statement is the right tool.
+
+#### 8. No Tables
+Tables cannot be used as subjects or patterns. Only the four simple types are allowed. If you need to branch based on a table, you'd have to extract a value from the table first, then match on that value.
+
+#### 9. No Range Patterns
+Apex `match` does not support range patterns like `case 1..10`. Each pattern is a single, exact value.
+
+```apex
+score = 85
+
+match score
+    case 90              // exact value only
+        // ...
+    case 1..89           // ERROR — ranges not supported
+        // ...
+```
+
+If you need range checks, use an if-else chain with comparison operators.
+
+```apex
+score = 85
+grade = ""
+
+if score >= 90
+    grade = "A"
+else if score >= 80
+    grade = "B"
+else
+    grade = "C"
+```
+
+This is the right tool for ranges. `match` is for exact values.
+
+#### 10. No Compound Patterns
+Apex `match` does not support compound patterns like `case 1, 2, 3` or `case 1 or 2`. Each case handles exactly one value.
+
+```apex
+value = 2
+
+match value
+    case 1, 2, 3         // ERROR — compound patterns not supported
+        // ...
+```
+
+If you want to match several values to the same block, you would need to write each case separately, or use an if-else chain.
+
+```apex
+// Alternative: use if-else if you need to group values
+if value == 1 or value == 2 or value == 3
+    // ...
+```
+
+#### 11. No Fallthrough
+Unlike C's `switch`, Apex's `match` has no fallthrough. Once a case matches, its block runs, and the `match` ends. You don't need a `break` statement.
+
+```apex
+match value
+    case 1
+        // only this block runs
+    case 2
+        // this is skipped if case 1 matched
+```
+
+There's no way to accidentally fall through from one case to the next. This is one of the reasons `match` is cleaner than `switch` in many other languages.
+
+#### 12. Empty Case Bodies Are Allowed
+A case body can be empty. If the subject matches and the case has no code, nothing happens. This is unusual but not an error.
+
+```apex
+match value
+    case 1
+    case 2
+        // code for case 2
+```
+
+Here, if `value` is 1, the first case matches, its empty body runs (nothing happens), and the `match` ends. The second case is never reached. So this is different from C's `switch` fallthrough — Apex stops at the first match, empty or not.
+
+If you actually want "do nothing for 1, do something for 2," you'd write:
+
+```apex
+match value
+    case 1
+        none                // explicitly do nothing (a single expression statement)
+    case 2
+        // code for case 2
+```
+
+Or, more commonly, you'd just include the "do nothing" case in a grouped if statement.
+
+### Putting It Together
+`match` is a powerful way to keep your code clean when you have many fixed options to check. It's especially handy for things like status codes, command strings, or simple state machines.
+
+Here's a complete example that puts everything together:
+
+```apex
+import os
+
+function describe_day(day)
+    description = ""
+    match day
+        case "Monday"
+            description = "Start of the work week"
+        case "Friday"
+            description = "Almost the weekend"
+        case "Saturday"
+            description = "Weekend!"
+        case "Sunday"
+            description = "Rest day"
+        case
+            description = "Just a regular day"
+    return description
+
+os.output(describe_day("Saturday"))   // Weekend!
+os.output(describe_day("Wednesday"))  // Just a regular day
+os.output(describe_day(""))           // Just a regular day (empty string doesn't match)
+```
+
+The function takes a day name. It matches against four known days and falls through to a default for anything else. The result is a short description.
+
+#### When to Use Match vs. If
+Use `match` when:
+- You're comparing one value against many fixed possibilities.
+- Each possibility is a constant (number, string, boolean, or none).
+- You want the code to be clean and readable.
+
+Use `if`/`else if`/`else` when:
+- You need ranges or comparisons (like `score >= 90`).
+- Your conditions involve different subjects (like `age > 18 and has_license == true`).
+- You need complex boolean logic.
+
+Both tools have their place. `match` is not better than `if` — it's just more specialized. For the specific case of "one value, many constants," `match` is clearer. For everything else, `if` is the right choice.
+
+#### A Reminder About Comparison Semantics
+When `match` compares the subject to a pattern, it uses the same comparison rules as `==`. That means:
+
+- Numbers are compared by value: `42` matches `42`.
+- Strings are compared by content: `"hello"` matches `"hello"`, not `"Hello"` (case matters).
+- Booleans are compared by value: `true` matches `true`, `false` matches `false`.
+- `none` matches `none`.
+- Different types never match: `42` never matches `"42"`.
+- Tables and functions cannot be used at all.
+
+So if you're ever unsure whether a pattern will match, think about what `subject == pattern` would produce. If `==` gives `true`, the case matches. If `==` gives `false`, it doesn't.
+
+Now you have another tool in your decision-making toolkit. In the next section, we'll learn how to repeat code with loops.
+
+## For Loops
+Programs often need to repeat the same action many times. You might want to count from one to ten, process every item in a table, or keep asking for input until the user types the right thing. Writing the same code over and over is not an option — it would be tedious and error-prone. That's where loops come in.
+
+A loop is a way to tell Apex: "Do this block of code again and again, according to these rules." Apex gives you a single keyword — `for` — with three different forms, each suited to a different kind of repetition:
+
+- **Counter**: when you know the exact range of numbers you want to walk through.
+- **Table iteration**: when you want to visit every value inside a table, one by one.
+- **Condition**: when you don't know how many times you'll repeat, but you know when to stop.
+
+All three use `for`, and all three use the same indentation rule you already know: the loop body is a block indented by four spaces.
+
+Before we look at each form, one important rule: **a loop creates its own scope**. Any variable you declare inside the loop body — including the loop variable itself — exists only inside that loop. Once the loop finishes, those variables are gone. You cannot use them afterward. We'll see this in action as we go.
+
+Let's start with the most common form: the counter.
+
+### For Counter
+The counter form is for when you want to count. You give the loop a variable, a starting number, and an ending number. Apex runs the body once for each number in that range, including the end value.
+
+Syntax:
+```apex
+for variable = start, end
+    // code to run for each value
+```
+
+The loop variable takes on each value in turn: `start`, then `start + 1`, then `start + 2`, and so on, until it reaches `end`. At each step, the body runs. When the variable would go past `end`, the loop stops.
+
+Here's a simple example that counts from 1 to 5:
+
+```apex
+result = ""
+for i = 1, 5
+    result = "{result}{i}"
+```
+
+After this code runs, `result` is `"12345"`. Let's trace through it:
+- `i` starts at 1. The body runs: `result` becomes `"1"`.
+- `i` becomes 2. The body runs: `result` becomes `"12"`.
+- `i` becomes 3. The body runs: `result` becomes `"123"`.
+- `i` becomes 4. The body runs: `result` becomes `"1234"`.
+- `i` becomes 5. The body runs: `result` becomes `"12345"`.
+- `i` would become 6, which is greater than 5, so the loop stops.
+
+Notice the string interpolation `"{result}{i}"`. It builds up the result one digit at a time. Also notice that `result` is declared **outside** the loop, so it survives after the loop ends. But `i` is declared **inside** the loop header, so it only exists during the loop. If you tried to use `i` after the loop, Apex would report an error.
+
+What if the start is greater than the end? For example:
+
+```apex
+result = ""
+for i = 5, 1
+    result = "{result}{i}"
+```
+
+Here, `i` starts at 5, which is already greater than the end value 1. The loop never runs. `result` stays `""`. This is not an error — it's just a loop with zero iterations.
+
+#### Counting Down with a Step
+By default, the counter increases by 1 each time. But you can add a third number — the **step** — to control how much it changes.
+
+Syntax:
+```apex
+for variable = start, end, step
+    // code
+```
+
+The step can be any number. If it's positive, the loop counts upward. If it's negative, the loop counts downward.
+
+Counting upward by 2:
+```apex
+result = ""
+for i = 0, 10, 2
+    result = "{result}{i}"
+```
+
+After this, `result` is `"0246810"`. `i` takes the values 0, 2, 4, 6, 8, 10. When it would become 12 (greater than 10), the loop stops.
+
+Counting downward:
+```apex
+result = ""
+for i = 5, 1, -1
+    result = "{result}{i}"
+```
+
+Here, `result` becomes `"54321"`. `i` takes 5, 4, 3, 2, 1, then would become 0, which is less than 1, so the loop stops.
+
+If you use a negative step, the start value should be greater than the end value for the loop to run at all. If you swap them and still use a negative step, the loop won't run:
+
+```apex
+result = ""
+for i = 1, 5, -1     // start 1, end 5, step -1
+    result = "{result}{i}"
+```
+
+The step is negative, so the loop counts downward. But the start value (1) is less than the end value (5). Counting down from 1 never reaches 5 — it goes further and further away. So the loop doesn't run. `result` stays `""`.
+
+**The step cannot be zero.** If you write `for i = 1, 10, 0`, Apex will report an error. A step of zero would mean the loop variable never changes, so the loop would never end — that's not allowed.
+
+You can also use decimals as steps, but be careful. Floating-point arithmetic can introduce tiny rounding errors. For example:
+
+```apex
+result = ""
+for i = 0, 2, 0.5
+    result = "{result}{i} "
+```
+
+After this, `result` is `"0 0.5 1 1.5 2 "`. The loop counts from 0 by half-steps. But if you tried to use `0.1` as a step, you might find that accumulated rounding errors make the loop either run one extra time or one time too few. For most counting tasks, whole-number steps are what you want.
+
+#### The Loop Variable Is a Number
+The loop variable in a counter loop is always a number. You can use it in arithmetic, compare it, print it — anything you'd do with a number.
+
+```apex
+sum = 0
+for i = 1, 5
+    sum = sum + i
+```
+
+After this, `sum` is 15 (because 1+2+3+4+5 = 15). The loop variable `i` was used as a number in the expression `sum + i`.
+
+If you wanted to compute the factorial of a number with a loop, you could do:
+
+```apex
+function factorial(n)
+    result = 1
+    for i = 1, n
+        result = result * i
+    return result
+```
+
+Calling `factorial(5)` returns 120.
+
+#### Using a Decimal Start or End
+The start and end values don't have to be whole numbers. You can use decimals:
+
+```apex
+result = ""
+for i = 0.5, 2.5, 0.5
+    result = "{result}{i} "
+```
+
+After this, `result` is `"0.5 1 1.5 2 2.5 "`. The loop runs for each value from 0.5 to 2.5, stepping by 0.5.
+
+The start and end values are evaluated once, at the beginning of the loop. They are not re-evaluated on each iteration. So if you write:
+
+```apex
+end = 10
+result = ""
+for i = 1, end
+    end = 100
+    result = "{result}{i}"
+```
+
+The loop still stops at 10, because that's the value `end` had when the loop began. Changing `end` inside the loop has no effect on the loop's stop condition.
+
+This is important. The `end` value is captured once, and the loop runs according to that captured value. Same for the step:
+
+```apex
+step = 1
+result = ""
+for i = 1, 5, step
+    step = 2
+    result = "{result}{i}"
+```
+
+The loop runs 1, 2, 3, 4, 5 (step 1), not 1, 3, 5. The step is captured once at the start.
+
+#### The Loop Variable Cannot Be Modified Inside the Loop
+You might wonder: what happens if I assign a new value to the loop variable inside the loop?
+
+```apex
+result = ""
+for i = 1, 5
+    i = 100
+    result = "{result}{i}"
+```
+
+This doesn't work the way you might think. The loop variable `i` is controlled by the loop machinery. Assigning to it inside the body is confusing and can lead to undefined behavior. Apex manages the loop variable itself. Don't write code that assigns to the loop variable — it's a bug waiting to happen.
+
+If you need a variable that you can modify, use a different name:
+
+```apex
+result = ""
+for i = 1, 5
+    temp = i * 2
+    result = "{result}{temp}"
+```
+
+Now `temp` is a normal variable that you can modify freely. `i` stays under the loop's control.
+
+#### Nested Counter Loops
+You can put a loop inside another loop. This is called **nesting**. When you do, each loop has its own variable and its own scope.
+
+```apex
+result = ""
+for i = 1, 2
+    for j = 1, 2
+        result = "{result}{i}{j} "
+```
+
+After this, `result` is `"11122122 "`. Let's trace through:
+- `i` is 1. Inner loop runs with `j` from 1 to 2:
+  - `j = 1`: result += "11 "
+  - `j = 2`: result += "12 "
+- `i` is 2. Inner loop runs again with `j` from 1 to 2:
+  - `j = 1`: result += "21 "
+  - `j = 2`: result += "22 "
+
+The total is `"11122122 "`.
+
+Notice that the inner loop runs completely for each iteration of the outer loop. This is the key idea of nesting. The outer loop controls the inner loop.
+
+Nested loops are useful for working with grids, matrices, and any data that has multiple dimensions. For example, a chessboard is an 8×8 grid:
+
+```apex
+for row = 1, 8
+    for col = 1, 8
+        // process cell at (row, col)
+```
+
+Each cell gets its own processing. This pattern is extremely common.
+
+But be careful with nesting. If you nest too many loops, the number of iterations grows fast. Two nested loops with 100 iterations each means 10,000 total iterations. Three nested loops with 100 iterations each means 1,000,000. The computer is fast, but it's not infinitely fast. If your nested loops take too long, look for ways to flatten them or reduce the range.
+
+### For Table Iteration
+Tables hold many values. Often you want to do something with each one — print it, add it to a total, check if it matches some condition. The table iteration form of `for` lets you visit every value in a table, one at a time.
+
+Syntax:
+```apex
+for variable in table
+    // code to run for each value
+```
+
+The loop variable takes on each **value** from the table. Notice I said value, not key. Apex gives you the values directly. You don't need to worry about positions or keys unless you want to.
+
+Here's an example:
+
+```apex
+fruits = ["apple", "banana", "cherry"]
+result = ""
+for fruit in fruits
+    result = "{result}{fruit} "
+```
+
+After this, `result` is `"apple banana cherry "`. The loop visits each string in the table, in order, and appends it to `result` followed by a space.
+
+The loop variable `fruit` is a new variable, local to the loop. It changes on each iteration. You can name it whatever you like — `fruit`, `item`, `value`, `x`. Just pick a name that describes what the values are.
+
+You can iterate over tables of any type — numbers, strings, booleans, even tables inside tables. For example:
+
+```apex
+numbers = [10, 20, 30, 40]
+total = 0
+for n in numbers
+    total = total + n
+```
+
+After this, `total` is `100`. The loop adds each number to the running total.
+
+#### Iterating Over Key-Value Tables
+Now consider a key-value table:
+
+```apex
+user = ["name" = "Alice", "age" = 30, "city" = "Dubai"]
+result = ""
+for value in user
+    result = "{result}{value} "
+```
+
+Here, `result` becomes `"30 Dubai Alice "` (or some other order — key-value tables do not guarantee the order in which values are visited). The loop visits the values `"Alice"`, `30`, and `"Dubai"`, but the order depends on the internal layout of the table.
+
+This is important: **key-value tables do not preserve insertion order.** If you insert `"name"` first and `"age"` second, you might get `"age"` before `"name"` when iterating. If you need a specific order, you should sort or restructure your data first.
+
+The key thing to remember: **for table iteration gives you the values, not the keys**. If you want the keys, Apex provides ways to get them, but that's a topic for later.
+
+#### Iterating Over Mixed Tables
+If a table has both positional values and key-value pairs, iteration visits all of them. But the order is not guaranteed for the key-value part.
+
+```apex
+mixed = ["first", "second", "name" = "Alice"]
+result = ""
+for v in mixed
+    result = "{result}{v} "
+```
+
+After this, `result` might be `"first second Alice "` — the positional values come first, and then the key-value values. Or it might not, depending on the implementation. In practice, positional values are visited in order, and then key-value values are visited in their own internal order.
+
+The takeaway: don't rely on the order of iteration for key-value tables. If order matters, use a table that contains only positional values, or sort the keys first.
+
+#### Iterating Over an Empty Table
+What happens if the table is empty?
+
+```apex
+empty = []
+count = 0
+for v in empty
+    count = count + 1
+```
+
+The loop runs zero times. `count` stays 0. This is not an error — it's just a loop that doesn't execute. The same is true if the table has no values (like a key-value table with only keys but no values, which is unusual but possible).
+
+#### The Loop Variable Holds a Reference
+When you iterate over a table, the loop variable holds a **reference** to each value. For numbers and strings, this doesn't matter much — they're immutable anyway. But for tables, the loop variable points to the same table that's inside the container.
+
+```apex
+outer = [[1, 2], [3, 4]]
+for inner in outer
+    // inner is a reference to each inner table
+    inner[1] = inner[1] * 10
+```
+
+After this, `outer` is `[[10, 2], [30, 4]]`. Because `inner` is a reference to the actual table inside `outer`, modifying `inner` modifies the original table.
+
+If you wanted to modify a copy instead, you'd have to make the copy yourself. But usually, modifying in place is what you want.
+
+#### You Cannot Iterate Over Strings
+If you want to iterate over the characters of a string, `for value in string` won't work. Strings are not tables.
+
+```apex
+text = "hello"
+for c in text     // ERROR — text is a string, not a table
+    // ...
+```
+
+Apex requires the iterable to be a table. If you need to process characters one by one, you can split the string into a table of characters first, or use a counter loop over the string's length.
+
+### For Condition
+Sometimes you don't know in advance how many times you'll need to repeat something. You just know that you want to keep going as long as some condition is true. That's what the condition form of `for` is for.
+
+Syntax:
+```apex
+for condition
+    // code to run while condition is true
+```
+
+Notice there's no variable after `for`. Instead, you write a boolean expression — the same kind of condition you'd write in an `if` statement. Before each iteration, Apex checks the condition. If it's true, the body runs. If it's false, the loop stops.
+
+Here's an example that counts from 1 to 5:
+
+```apex
+counter = 1
+result = ""
+for counter <= 5
+    result = "{result}{counter}"
+    counter = counter + 1
+```
+
+After this, `result` is `"12345"`. Let's trace through:
+- `counter` is 1. The condition `counter <= 5` is true. The body runs: `result` becomes `"1"`, `counter` becomes 2.
+- `counter` is 2. Condition true. `result` becomes `"12"`, `counter` becomes 3.
+- … and so on …
+- `counter` is 5. Condition true. `result` becomes `"12345"`, `counter` becomes 6.
+- `counter` is 6. Condition `6 <= 5` is false. The loop stops.
+
+Notice that `counter` is declared **before** the loop. The loop body modifies it. If you forgot to update `counter` inside the body, the condition would never change, and the loop would run forever. Apex won't stop you from writing an infinite loop — it will just keep running until you kill the program.
+
+Always make sure something inside the loop body changes the condition. Common patterns are incrementing a counter, decrementing a counter, or reading new input each time.
+
+#### The Condition Can Be Any Boolean Expression
+The condition can be any boolean expression, including comparisons with `and`, `or`, and `not`. For example:
+
+```apex
+x = 1
+y = 10
+result = ""
+for x < y and y > 5
+    result = "{result}{x}"
+    x = x + 2
+    y = y - 1
+```
+
+This loop continues as long as `x < y` **and** `y > 5`. Each iteration, `x` increases by 2 and `y` decreases by 1. The condition is re-checked before each iteration.
+
+#### The Condition Is Re-Evaluated Before Each Iteration
+Unlike a counter loop, where the start and end values are captured once, the condition in a condition loop is re-evaluated before every iteration. That's the whole point — the condition can change based on what happens in the body.
+
+```apex
+i = 0
+for i < 5
+    i = i + 1
+```
+
+Before each run, `i < 5` is checked with the current value of `i`. When `i` becomes 5, the condition is false, and the loop stops.
+
+This means you can write conditions that depend on the state of many variables, and the loop will adapt as those variables change. The loop keeps running as long as the condition is true, no matter how many iterations that takes.
+
+#### Counting Down
+Here's an example that counts down:
+
+```apex
+counter = 5
+result = ""
+for counter >= 1
+    result = "{result}{counter}"
+    counter = counter - 1
+```
+
+After this, `result` is `"54321"`. The loop runs while `counter >= 1`. Each iteration, `counter` decreases by 1. When `counter` reaches 0, the condition is false, and the loop stops.
+
+#### A Warning About Infinite Loops
+An infinite loop is a loop that never stops. It runs forever, or until the program is killed. This can happen accidentally if you forget to update the condition variable.
+
+```apex
+counter = 1
+for counter <= 5
+    result = "{result}{counter}"
+    // forgot to increment counter!
+```
+
+Here, `counter` is always 1. The condition `1 <= 5` is always true. The loop runs forever, printing `"1"` each time. The program will hang until you interrupt it (usually with Ctrl+C).
+
+Always double-check that your loop body changes the state that the condition depends on. If the condition doesn't change, the loop never stops.
+
+#### The Condition Must Be Boolean
+As with everything in Apex, the condition must be a boolean expression. You cannot write `for x` and expect it to mean "while x is not zero." You must write a comparison or a boolean variable.
+
+```apex
+x = 5
+for x > 0          // OK — comparison
+    // ...
+
+y = true
+for y == true      // OK — explicit boolean comparison
+    // ...
+```
+
+If you write `for x` where `x` is a number, Apex will report an error. Always be explicit.
+
+#### Zero Iterations
+If the condition is false from the start, the loop never runs. This is not an error — it's just a loop with zero iterations.
+
+```apex
+x = 10
+result = ""
+for x < 5
+    result = "{result}{x}"
+```
+
+Here, `x < 5` is false initially (10 is not less than 5). The loop body never runs. `result` stays `""`.
+
+### Break
+Sometimes you want to leave a loop early. Maybe you found what you were looking for and there's no point continuing. Or maybe an error occurred and you need to stop. The `break` statement exits the loop immediately.
+
+When Apex sees `break`, it jumps out of the innermost loop, skipping any remaining iterations. Execution continues with the code after the loop.
+
+Here's an example that searches for a value:
+
+```apex
+numbers = [10, 20, 30, 40, 50]
+found = false
+for n in numbers
+    if n == 30
+        found = true
+        break
+```
+
+After this, `found` is `true`. The loop visits 10, then 20, then 30. When `n` is 30, the condition `n == 30` is true, so `found` becomes `true` and `break` runs. The loop stops immediately, and the remaining values (40, 50) are never visited.
+
+Without `break`, the loop would continue to the end, but `found` would already be `true` — the extra iterations would just be wasted work. `break` saves time when you know there's nothing more to do.
+
+#### Break in Counter Loops
+You can use `break` with any form of `for`. Here's an example with a counter loop:
+
+```apex
+result = ""
+for i = 1, 10
+    if i == 5
+        break
+    result = "{result}{i}"
+```
+
+After this, `result` is `"1234"`. The loop runs `i` from 1 to 10, but when `i` reaches 5, `break` exits the loop. So the body only runs for `i` = 1, 2, 3, 4.
+
+#### Break in Condition Loops
+`break` is especially common with condition loops, where you're looping until something happens, and then you break when it does.
+
+```apex
+import os
+
+for true == true       // infinite loop
+    input = os.input("Enter a number (or 'quit'): ")
+    if input == "quit"
+        break
+    n = number(input)
+    if n == none
+        os.output("Not a number")
+    else
+        os.output("Doubled: {n * 2}")
+```
+
+This loop runs forever, prompting the user for input. If the user types `"quit"`, `break` exits the loop. Otherwise, the input is processed and the loop repeats.
+
+Using `for true == true` to write an infinite loop is a common pattern when you don't know how many iterations you'll need, but you know when to stop. Always make sure there's a `break` somewhere that will eventually be reached.
+
+#### Break Only Exits the Innermost Loop
+`break` only exits the **innermost** loop. If you have a loop inside another loop, `break` inside the inner loop exits only that inner loop. The outer loop continues.
+
+```apex
+result = ""
+for i = 1, 3
+    for j = 1, 5
+        if j == 3
+            break
+        result = "{result}{i}{j} "
+```
+
+After this, `result` is `"111221223132 "`. Let's trace:
+- `i = 1`: inner loop runs `j` from 1 to 5. When `j == 3`, break. So `j` runs 1, 2. `result` gets `"11 12 "`.
+- `i = 2`: inner loop again runs `j` from 1, breaks at 3. `result` gets `"21 22 "`.
+- `i = 3`: same thing. `result` gets `"31 32 "`.
+
+The `break` only exits the inner loop. The outer loop continues. This is important — if you want to break out of both loops at once, you'd need some other mechanism (like a flag variable or a helper function with a `return`).
+
+### Continue
+Sometimes you don't want to exit the loop entirely — you just want to skip the rest of the current iteration and move on to the next one. That's what `continue` does.
+
+When Apex sees `continue`, it stops executing the current iteration and jumps to the next one. The loop itself continues; only the current pass is cut short.
+
+Here's an example that skips even numbers:
+
+```apex
+result = ""
+for i = 1, 6
+    if i % 2 == 0
+        continue
+    result = "{result}{i}"
+```
+
+After this, `result` is `"135"`. Let's trace through:
+- `i` is 1. `1 % 2 == 0` is false, so we don't continue. `result` becomes `"1"`.
+- `i` is 2. `2 % 2 == 0` is true, so `continue` runs. We skip the rest of the body — `result` is not changed.
+- `i` is 3. Condition false. `result` becomes `"13"`.
+- `i` is 4. Condition true. `continue`. Skip.
+- `i` is 5. Condition false. `result` becomes `"135"`.
+- `i` is 6. Condition true. `continue`. Skip.
+- Loop ends.
+
+The loop visited all six numbers, but the even ones were skipped. `continue` is useful when you want to ignore certain cases but still process the rest.
+
+#### Continue in Table Iteration
+`continue` works in table iteration loops too:
+
+```apex
+values = [1, 2, 3, 4, 5]
+result = ""
+for v in values
+    if v % 2 == 0
+        continue
+    result = "{result}{v}"
+```
+
+After this, `result` is `"135"`. The loop skips the even numbers.
+
+#### Continue Only Affects the Innermost Loop
+Like `break`, `continue` affects only the innermost loop. In nested loops, `continue` skips to the next iteration of the inner loop, not the outer one.
+
+```apex
+result = ""
+for i = 1, 2
+    for j = 1, 3
+        if j == 2
+            continue
+        result = "{result}{i}{j} "
+```
+
+After this, `result` is `"11132123 "`. Let's trace:
+- `i = 1`:
+  - `j = 1`: no continue. `result` gets `"11 "`.
+  - `j = 2`: continue — skip. `result` not changed.
+  - `j = 3`: no continue. `result` gets `"13 "`.
+- `i = 2`:
+  - `j = 1`: no continue. `result` gets `"21 "`.
+  - `j = 2`: continue — skip.
+  - `j = 3`: no continue. `result` gets `"23 "`.
+
+The `continue` only skipped the inner loop's iterations. The outer loop ran all its iterations.
+
+#### Continue vs. Break
+These two statements look similar but do very different things:
+
+| Statement | Effect |
+|-----------|--------|
+| `break` | Exits the loop entirely. |
+| `continue` | Skips the rest of the current iteration and moves on to the next one. |
+
+`break` says "I'm done with this loop." `continue` says "I'm done with this iteration."
+
+Use `break` when you want to stop looping entirely. Use `continue` when you want to skip the current item but keep looping.
+
+#### A Common Pattern: Filtering
+A common use of `continue` is filtering — you want to process some items but skip others.
+
+```apex
+import os
+
+numbers = [1, -2, 3, -4, 5]
+total = 0
+for n in numbers
+    if n < 0
+        continue
+    total = total + n
+os.output(total)   // 9 (1 + 3 + 5)
+```
+
+Here, the loop skips negative numbers and adds only the positive ones. The result is 9.
+
+Without `continue`, you'd need an `if` that wraps the entire rest of the loop body:
+
+```apex
+for n in numbers
+    if n >= 0
+        total = total + n
+```
+
+This is also valid, but when the loop body is long, `continue` at the top is cleaner. It lets you say "skip negative numbers" early, and then the rest of the body doesn't need to be indented.
+
+#### When to Use Continue
+Use `continue` when:
+- You want to skip the current item entirely.
+- The skip condition is simple and can be checked early in the loop.
+- The rest of the loop body would be deeply indented otherwise.
+
+Don't overuse it. If your loop body has many `continue` statements, it might be a sign that you should restructure your logic. But used sparingly, `continue` keeps loops clean.
+
+## Functions
+### Why Functions Exist
+Imagine you're writing a program that calculates the area of a circle. You write the formula once, and it works. Now imagine your program needs to calculate the area of ten different circles at ten different points. Would you write the same formula ten times? Of course not. That would be tedious, and if you ever needed to change the formula, you'd have to change it in ten places. Miss one, and your program is inconsistent.
+
+This is the problem functions solve. A **function** is a named block of code that you can run whenever you want, as many times as you want, without writing it out again. You write the code once, give it a name, and then **call** that name whenever you need the code to run.
+
+Think of a function like a recipe. A recipe has a name (like "Pancakes"), it might need ingredients (flour, milk, eggs), and it produces a result (a stack of pancakes). You don't rewrite the recipe every time you want pancakes. You just follow the recipe again. The recipe is the function. The ingredients are the **parameters**. The pancakes are the **return value**. And "making pancakes" is **calling** the function.
+
+Functions give you three big benefits:
+
+1. **Reusability.** Write once, use many times.
+2. **Clarity.** A well-named function tells you what it does without you needing to read the code inside.
+3. **Organization.** Complex programs become a collection of small, understandable pieces instead of one giant blob.
+
+Every programming language has functions in some form. In Apex, they are simple, predictable, and pure. Let's learn how to write them.
+
+### Function Statement
+To create a function, you use the `function` keyword. Then you write the function's name. Then a pair of parentheses `()`. Then an indented block of code — the function body.
+
+Syntax:
+```apex
+function name()
+    // code that runs when the function is called
+```
+
+Here's a simple example:
+
+```apex
+import os
+
+function say_hello()
+    os.output("Hello!")
+```
+
+This defines a function called `say_hello`. The body contains one line: it prints `"Hello!"` to the terminal. Defining the function does not run it. It just tells Apex: "When I say `say_hello()`, run this code."
+
+To actually run the code, you have to **call** the function. We'll cover calling in a moment. For now, just notice the shape: keyword `function`, then a name, then `()`, then an indented block.
+
+#### Naming Functions
+Function names follow the same rules as variable names. They can contain letters, digits, and underscores. They cannot start with a digit. They are case-sensitive: `say_hello` and `Say_Hello` are different names.
+
+By convention, Apex uses `snake_case` for function names — all lowercase, with underscores between words. So `say_hello`, `calculate_area`, `find_user_by_id`. This makes names easy to read.
+
+A good function name describes **what the function does**, not how it does it. `calculate_total` is better than `loop_and_add`. `is_valid` is better than `check_stuff`. When someone reads your code, the name should tell them what to expect.
+
+#### Functions Are Values
+When you define a function, Apex stores it as a **function value** — just like numbers, strings, and tables. You can assign it to a variable, pass it around, and store it in tables. But for now, we'll keep it simple and focus on the basics.
+
+### Parameters
+A function that always does the same thing is useful, but limited. Most functions need **input** — information to work with. That's what parameters are for.
+
+A parameter is a named slot that the function expects to receive when it's called. You list parameters inside the parentheses, separated by commas.
+
+Syntax:
+```apex
+function name(param1, param2, param3)
+    // code can use param1, param2, and param3
+```
+
+Here's a function with one parameter:
+
+```apex
+import os
+
+function greet(name)
+    os.output("Hello, {name}!")
+```
+
+This function is called `greet`. It takes one parameter called `name`. Inside the body, `name` is used in a string interpolation. When someone calls `greet("Alice")`, the parameter `name` becomes `"Alice"`, and the function prints `"Hello, Alice!"`.
+
+The parameter `name` is a variable. It exists only inside the function. It's created when the function is called, and it disappears when the function finishes. You can use it anywhere inside the body, just like any other variable.
+
+Here's a function with two parameters:
+
+```apex
+import os
+
+function add(a, b)
+    result = a + b
+    os.output("{a} + {b} = {result}")
+```
+
+When you call `add(5, 3)`, the parameter `a` becomes `5`, `b` becomes `3`, and the function prints `"5 + 3 = 8"`.
+
+The order matters. The first value you pass goes into the first parameter, the second value goes into the second parameter, and so on. So `add(5, 3)` and `add(3, 5)` both work, but they set the parameters differently.
+
+#### Parameters Are Local
+A parameter is just a local variable. It exists inside the function and nowhere else. If you have a variable with the same name outside the function, they are different variables. The parameter shadows the outer one inside the function body.
+
+For example:
+
+```apex
+import os
+
+name = "Outer"
+
+function greet(name)
+    os.output("Hello, {name}!")
+
+greet("Alice")
+os.output("Outside: {name}")
+```
+
+This prints:
+```text
+Hello, Alice!
+Outside: Outer
+```
+
+Inside `greet`, the parameter `name` is `"Alice"`. Outside, the variable `name` is still `"Outer"`. They don't interfere.
+
+#### Parameters Must Be Provided
+Apex does not have default parameter values. If a function declares two parameters, you must call it with exactly two arguments. Not one. Not three. Exactly two.
+
+If you try to call `add(5)` when `add` expects two parameters, Apex will report an error. If you call `add(5, 3, 1)`, Apex will also report an error. This strictness is deliberate: functions should be predictable, and part of predictability is knowing exactly what input they expect.
+
+#### Parameters Are Copies
+When you pass a value to a function, the parameter receives a **copy** of that value. If you change the parameter inside the function, the original value outside is not affected.
+
+For numbers, strings, booleans, and none, this is straightforward. They are **immutable** — you can't change them anyway. You can only reassign the variable to point to a new value.
+
+For tables, the story is different. A table is a **reference type**. When you pass a table to a function, the parameter points to the same table. If you modify the table inside the function — by setting a key or appending an item — those changes are visible outside. But if you reassign the parameter to a completely new table, the outer variable still points to the original.
+
+This distinction is important, but it's a subtle one. For now, just remember: numbers, strings, booleans, and none are copied. Tables are shared. We'll revisit this when we talk about tables more deeply.
+
+### Return Value
+A function can do work, but often you want it to **give you back a result**. That's what return values are for. When a function returns a value, the call to that function **evaluates** to that value. You can assign it to a variable, use it in an expression, or pass it to another function.
+
+To return a value, use the `return` keyword followed by an expression:
+
+```apex
+function add(a, b)
+    return a + b
+```
+
+This function takes two parameters and returns their sum. When you call `add(5, 3)`, the function runs, computes `5 + 3`, and returns `8`. The call `add(5, 3)` becomes `8` — as if you'd written the number `8` directly.
+
+You can use the return value like this:
+
+```apex
+import os
+
+function add(a, b)
+    return a + b
+
+result = add(5, 3)
+os.output(result)  // prints 8
+```
+
+Here, `result` receives the value `8`, which came from the function. Then `os.output` prints it.
+
+You can also use the return value directly:
+
+```apex
+os.output(add(10, 20))  // prints 30
+```
+
+The function returns `30`, and `os.output` prints it.
+
+#### Returning Early
+The `return` statement does two things: it gives a value back to the caller, and it **immediately exits the function**. Nothing after `return` runs.
+
+```apex
+function check_positive(n)
+    if n > 0
+        return "positive"
+    return "not positive"
+```
+
+If `n` is `5`, the condition `n > 0` is true, so `return "positive"` runs, and the function exits immediately. The final `return "not positive"` is never reached.
+
+If `n` is `-3`, the condition is false, so the first `return` is skipped. The function continues to `return "not positive"`, which runs and exits the function.
+
+This pattern — checking a condition and returning early — is very common. It keeps your code flat and easy to read, avoiding deeply nested `if` statements.
+
+#### Functions Without a Return
+Not every function needs to return a value. Some functions just do something — print a message, write a file, modify a table. If a function has no `return`, it returns `none` automatically when it reaches the end.
+
+```apex
+import os
+
+function say_hello()
+    os.output("Hello!")
+
+result = say_hello()
+os.output(result)  // prints none
+```
+
+Here, `say_hello` prints `"Hello!"`, then reaches the end of the function. Since there's no `return`, it returns `none`. The variable `result` gets `none`.
+
+You can also write `return none` explicitly if you want to be clear that the function returns nothing meaningful. But it's not required.
+
+#### Return Ends the Function
+Once `return` runs, the function is done. Nothing after it runs, not even if there's more code in the body.
+
+```apex
+function example()
+    return 42
+    os.output("This never runs")  // unreachable
+```
+
+Apex will actually warn you that the line after `return` is unreachable. It's dead code, and dead code is usually a mistake.
+
+#### A Function Returns Exactly One Value
+Apex functions return exactly one value. That value can be a number, a string, a boolean, none, or a table. But it's always exactly one thing.
+
+You cannot write `return a, b` to return two values. If you need to return multiple pieces of information, you can put them in a table and return the table.
+
+```apex
+function min_max(numbers)
+    // ... compute minimum and maximum ...
+    return ["min" = min_value, "max" = max_value]
+```
+
+Then the caller receives a table and can access its parts. This is the idiomatic way to return multiple values in Apex.
+
+### Call
+Defining a function doesn't run it. To run it, you **call** it. Calling a function means writing its name followed by parentheses, with any arguments inside the parentheses if the function expects parameters.
+
+Syntax:
+```apex
+name(arg1, arg2, ...)
+```
+
+If the function has no parameters, the parentheses are empty:
+
+```apex
+say_hello()
+```
+
+If the function has parameters, you list the values inside:
+
+```apex
+greet("Alice")
+add(5, 3)
+```
+
+The values you pass are called **arguments**. The names inside the function definition are called **parameters**. They're often used interchangeably, but the distinction is useful: parameters are the slots, arguments are the values you put in them.
+
+When Apex sees a function call, it:
+1. Evaluates each argument to get its value.
+2. Creates a new scope for the function.
+3. Binds each parameter to the corresponding argument value.
+4. Runs the function body.
+5. If a `return` is reached, that value becomes the result of the call.
+6. If the end of the body is reached without a `return`, the result is `none`.
+7. Destroys the function's scope, including all parameters and local variables.
+8. The call expression evaluates to the returned value.
+
+You can use a function call anywhere you can use a value. That means you can:
+
+- Assign it to a variable: `result = add(5, 3)`
+- Use it in an expression: `total = add(5, 3) * 2`
+- Pass it to another function: `os.output(add(5, 3))`
+- Use it in a condition: `if is_valid(x) == true`
+
+And because functions can call other functions, you can build up complex behavior from simple pieces.
+
+### Scope and Blocks
+Every function creates a new **scope**. A scope is a region of code where a variable exists. Variables declared inside a function — including its parameters — are **local** to that function. They are created when the function is called, and they are destroyed when the function returns.
+
+This means:
+
+1. You cannot access a function's local variables from outside.
+2. Two different functions can use the same variable name without conflict.
+3. A function can read variables from outer scopes, but it cannot assign to them in a way that affects the outer scope (for numbers, strings, booleans, and none).
+
+Let's look at an example:
+
+```apex
+import os
+
+x = "outer"
+
+function test()
+    y = "inner"
+    os.output(x)  // reads outer variable
+    os.output(y)  // reads local variable
+
+test()
+os.output(y)  // ERROR: y is not defined here
+```
+
+Inside `test`, the variable `x` is visible because it was declared outside. But `y` is local to `test`. After `test` returns, `y` is gone. Trying to use it outside causes an error.
+
+The function can read `x`, but it cannot change `x` in a way that affects the outside. If it assigns to `x`, it creates a new local variable that shadows the outer one.
+
+```apex
+import os
+
+x = "outer"
+
+function test()
+    x = "inner"  // creates a new local x
+    os.output(x)  // prints "inner"
+
+test()
+os.output(x)  // prints "outer"
+```
+
+Inside `test`, `x = "inner"` creates a new local variable `x`. The outer `x` is untouched. When `test` returns, the local `x` disappears, and the outer `x` is still `"outer"`.
+
+#### Functions Inside Functions
+You can define a function inside another function. The inner function can read the outer function's variables, but the outer function cannot read the inner function's variables.
+
+```apex
+import os
+
+function outer()
+    message = "Hello from outer"
+    
+    function inner()
+        os.output(message)  // reads outer's message
+    
+    inner()
+
+outer()
+```
+
+Here, `inner` is defined inside `outer`. It can read `message` because `message` is in an enclosing scope. When `outer` calls `inner`, the message is printed.
+
+Nested functions are useful for organization, but they should be used sparingly. Most of the time, a flat structure with well-named functions at the top level is clearer.
+
+#### Blocks Inside Functions
+You already know that `if` and `for` create their own blocks and scopes. The same is true inside functions. A variable declared inside an `if` block is local to that block. It does not exist after the block.
+
+```apex
+function example()
+    if true == true
+        temp = "inside if"
+        // temp exists here
+    // temp does not exist here
+```
+
+This rule is consistent throughout Apex: **indentation defines scope**. Wherever you indent, you create a new scope. Variables live and die within their scope.
+
+### Early Return
+The `return` statement can appear anywhere in a function, not just at the end. When it runs, the function exits immediately, and no further code in that function runs.
+
+This is called **early return**, and it's a powerful way to keep your functions readable.
+
+Consider a function that validates a username:
+
+```apex
+function is_valid_username(name)
+    if name == none
+        return false
+    if string.length(name) < 3
+        return false
+    if string.length(name) > 20
+        return false
+    return true
+```
+
+This function checks several conditions. If any of them fail, it returns `false` immediately. Only if all conditions pass does it return `true`. The logic is flat and easy to follow.
+
+Without early return, you'd need to nest everything:
+
+```apex
+function is_valid_username(name)
+    if name != none
+        if string.length(name) >= 3
+            if string.length(name) <= 20
+                return true
+            else
+                return false
+        else
+            return false
+    else
+        return false
+```
+
+This is harder to read. The nesting obscures the logic. Early return flattens it out.
+
+Use early return when:
+- You're validating input and want to bail out on the first problem.
+- You've found what you're looking for and don't need to continue.
+- You're handling error cases and want to get them out of the way.
+
+Functions can have multiple `return` statements, but only one of them will actually run on any given call. The first one reached is the one that exits.
+
+### Recursion
+A function can call itself. This is called **recursion**, and it's a powerful technique for solving problems that have a naturally repetitive structure.
+
+The classic example is factorial. The factorial of a number `n` is the product of all positive integers from 1 to `n`. For example, `5! = 5 × 4 × 3 × 2 × 1 = 120`.
+
+You can define factorial recursively: `n! = n × (n-1)!`, with the base case `0! = 1`.
+
+```apex
+function factorial(n)
+    if n <= 1
+        return 1
+    return n * factorial(n - 1)
+```
+
+Let's trace `factorial(4)`:
+- `n` is 4. Not `<= 1`. So return `4 * factorial(3)`.
+- `n` is 3. Not `<= 1`. So return `3 * factorial(2)`.
+- `n` is 2. Not `<= 1`. So return `2 * factorial(1)`.
+- `n` is 1. `1 <= 1` is true. Return `1`.
+- So `factorial(2)` returns `2 * 1 = 2`.
+- `factorial(3)` returns `3 * 2 = 6`.
+- `factorial(4)` returns `4 * 6 = 24`.
+
+Recursion works because each call to `factorial` creates a new scope with its own `n`. They don't interfere with each other. The calls stack up until the base case is reached, then the results unwind back.
+
+Every recursive function needs a **base case** — a condition where it returns without calling itself. Without a base case, the function would call itself forever, and Apex would eventually report a stack overflow.
+
+Apex has a maximum call depth of 1024 frames. If your recursion goes deeper than that, the program stops with an error. Most recursive algorithms stay well under this limit, but deeply recursive ones might need to be rewritten as loops.
+
+## Async / Await
+### Why Async Exists
+Imagine you're writing a program that needs to read a large file from disk. Reading a file is not instant. It takes time — maybe a few milliseconds, maybe a few seconds. While the computer is fetching that data, what should your program do? Should it freeze and wait, doing nothing until the file is ready? Or should it keep doing other useful work in the meantime?
+
+In most simple programs, the answer is "just wait." You ask for the file, and your program pauses until the file arrives. This is called **blocking**. It's simple and predictable. For small scripts, it's perfectly fine.
+
+But imagine your program has more to do. Maybe it needs to read ten files, or wait for a network response, or sleep for a second between steps. If each of those operations blocks the whole program, you're wasting time. While waiting for one thing, you can't do anything else.
+
+This is where **async** and **await** come in. They let you say: "Start this slow operation, but don't stop the whole program while you wait. Let me do other things. When the result is ready, I'll come back for it."
+
+The idea is simple, but the mechanics take a moment to get used to. Let's build up from the ground.
+
+### What Is a Future
+A **future** is a value that represents a result you don't have yet — but will have later. It's like a claim ticket at a coat check. You hand over your coat, and you get a ticket. The ticket isn't the coat. It's a promise that says: "Your coat will be ready when you come back with this ticket."
+
+You can hold onto the ticket, put it in your pocket, or hand it to a friend. You don't have to wait at the counter. You can go do other things. When you're ready to get your coat, you show the ticket, and if the coat is ready, you receive it. If it's not ready yet, you wait a little longer.
+
+In Apex, a future is a real value — just like a number, string, or table. You can store it in a variable, put it in a table, pass it to a function. It represents a result that will be available at some point.
+
+You create a future by calling an **async function**. Calling a normal function runs its body immediately and gives you the result. Calling an async function does something different: it **starts** the function's body in the background, and immediately returns a future. You get the ticket right away. The result comes later.
+
+### Async Function
+To create an async function, you put the word `async` before the word `function`.
+
+Syntax:
+```apex
+async function name(params)
+    // body
+```
+
+Everything else stays the same. You still list parameters, you still use `return`, you still call it with parentheses. The only difference is that calling it does not run the body to completion and give you the return value directly. Instead, it returns a **future**.
+
+Here's a simple async function:
+
+```apex
+async function add(a, b)
+    return a + b
+```
+
+This function adds two numbers and returns the sum. The body is trivial. But because it's marked `async`, calling `add(2, 3)` does not give you `5`. It gives you a **future** that will eventually hold `5`.
+
+```apex
+future = add(2, 3)
+// future is a future, not 5
+```
+
+To get the actual value out of a future, you need `await`. We'll get there in a moment.
+
+#### Why Mark a Function Async?
+For a function as simple as `add`, there's no reason to make it async. The body is instantaneous. The whole point of async is to run slow work in the background without blocking. So async functions usually do things like:
+
+- Read a file with `os.read`.
+- Wait for a timer with `os.wait`.
+- Perform a network request.
+- Run a long computation.
+
+Here's an example of an async function that waits:
+
+```apex
+import os
+
+async function delayed_greeting(name)
+    await os.wait(1)  // wait one second in the background
+    return "Hello, {name}!"
+```
+
+When you call `delayed_greeting("Alice")`, the function starts running in the background. It immediately hits `await os.wait(1)`, which schedules a one-second timer and suspends the function. The caller gets a future back right away. After a second passes, the function resumes, builds the greeting string, and the future resolves to `"Hello, Alice!"`.
+
+The caller was never blocked. If the caller had other work to do, it could do that work during the one-second wait.
+
+#### Async Functions Return Futures
+Every async function, no matter how simple, returns a future. Even `async function add(a, b) return a + b` returns a future, not a number.
+
+This is the crucial rule to internalize: **calling an async function gives you a future, not the result**. The result arrives later, and you retrieve it with `await`.
+
+### Await
+The word `await` means: "I want the result of this future. If it's ready, give it to me now. If it's not ready yet, wait until it is."
+
+You use `await` before a call to an async function. The call is what produces the future; `await` unwraps it.
+
+Syntax:
+```apex
+result = await async_function(args)
+```
+
+The `await` keyword tells Apex: "Call this async function, start its body in the background if it hasn't already started, and give me the value when it's ready."
+
+Here's a complete example:
+
+```apex
+import os
+
+async function add(a, b)
+    return a + b
+
+async function main()
+    result = await add(2, 3)
+    os.output(result)  // prints 5
+
+await main()
+```
+
+Let's trace through this:
+- `main` is called with `await`. It's async, so its body starts running.
+- Inside `main`, `add(2, 3)` is called with `await`. This starts `add`'s body in the background.
+- `add` returns `5` almost instantly. `await` receives `5` and assigns it to `result`.
+- `os.output(result)` prints `5`.
+- `main` finishes, and the top-level `await main()` completes.
+
+The `await` in front of `add(2, 3)` is what turns the future into the actual number.
+
+#### Await Does Not Block Everything
+The word "wait" might make you think `await` freezes the whole program. It doesn't. When `await` encounters a future that isn't ready yet, it **suspends the current function** and lets the rest of the program continue. Other functions, other coroutines, and the scheduler keep running. Only the current function pauses.
+
+Think of it like this: you're in a restaurant, and you've ordered food. Instead of standing at the counter staring at the kitchen, you go back to your table and chat with friends. When the waiter brings your food, you eat. You didn't block anyone; you just paused your own waiting until the food arrived.
+
+`await` works the same way. It pauses the function that called it, but the rest of the program keeps going. When the future resolves, the function resumes right where it left off.
+
+#### Await Always Gives a Value
+The result of `await` is the resolved value of the future. If the async function returned `5`, `await` gives you `5`. If it returned a string, you get the string. If it returned a table, you get the table. If it returned `none`, you get `none`.
+
+You can use that value like any other:
+
+```apex
+async function main()
+    x = await get_number()
+    y = await get_number()
+    sum = x + y
+    os.output("Sum: {sum}")
+```
+
+Each `await` retrieves one value. The values are ordinary Apex values.
+
+### Where Await Can Be Used
+`await` has strict rules about where it can appear. It can only be used in two places:
+
+1. **Inside an async function.**
+2. **At the top level of the program.**
+
+That's it. You cannot use `await` inside a normal (non-async) function. You cannot use it inside an `if` at the top level unless that `if` is itself at the top level.
+
+The reason is that `await` requires the scheduler to be able to pause and resume the surrounding function. Only async functions (and the top-level program) are set up to support that. A regular function must run from start to finish without interruption.
+
+If you try to use `await` inside a normal function, Apex will report an error: `'await' outside of async function`.
+
+#### Top-Level Await
+At the top level of your program — that is, in the code that runs immediately when the program starts — you can use `await` directly. This is convenient for small scripts that need to await one or two things.
+
+```apex
+import os
+
+async function fetch_name()
+    await os.wait(0.5)
+    return "Alice"
+
+name = await fetch_name()
+os.output(name)  // prints "Alice" after a half-second pause
+```
+
+Here, `await fetch_name()` is at the top level. It's allowed. The program runs `fetch_name` in the background, waits for it to finish, gets `"Alice"`, and prints it.
+
+#### Await Inside Async Functions
+You can also use `await` inside any async function. This is how you compose async operations: one async function awaits another, which awaits another, and so on.
+
+```apex
+import os
+
+async function read_two_files(path1, path2)
+    content1 = await os.read(path1)
+    content2 = await os.read(path2)
+    return content1 + content2
+```
+
+Here, `read_two_files` awaits `os.read` twice. Each call runs in the background. The function suspends while waiting, then resumes when each file is ready.
+
+You can also await user-defined async functions:
+
+```apex
+async function outer()
+    result = await inner()
+    return result * 2
+
+async function inner()
+    return 42
+
+final = await outer()  // 84
+```
+
+The nesting can go as deep as you need. Each level of `await` unwraps one layer of future.
+
+### What Can Be Awaited
+Not everything can be awaited. The operand of `await` must be either:
+
+1. **A call to an async function.**
+2. **A call to a builtin that supports async.**
+
+You cannot await a number. You cannot await a string. You cannot await a normal function call. You cannot await a variable that holds a future — you can only await the **call** that produces the future.
+
+Wait — that last one needs clarification. The rule is that `await` must be followed by a function call. You write:
+
+```apex
+result = await async_function()
+```
+
+You cannot write:
+
+```apex
+fut = async_function()
+result = await fut  // ERROR: 'await' requires a call
+```
+
+The future stored in `fut` is real, but Apex requires the await to see the call directly. This is a design choice that keeps the scheduler simple and predictable. If you need to store an async call's future for later, you would typically structure your code so the await happens immediately, or you would restructure so the async function does the work internally.
+
+In practice, this restriction is rarely a problem. You usually call an async function and await it right away.
+
+#### Awaiting Builtins
+Many built-in functions in Apex support the async protocol. When you put `await` before a call to one of these builtins, the work is offloaded to a background worker thread, and the caller continues without blocking. The future resolves when the worker is done.
+
+Builtins that can be awaited include:
+
+- `os.read` — reading a file.
+- `os.write` — writing a file.
+- `os.append` — appending to a file.
+- `os.execute` — running a shell command.
+- `os.wait` — sleeping for a duration.
+- `os.copy`, `os.move`, `os.rename`, `os.delete`, `os.create_file`, `os.create_folder`, `os.list_folder`, `os.size`, `os.exists`, `os.is_file`, `os.is_folder`, `os.parent_folder`, `os.access`, `os.terminate` — various filesystem and process operations.
+- `json.decode`, `json.encode` — JSON processing.
+- `xml.decode`, `xml.encode` — XML processing.
+- `csv.decode`, `csv.encode` — CSV processing.
+- `base.encode_*`, `base.decode_*` — base encoding.
+- `regex.find_all`, `regex.replace`, `regex.split`, `regex.search` — regex operations.
+- `zip.pack`, `zip.unpack` — ZIP archives.
+
+When you call these with `await`, the operation runs off the main thread. The current function suspends. When the operation completes, the function resumes with the result.
+
+```apex
+import os
+import json
+
+async function load_config(path)
+    text = await os.read(path)
+    if text == none
+        return none
+    return json.decode(text)
+
+config = await load_config("config.json")
+```
+
+Here, `await os.read(path)` reads the file in the background. Then `await load_config(...)` (at the top level) runs the whole function as a background coroutine. The result is the parsed config or `none`.
+
+#### Awaiting Without Awaiting
+It's worth noting: if you call one of these builtins without `await`, it runs synchronously — that is, it blocks the current thread until it's done.
+
+```apex
+text = os.read(path)  // blocks until the file is read
+```
+
+This is fine for simple scripts. The async versions are for when you want to keep the program responsive while doing slow work.
+
+#### When You Don't Need to Await
+You don't have to await everything. If you're at the top level and you just need a value, you can call async functions and use the result... but wait, that's not true. Calling an async function gives you a future, not the value. So you do need to await.
+
+The exceptions are the synchronous builtins — the ones you call without `await`. Those are fine.
+
+The rule is simple: **if it's an async function, you must await it to get its value.** If it's a normal function or a synchronous builtin, you get the value directly.
+
+### Running in the Background
+When you write `await some_function()`, the body of `some_function` starts running in the background. This is important: it's not "run later" or "queue for some future time." It starts now.
+
+What happens next depends on whether `some_function` reaches an `await` of its own:
+
+- If `some_function` runs to completion without ever suspending, its future resolves almost immediately. The `await` in the caller retrieves the value right away.
+- If `some_function` suspends (because it awaits something), the caller's `await` also suspends. The scheduler pauses both functions and continues with other work. When the inner operation completes, `some_function` resumes, and eventually its future resolves, waking up the caller.
+
+This means that awaiting an async function that internally awaits other things chains the suspensions together. The scheduler manages the whole chain, resuming functions in the right order.
+
+#### Example: A Chain of Awaits
+```apex
+import os
+
+async function level_three()
+    await os.wait(0.1)
+    return "three"
+
+async function level_two()
+    result = await level_three()
+    return "two + {result}"
+
+async function level_one()
+    result = await level_two()
+    return "one + {result}"
+
+final = await level_one()
+os.output(final)  // prints "one + two + three"
+```
+
+Let's trace:
+- Top-level `await level_one()` starts `level_one` in the background.
+- `level_one` calls `await level_two()`, which starts `level_two` in the background.
+- `level_two` calls `await level_three()`, which starts `level_three` in the background.
+- `level_three` hits `await os.wait(0.1)`, which schedules a 0.1-second timer and suspends.
+- All four functions — top-level, `level_one`, `level_two`, `level_three` — are now suspended.
+- After 0.1 seconds, the timer fires. `level_three` resumes, returns `"three"`.
+- `level_two` resumes with `"three"`, builds `"two + three"`, returns it.
+- `level_one` resumes with `"two + three"`, builds `"one + two + three"`, returns it.
+- Top-level resumes with the final string, prints it.
+
+All of this happens without blocking the program. If there were other coroutines running, they would have continued during the 0.1-second pause.
+
+#### The Scheduler
+Under the hood, Apex has a **scheduler**. The scheduler is the part of the runtime that manages all the suspended functions and decides which one runs next. You don't interact with the scheduler directly. It works invisibly when you use `await`.
+
+Every time a function suspends, the scheduler keeps track of where it was and what it's waiting for. When the awaited operation finishes, the scheduler resumes the function.
+
+You don't need to know the details of the scheduler to use `await`. But it's good to know it exists, because it explains why `await` doesn't block everything and why some functions can pause and resume.
+
+## Imports
+### Why Imports Exist
+So far, every program you've written has lived in a single file. That's fine for small scripts — a hundred lines, maybe a few hundred. But real programs grow. They get bigger. A task tracker might have functions for storing tasks, functions for displaying them, functions for formatting dates, functions for reading and writing files, and hundreds of lines of logic connecting everything together.
+
+If you put all of that in one file, the file becomes a maze. You scroll forever to find the function you need. You lose track of what belongs with what. You can't hand a piece of the program to a teammate without also handing them everything else.
+
+The solution is to split your code into multiple files. Each file holds a related group of functions and variables — a **module**. One file might handle math utilities, another might handle string formatting, another might hold configuration. You work on each file separately, keeping it small and focused.
+
+But files can't be completely isolated. Sometimes the math file needs a helper from the string file. Sometimes the main program needs to call functions from both. That's what **imports** are for. An import tells Apex: "This file needs to use things from that other file. Go load it and make its contents available."
+
+Think of imports like borrowing tools from a friend's workshop. Instead of buying your own drill, you go next door and say "I need your drill for this job." The drill lives in your friend's workshop, but you can use it in yours. That's an import.
+
+In Apex, imports are simple. There's one keyword: `import`. You write it, name the file or library you want, and Apex handles the rest.
+
+### Importing an Entire File
+The most basic form of import brings in an entire file. You use the `import` keyword, followed by the file path.
+
+Syntax for a file in the same folder:
+```apex
+import database.apex
+```
+
+This tells Apex: "Load the file `database.apex` from the same folder as this one, and make everything it defines available to me."
+
+Wait — but a moment ago I said a file is a module. When you import a file, you don't get its contents dumped into your current scope with no structure. You get access to them **under the file's name**. So if `database.apex` defines a function called `connect`, you would call it like this:
+
+```apex
+import database.apex
+
+database.connect()
+```
+
+The prefix `database.` tells Apex: "Look in the database module for the `connect` function." This is how you know, when you're reading code, where each function comes from. If you see `string.length(...)`, you know it's from the string module. If you see `database.connect()`, you know it's from your database file.
+
+Here's a concrete example. Suppose you have a file called `math_utils.apex`:
+
+```apex
+// math_utils.apex
+
+function square(x)
+    return x * x
+
+function cube(x)
+    return x * x * x
+
+pi = 3.14159
+```
+
+And a main file called `main.apex` in the same folder:
+
+```apex
+// main.apex
+
+import math_utils.apex
+
+import os
+
+result = math_utils.square(5)
+os.output(result)  // prints 25
+
+area = math_utils.pi * math_utils.square(3)
+os.output(area)    // prints 28.27431
+```
+
+Notice how the imported functions are called with the module prefix: `math_utils.square(5)`. The variable `pi` from `math_utils` is also accessed through the prefix: `math_utils.pi`.
+
+This prefixing is deliberate. Without it, imagine if two files both define a function called `square` — one for numbers and one for matrices. If imports dumped everything into one flat namespace, one would overwrite the other, and calling `square` would be ambiguous. With prefixes, `math_utils.square` and `matrix_utils.square` are distinct. The prefix is the file's name, and it's how Apex keeps things organized.
+
+Notice that we also imported `os` in the example. `os` is a built-in module — we'll cover that distinction later. For now, focus on the file import.
+
+#### The `.apex` Extension Is Required
+For user files, you must include the `.apex` extension in the import. If you write `import math_utils` without the extension, Apex won't know whether you mean a file, a folder, or something else. So always write `import math_utils.apex`.
+
+Actually, let me correct that — the rule is: the import path must end with `.apex`. If you write `import math_utils`, Apex will report an error saying the path must end with `.apex`. This is a hard rule. Built-in modules (like `os`, `math`, `json`) are the exception, because they don't correspond to files on disk; they're part of the interpreter itself. We'll discuss that more in a bit.
+
+#### Where Does Apex Look for the File?
+All user file imports are resolved relative to the **main file** — the file you actually ran with `apex main.apex`. Not the file that contains the import, but the main file. This is important because it makes all your imports consistent. No matter how deep in your folder structure a file is, when it imports something, that import path is written as if it were being written from the main file's folder.
+
+Let's look at an example of why this matters. Suppose your project looks like this:
+
+```
+my_project/
+├── main.apex
+├── database.apex
+└── utils/
+    └── string_utils.apex
+```
+
+If `main.apex` wants to use `string_utils.apex`, it writes:
+
+```apex
+import utils/string_utils.apex
+```
+
+Now suppose `database.apex` also wants to use `string_utils.apex`. It writes the same thing:
+
+```apex
+import utils/string_utils.apex
+```
+
+Even though `database.apex` is in the project root, and `string_utils.apex` is in `utils/`, the import path is still `utils/string_utils.apex` because it's written as if from the main file. This is deliberate — it keeps imports consistent. You never have to think about "where is this file relative to this other file?" You just write it once from the main file's perspective, and it works everywhere.
+
+We'll come back to this rule when we talk about sub-folders.
+
+### What Gets Imported
+When you import a file, what exactly do you get access to? This is a question you might be asking.
+
+The answer: **all globals** defined in the imported file. That means:
+
+- **Functions.** Every `function` declared at the top level of the imported file.
+- **Variables.** Every variable declared at the top level.
+- **Constants.** Every `constant` declared at the top level.
+
+What does **not** get imported:
+
+- Local variables inside functions. Those are private to their functions and always will be.
+- Anything that's inside a nested scope (like a variable declared inside an `if` block at the top level). Only the top-level definitions are shared.
+
+Here's an example to make this clear. Suppose `helpers.apex` looks like this:
+
+```apex
+// helpers.apex
+
+greeting = "Hello"
+
+function greet(name)
+    return "{greeting}, {name}!"
+
+function mystery()
+    secret = "I am local"
+    return secret
+```
+
+When you import `helpers.apex`, you get access to `helpers.greeting` and `helpers.greet`. You do **not** get access to `secret`, because it's inside the `mystery` function.
+
+You also get access to `helpers.mystery`, because `mystery` itself is a top-level function. Its body is not visible, but the function is.
+
+#### Modules Run Once
+A subtle but important point: when Apex imports a file, the top-level code in that file runs exactly once. Even if two different files import the same module, the module's body runs a single time. This is important because it means any initialization code (like setting up a global variable based on the environment) only runs once, no matter how many places use the module.
+
+```apex
+// config.apex
+
+import os
+import sys
+
+host = sys.host()
+started_at = datetime.timestamp()
+```
+
+If `config.apex` is imported from three different files, `sys.host()` and `datetime.timestamp()` are only called once. The module remembers its state from that single execution.
+
+This is good news for both performance and consistency. You don't get three different values for `started_at`. You get the same value everywhere, because the module ran once.
+
+### Importing from Sub-folders
+Big projects rarely keep all files in one folder. They organize them into sub-folders — one for utilities, one for network code, one for tests. Apex supports this with a simple rule: use forward slashes `/` in your import paths to walk into folders.
+
+Suppose your project looks like this:
+
+```
+my_project/
+├── main.apex
+└── utils/
+    ├── math.apex
+    └── string.apex
+```
+
+To import `math.apex`, you write:
+
+```apex
+import utils/math.apex
+```
+
+The `/` in `utils/math.apex` tells Apex: "Look in the folder `utils`, then in the file `math.apex`." You can nest deeper, too:
+
+```
+my_project/
+├── main.apex
+└── utils/
+    └── internal/
+        └── helpers.apex
+```
+
+```apex
+import utils/internal/helpers.apex
+```
+
+Each `/` represents one level of descent.
+
+You can use as many levels as you want, but if you go more than a few levels deep, consider whether your project structure is trying to tell you something. Deep folder structures can be hard to navigate. Most projects stay within two or three levels.
+
+Once imported, you access things using the module name — which is the file's name without the `.apex` extension, not including the folders. So `utils/math.apex` becomes just `math` when used:
+
+```apex
+import utils/math.apex
+
+result = math.square(5)
+```
+
+Notice that we write `math.square(5)`, not `utils.math.square(5)`. The folder structure is part of the import path, but the module name is just the file name.
+
+#### A Caution About Names
+Because the module name is the file name, two files with the same name in different folders will both be called the same thing inside your program. For example, if you have both `utils/math.apex` and `helpers/math.apex`, importing both gives you two modules both named `math`. This is confusing and probably a bug in your project structure.
+
+Apex won't stop you from doing this, but you should avoid it. Pick unique file names for your modules. If you must have two files with the same name — for example, a `math.apex` for testing and a `math.apex` for production — use aliasing to give one of them a different name. We'll cover aliasing shortly.
+
+### Importing from One Sub-folder into Another
+Here's the tricky case. You have two files, each in its own sub-folder. One file wants to use something from the other. How do you write the import?
+
+Remember the rule: **every import path is written relative to the main file**. Not relative to the importing file, not relative to the current working directory, but relative to the main file.
+
+Let's look at the example structure from the Apex Express Course:
+
+```
+my_project/
+├── main.apex
+├── helpers/
+│   └── math.apex
+└── features/
+    └── calculator.apex
+```
+
+Now, `calculator.apex` wants to use the `power` function from `helpers/math.apex`. How does it write the import? Even though `calculator.apex` is inside `features/`, and `math.apex` is inside `helpers/`, and both are siblings under `my_project/`, you do **not** write something like `../helpers/math.apex`. Apex does not support `..` paths.
+
+Instead, you write:
+
+```apex
+import helpers/math.apex
+```
+
+That's it. This looks like `calculator.apex` is at the project root, not inside `features/`. And that's exactly the point: **all imports are written as if from the main file's location**. Since `main.apex` is at the project root, it would import `math.apex` as `helpers/math.apex`. So `calculator.apex` does the same thing, even though it's not at the project root.
+
+This rule is unusual at first — many other languages use relative paths like `../`. But once you get used to it, it's actually simpler. You never have to count how many `..` you need. Every path is written the same way. Every import in every file reads like it was written from the top of your project.
+
+Let's trace through a complete example to make sure it's clear.
+
+**File: `my_project/main.apex`**
+
+```apex
+import features/calculator.apex
+
+result = calculator.add(5, 3)
+os.output(result)
+```
+
+**File: `my_project/features/calculator.apex`**
+
+```apex
+import helpers/math.apex
+
+function add(a, b)
+    return a + b
+
+function power_add(a, b, exp)
+    return math.power(a, exp) + b
+```
+
+**File: `my_project/helpers/math.apex`**
+
+```apex
+function power(base, exp)
+    result = 1
+    for i = 1, exp
+        result = result * base
+    return result
+```
+
+Here's what happens:
+1. Apex runs `main.apex`. It sees `import features/calculator.apex`.
+2. It loads `calculator.apex`. Inside, there's `import helpers/math.apex`.
+3. Apex loads `helpers/math.apex` relative to the main file (`my_project/`), finding it at `my_project/helpers/math.apex`.
+4. Everything resolves, and `main.apex` can call `calculator.add(5, 3)`.
+
+The import path `helpers/math.apex` inside `calculator.apex` is written exactly as `main.apex` would have written it. Both files use the same path. This consistency is the whole point of the rule.
+
+### Aliasing
+Sometimes a module name is long, or awkward, or you just want a shorter name to type. Apex lets you give a module an **alias** — a shorter name you can use instead.
+
+Syntax:
+```apex
+import utils/calculator.apex as calc
+```
+
+Now, everywhere in your file, you can refer to the module as `calc` instead of `calculator`:
+
+```apex
+result = calc.add(2, 3)
+calc.print_result(result)
+```
+
+The `as` keyword introduces the alias. It comes after the file path, and the alias must be a valid name — letters, digits, and underscores, not starting with a digit.
+
+Aliases are purely a convenience. They change nothing about the module itself. They just give you a shorter way to refer to it. Use them when the original name is verbose, or when it clashes with something else.
+
+#### Aliases Must Be Unique
+Each alias in a single file must be different from every other alias and from every other module name. If you import two modules and give them the same alias, Apex will report an error.
+
+```apex
+import utils/calculator.apex as calc
+import utils/statistics.apex as calc  // ERROR: alias 'calc' already used
+```
+
+This is enforced because a duplicate alias would make it ambiguous which module you meant. Always choose aliases that don't clash.
+
+#### Aliases Are Only for User Modules
+Here's a rule that trips people up: you **cannot** alias a built-in module. If you try to write `import os as system`, Apex will report an error: "Cannot use 'as' alias with built-in module 'os'."
+
+Why? Because built-in modules have canonical names that every Apex programmer knows. `os` is always `os`. `math` is always `math`. If you could alias them, code that uses `os.output` in one file might use `system.output` in another, and suddenly reading code becomes guesswork. Apex keeps built-in names fixed so that anyone reading your code knows exactly where each built-in function comes from.
+
+User modules, on the other hand, are yours. You can name them whatever makes sense in your project, and you can alias them to whatever is convenient. So aliasing exists only for user modules.
+
+### Built-in Modules Are Different
+We've been talking about importing files — files that live on disk, written by you or your teammates. But Apex also ships with a set of **built-in modules**: `os`, `sys`, `math`, `string`, `table`, `random`, `json`, `xml`, `csv`, `base`, `regex`, `crypto`, `zip`, `datetime`.
+
+These are not files. They're part of the interpreter itself, written in C. They're always available. But — and this is the catch — they still require an `import` to use.
+
+```apex
+import os
+os.output("Hello")
+```
+
+You might wonder: why do built-in modules need an import if they're already part of the interpreter? Why not just make `os.output` available everywhere?
+
+The answer is **clarity**. If every built-in function were available without an import, then reading any piece of code would require you to know the entire standard library by heart. You'd see `output(...)` and have to remember: is that from `os`? From `sys`? From some other module? With explicit imports, you always know where a function came from. You see `os.output` and you know it's the output function from the `os` module. You see `import os` at the top of the file and you know the file uses `os`.
+
+This also makes it obvious when you're using features you didn't intend to. If you're reading a file that imports `crypto`, you know immediately that the file does something cryptographic. If there were no imports, you'd have to scan the whole file to discover that.
+
+So the rule is simple: **to use a built-in module, you must import it by name**. No file path, no `.apex` extension. Just the name:
+
+```apex
+import os
+import math
+import string
+import json
+```
+
+#### Built-in Modules Do Not End with `.apex`
+This follows from the previous point. A user file is a file on disk, and its import path ends with `.apex`. A built-in module isn't a file, so its import is just the module name with no extension.
+
+```apex
+import os            // built-in, no extension
+import math          // built-in, no extension
+import utils/math.apex  // user file, ends with .apex
+```
+
+These are two very different kinds of import, and Apex distinguishes them by whether the path ends with `.apex`. If it does, it's a file. If it doesn't, it must be a built-in module name.
+
+If you accidentally write `import os.apex`, Apex will try to find a file called `os.apex` on disk and fail. If you accidentally write `import math` when you meant the file `math.apex`, Apex will try to load the built-in `math` module — and probably succeed, which could be confusing. Be careful to include the `.apex` extension for user files and omit it for built-in modules.
+
+#### Accessing Built-in Contents
+Once imported, a built-in module's contents are accessed the same way as a user module's — with the module name as a prefix.
+
+```apex
+import math
+result = math.sqrt(16)  // 4
+```
+
+```apex
+import string
+length = string.length("hello")  // 5
+```
+
+The prefix is always the module's name, exactly as you wrote it in the import.
+
+#### One Built-in Module at a Time
+You can import as many built-in modules as you want, but each needs its own `import` line:
+
+```apex
+import os
+import math
+import string
+import json
+```
+
+You cannot write `import os, math` — Apex doesn't support that syntax. One import per line.
+
+### Rules and Restrictions
+Imports are powerful, but they come with rules. Here are the ones you need to remember.
+
+#### 1. Import at the Top
+Imports must appear at the top of the file, before any other code. You cannot import a module halfway through a function. The reason is simple: when Apex loads your file, it needs to know what modules are available before it can resolve any names. If imports were scattered throughout, the compiler would have to make multiple passes to figure everything out.
+
+```apex
+import os
+import math
+
+// rest of your code
+```
+
+If you put an import after some other code, Apex will report an error.
+
+#### 2. Import Paths Are Relative to the Main File
+We already covered this, but it's important enough to repeat. **Every import path in every file is written as if from the main file's location.** Not from the importing file's location, not from your current working directory. Just from the main file. This rule makes all imports consistent and predictable.
+
+```apex
+// Even in a deeply nested file, you write imports
+// as if you were at the project root.
+import helpers/math.apex
+```
+
+#### 3. `.apex` for User Files, Nothing for Built-in Modules
+User file imports must end with `.apex`. Built-in module imports must not. This is the syntax that tells Apex which kind of import you mean.
+
+```apex
+import os                 // built-in
+import utils/math.apex    // user file
+```
+
+#### 4. No Aliasing Built-in Modules
+You cannot write `import os as system`. Built-in modules keep their canonical names. Aliases are only for user file imports.
+
+#### 5. Aliases Must Be Unique and Valid
+An alias must be a valid identifier — letters, digits, underscores, not starting with a digit. And it must not clash with any other alias or module name in the same file.
+
+```apex
+import utils/calc.apex as calc
+import utils/stat.apex as stats  // fine, different alias
+```
+
+#### 6. No Multiple Modules Per Import
+Each `import` line brings in exactly one module. You cannot write `import os, math`. Use two lines.
+
+#### 7. Only Top-Level Definitions Are Imported
+When you import a file, you get access to its top-level functions, variables, and constants. You do **not** get access to anything declared inside nested scopes — inside functions, inside `if` blocks, and so on.
+
+#### 8. Module Names Come from File Names
+The name you use to access a module's contents is the file's name without the `.apex` extension. The folders in the path are not part of the module's name. So `utils/math.apex` is accessed as `math`, not `utils.math`.
+
+#### 9. Files Must Exist and Be Readable
+If Apex can't find an imported file, it reports an error. The path must exist relative to the main file's folder, and the file must be readable.
+
+#### 10. Built-in Modules Must Be Imported Before Use
+Even though `os`, `math`, and the rest are built into the interpreter, you still must import them before using their contents. Without the import, `os.output("Hello")` would be reported as an undefined name.
+
+## Conclusion
+And that's it — you now know the entire Apex language. Every keyword, every data type, every operator, every control structure, every way to define and use functions, every rule about async, every detail of imports. There is no hidden syntax waiting for you later. What you have learned is the complete language. Everything else from here on out is not new syntax — it's the standard library, which is just a very large collection of functions you already know how to call.
+
+The best next step is to open the **[Library Reference](resources/Library_Reference.md)**. It lists every built-in module — `os`, `sys`, `math`, `string`, `table`, `random`, `json`, `xml`, `csv`, `base`, `regex`, `crypto`, `zip`, `datetime` — and every function inside them, with short examples for each. You will recognize the pattern immediately: `import` the module at the top of your file, then call its functions with the module name as a prefix. Nothing new to learn — just a lot of useful tools to discover.
+
+Don't try to memorize the Library Reference. Nobody does. Skim it once so you know what's available, then come back to it whenever you need something specific. "How do I read a file?" — check `os.read`. "How do I round a number?" — check `math.round`. "How do I sort a table?" — look in `table`. That's how everyone uses it, and that's how you should too.
+
+**Remember:**
+
+> *Apex is designed to be simple, but it's powerful with libraries.*
+
+**Happy coding in Apex!**
