@@ -33,14 +33,14 @@ function registerApexLanguage() {
 
         keywords: [
             'if', 'else', 'for', 'in', 'break', 'continue', 'return',
-            'import', 'as', 'match', 'case'
+            'import', 'as', 'match', 'case', 'await'
         ],
         constants: [
-            'function', 'true', 'false', 'none', 'constant', 'and', 'or', 'not'
+            'function', 'true', 'false', 'none', 'constant', 'and', 'or', 'not', 'async'
         ],
         libraries: [
-            'os', 'sys', 'math', 'string', 'table', 'ffi', 'random',
-            'json', 'xml', 'csv', 'base', 'regex', 'crypto', 'zip', 'network'
+            'os', 'sys', 'math', 'string', 'table', 'random',
+            'json', 'xml', 'csv', 'base', 'regex', 'crypto', 'zip', 'network', 'datetime'
         ],
 
         tokenizer: {

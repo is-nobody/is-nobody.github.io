@@ -8,22 +8,17 @@
     <link rel="stylesheet" href="components/common.css">
 </head>
 <body class="flex flex-col min-h-screen">
-    <!-- hero section -->
     <main class="flex-grow container mx-auto px-4 py-12 max-w-5xl">
-        <!-- tagline rotator -->
         <div class="text-center mb-8">
             <p id="tagline" class="text-2xl md:text-3xl font-bold dark:text-white light:text-gray-900 transition-opacity duration-500" style="min-height: 3.5rem;">
                 The biggest problem with Apex? You're still using something else.
             </p>
         </div>
 
-        <!-- divider -->
         <div class="w-full h-px dark:bg-[#2d2d2d] light:bg-gray-200 mb-12"></div>
 
-        <!-- projects grid -->
         <h2 class="text-3xl font-bold section-title mb-8 text-center">Projects</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- apex language -->
             <a href="apex-lang.html" class="block doc-card rounded-xl p-6 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
@@ -33,7 +28,7 @@
                     </div>
                     <div>
                         <h3 class="text-lg font-bold dark:text-white light:text-gray-900">Apex Language</h3>
-                        <span class="text-xs dark:text-gray-400 light:text-gray-500">26.08</span>
+                        <span class="text-xs dark:text-gray-400 light:text-gray-500">26.09</span>
                     </div>
                 </div>
                 <p class="dark:text-gray-300 light:text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
@@ -46,7 +41,6 @@
                 </div>
             </a>
 
-            <!-- apex obfuscator -->
             <a href="apex-obfuscator.html" class="block doc-card rounded-xl p-6 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
@@ -73,7 +67,6 @@
 
     <script src="components/load-navbar.js"></script>
     <script>
-        // tagline rotator
         const taglines = [
             "The biggest problem with Apex? You're still using something else.",
             "Giants spend millions on marketing. We spend nights on code.",
@@ -99,11 +92,9 @@
             }, 500);
         }
 
-        // initial random tagline
         currentIndex = Math.floor(Math.random() * taglines.length);
         taglineElement.textContent = taglines[currentIndex];
 
-        // rotate every 5 seconds
         setInterval(rotateTagline, 5000);
     </script>
 </body>

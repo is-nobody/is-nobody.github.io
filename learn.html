@@ -9,49 +9,35 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body class="flex flex-col min-h-screen">
-    <!-- Main Content -->
     <div class="flex flex-grow">
-        <!-- Sidebar -->
         <aside class="sidebar p-6 overflow-y-auto">
             <h2 class="text-lg font-bold mb-6 dark:text-white light:text-gray-900">Documentation</h2>
             <div class="space-y-3">
-                <div class="doc-card rounded-lg p-4 active-doc" onclick="loadDocument('Apex_in_Three-Pages.md')" id="doc-1">
+                <div class="doc-card rounded-lg p-4 active-doc" onclick="loadDocument('EC_fDevelopers.md')" id="doc-1">
                     <div class="flex items-center gap-3">
                         <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                         </svg>
                         <div>
-                            <h3 class="font-semibold dark:text-white light:text-gray-900 text-sm">Apex in Three Pages</h3>
-                            <p class="text-xs dark:text-gray-400 light:text-gray-500 mt-1">Quick overview of Apex</p>
+                            <h3 class="font-semibold dark:text-white light:text-gray-900 text-sm">Apex Express Course for Developers</h3>
+                            <p class="text-xs dark:text-gray-400 light:text-gray-500 mt-1">Fast-track guide for developers</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="doc-card rounded-lg p-4" onclick="loadDocument('RM_fBeginners.md')" id="doc-2">
+                <div class="doc-card rounded-lg p-4" onclick="loadDocument('Apex_Pain-Free_Programming.md')" id="doc-2">
                     <div class="flex items-center gap-3">
                         <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
                         </svg>
                         <div>
-                            <h3 class="font-semibold dark:text-white light:text-gray-900 text-sm">Reference Manual for Beginners</h3>
-                            <p class="text-xs dark:text-gray-400 light:text-gray-500 mt-1">Getting started guide</p>
+                            <h3 class="font-semibold dark:text-white light:text-gray-900 text-sm">Apex: Pain-Free Programming</h3>
+                            <p class="text-xs dark:text-gray-400 light:text-gray-500 mt-1">Beginner-friendly training for people with no coding experience</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="doc-card rounded-lg p-4" onclick="loadDocument('RM_fDevelopers.md')" id="doc-3">
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                        </svg>
-                        <div>
-                            <h3 class="font-semibold dark:text-white light:text-gray-900 text-sm">Reference Manual for Developers</h3>
-                            <p class="text-xs dark:text-gray-400 light:text-gray-500 mt-1">Advanced development guide</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="doc-card rounded-lg p-4" onclick="loadDocument('Library_Reference.md')" id="doc-4">
+                <div class="doc-card rounded-lg p-4" onclick="loadDocument('Library_Reference.md')" id="doc-3">
                     <div class="flex items-center gap-3">
                         <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
@@ -65,7 +51,6 @@
             </div>
         </aside>
 
-        <!-- Content Area -->
         <main class="content-area flex-grow p-8 overflow-y-auto" style="max-height: calc(100vh - 73px);">
             <div class="max-w-4xl mx-auto">
                 <div class="markdown-content" id="markdown-content">
@@ -101,7 +86,7 @@
                     card.classList.remove('active-doc');
                 });
                 
-                const docs = ['Apex_in_Three-Pages.md', 'RM_fBeginners.md', 'RM_fDevelopers.md', 'Library_Reference.md'];
+                const docs = ['EC_fDevelopers.md', 'Apex_Pain-Free_Programming.md', 'Library_Reference.md'];
                 const index = docs.indexOf(filename);
                 if (index >= 0) {
                     document.getElementById(`doc-${index + 1}`).classList.add('active-doc');
@@ -123,7 +108,7 @@
             }
         }
         window.addEventListener('load', () => {
-            loadDocument('Apex_in_Three-Pages.md');
+            loadDocument('EC_fDevelopers.md');
         });
     </script>
 </body>

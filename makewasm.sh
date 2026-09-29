@@ -1,13 +1,12 @@
 # compile libraries and the VM into object files with -O3.
 emcc -O3 -c \
-    -I. -I./source/core -I./source/utils -I./source/libraries \
+    -I. -I./source/core -I./source/compiler -I./source/utils -I./source/libraries \
     source/core/vm.c \
     source/libraries/os_module.c \
     source/libraries/sys_module.c \
     source/libraries/math_module.c \
     source/libraries/string_module.c \
     source/libraries/table_module.c \
-    source/libraries/ffi_module.c \
     source/libraries/random_module.c \
     source/libraries/json_module.c \
     source/libraries/xml_module.c \
@@ -16,7 +15,7 @@ emcc -O3 -c \
     source/libraries/regex_module.c \
     source/libraries/crypto_module.c \
     source/libraries/zip_module.c \
-    source/libraries/network_module.c && \
+    source/libraries/datetime_module.c && \
 
 # compile the rest with -O0 and link everything together.
 # MODULARIZE=1 + EXPORT_NAME wraps everything into createApexModule(),
@@ -36,7 +35,7 @@ emcc -O0 \
     -s ERROR_ON_UNDEFINED_SYMBOLS=0 \
     -s WARN_ON_UNDEFINED_SYMBOLS=0 \
     -o apex.js \
-    -I. -I./source/core -I./source/utils -I./source/libraries \
+    -I. -I./source/core -I./source/compiler -I./source/utils -I./source/libraries \
     source/utils/apex_api.c \
     source/utils/execute.c \
     source/utils/error.c \
@@ -46,14 +45,34 @@ emcc -O0 \
     source/core/parser.c \
     source/core/ast.c \
     source/core/bytecode.c \
-    source/core/codegen.c \
+    source/compiler/codegen.c \
+    source/compiler/codegen_expr.c \
+    source/compiler/codegen_stmt.c \
+    source/compiler/codegen_if.c \
+    source/compiler/codegen_for.c \
+    source/compiler/codegen_match.c \
+    source/compiler/codegen_fn.c \
+    source/compiler/codegen_scope.c \
+    source/compiler/codegen_modules.c \
+    source/compiler/opt_const_fold.c \
+    source/compiler/opt_const_cache.c \
+    source/compiler/opt_lvn.c \
+    source/compiler/opt_peephole.c \
+    source/compiler/opt_inline.c \
+    source/compiler/opt_licm.c \
+    source/compiler/opt_dce.c \
+    source/compiler/opt_branch_merge.c \
+    source/compiler/opt_jump_targets.c \
+    source/compiler/opt_linear_scan.c \
+    source/compiler/opt_bc_dce.c \
+    source/compiler/opt_for_fold.c \
+    source/compiler/opt_recursion.c \
     vm.o \
     os_module.o \
     sys_module.o \
     math_module.o \
     string_module.o \
     table_module.o \
-    ffi_module.o \
     random_module.o \
     json_module.o \
     xml_module.o \
@@ -62,7 +81,7 @@ emcc -O0 \
     regex_module.o \
     crypto_module.o \
     zip_module.o \
-    network_module.o && \
+    datetime_module.o && \
 
 # cleaning
 rm -f *.o && \

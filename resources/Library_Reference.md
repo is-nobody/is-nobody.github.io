@@ -3,6 +3,188 @@ Apex comes with several built-in libraries. These are ready-to-use tools that so
 
 **Important:** Most functions return `none` on error. However, some functions may return `false` as a valid value (e.g., when a table contains `false`).
 
+## Table of Contents
+### OS Library (os)
+- [os.output(value)](#osoutputvalue)
+- [os.print(value)](#osprintvalue)
+- [os.input(prompt)](#osinputprompt)
+- [os.input_hidden(prompt)](#osinput_hiddenprompt)
+- [os.wait(seconds)](#oswaitseconds)
+- [os.exit(code)](#osexitcode)
+- [os.execute(command)](#osexecutecommand)
+- [os.terminate(pid)](#osterminatepid)
+- [os.current_folder()](#oscurrent_folder)
+- [os.change_folder(path)](#oschange_folderpath)
+- [os.read(filename)](#osreadfilename)
+- [os.write(filename, content)](#oswritefilename-content)
+- [os.append(filename, content)](#osappendfilename-content)
+- [os.exists(path)](#osexistspath)
+- [os.is_file(path)](#osis_filepath)
+- [os.is_folder(path)](#osis_folderpath)
+- [os.size(path)](#ossizepath)
+- [os.rename(old_name, new_name)](#osrenameold_name-new_name)
+- [os.move(source, destination)](#osmovesource-destination)
+- [os.copy(source, destination)](#oscopy-source-destination)
+- [os.create_file(filename)](#oscreate_filefilename)
+- [os.create_folder(path)](#oscreate_folderpath)
+- [os.delete(path)](#osdeletepath)
+- [os.list_folder(path)](#oslist_folderpath)
+- [os.parent_folder(path)](#osparent_folderpath)
+- [os.access(path, mode)](#osaccesspath-mode)
+- [os.args()](#osargs)
+
+### System Library (sys)
+- [sys.platform()](#sysplatform)
+- [sys.architecture()](#sysarchitecture)
+- [sys.host()](#syshost)
+- [sys.user()](#sysuser)
+- [sys.home()](#syshome)
+- [sys.is_terminal(fd)](#tsysisterminalfd)
+- [sys.apex_version()](#sysapex_version)
+- [sys.executable()](#sysexecutable)
+- [sys.disk(path)](#sysdiskpath)
+- [sys.temp()](#systemp)
+- [sys.environment()](#sysenvironment)
+- [sys.process_id()](#sysprocess_id)
+
+### Math Library (math)
+- [math.pi()](#mathpi)
+- [math.e](#mathe)
+- [math.inf](#mathinf)
+- [math.abs(x)](#mathabsx)
+- [math.round_down(x)](#mathround_downx)
+- [math.round_up(x)](#mathround_upx)
+- [math.round(x, digits)](#mathroundx-digits)
+- [math.drop_decimal(x)](#mathdrop_decimalx)
+- [math.sqrt(x)](#mathsqrtx)
+- [math.power(base, exponent)](#mathpowerbase-exponent)
+- [math.exponent(x)](#mathexponentx)
+- [math.hypotenuse(x, y)](#mathhypotenusex-y)
+- [math.log(x, base)](#mathlogx-base)
+- [math.sin(x)](#mathsinx)
+- [math.cos(x)](#mathcosx)
+- [math.tan(x)](#mathtanx)
+- [math.asin(x)](#mathasinx)
+- [math.acos(x)](#mathacosx)
+- [math.atan(x)](#mathatanx)
+- [math.atan2(y, x)](#mathatan2y-x)
+- [math.radians(degrees)](#mathradiansdegrees)
+- [math.degrees(radians)](#mathdegreesradians)
+- [math.gcd(a, b)](#mathgcda-b)
+- [math.factorial(n)](#mathfactorialn)
+- [math.is_nan(x)](#mathis_nanx)
+- [math.is_inf(x)](#mathis_infx)
+
+### String Library (string)
+- [string.length(s)](#stringlengths)
+- [string.lower(s)](#stringlowers)
+- [string.upper(s)](#stringuppers)
+- [string.slice(s, start, end)](#stringslices-start-end)
+- [string.split(s, separator)](#stringsplitss-separator)
+- [string.join(parts, separator)](#stringjoinparts-separator)
+- [string.trim(s)](#stringtrims)
+- [string.find(s, search)](#stringfindss-search)
+- [string.replace(s, old, new)](#stringreplacess-old-new)
+- [string.repeat(s, n)](#stringrepeats-n)
+
+### Table Library (table)
+- [table.size(t)](#tablesizet)
+- [table.has(t, key)](#tablehast-key)
+- [table.remove(t, key)](#tableremovet-key)
+- [table.keys(t)](#tablekeyst)
+- [table.values(t)](#tablevaluest)
+- [table.clear(t)](#tablecleart)
+- [table.copy(t)](#tablecopyt)
+- [table.merge(t1, t2)](#tablemerget1-t2)
+
+### Random Library (random)
+- [random.seed(value)](#randomseedvalue)
+- [random.float()](#randomfloat)
+- [random.integer(a, b)](#randomintegera-b)
+- [random.choice(seq)](#randomchoiceseq)
+- [random.shuffle(seq)](#randomshuffleseq)
+- [random.sample(seq, k)](#randomsampleseq-k)
+- [random.normal(mu, sigma)](#randomnormalmu-sigma)
+- [random.triangular(low, high, mode)](#randomtriangularlow-high-mode)
+- [random.expovariate(lambd)](#randomexpovariatelambd)
+- [random.betavariate(alpha, beta)](#randombetavariatealpha-beta)
+
+### JSON Library (json)
+- [json.encode(value)](#jsonencodevalue)
+- [json.decode(json_string)](#jsondecodejson_string)
+
+### XML Library (xml)
+- [xml.encode(table)](#xmlencodetable)
+- [xml.decode(xml_string)](#xmldecodexml_string)
+
+### CSV Library (csv)
+- [csv.encode(table)](#csvencodetable)
+- [csv.decode(csv_string)](#csvdecodecsv_string)
+
+### Base Library (base)
+- [base.encode_64(data)](#baseencode_64data)
+- [base.decode_64(data)](#basedecode_64data)
+- [base.encode_64url(data)](#baseencode_64urldata)
+- [base.decode_64url(data)](#basedecode_64urldata)
+- [base.encode_16(data)](#baseencode_16data)
+- [base.decode_16(data)](#basedecode_16data)
+- [base.encode_32(data)](#baseencode_32data)
+- [base.decode_32(data)](#basedecode_32data)
+- [base.encode_32hex(data)](#baseencode_32hexdata)
+- [base.decode_32hex(data)](#basedecode_32hexdata)
+- [base.encode_62(data)](#baseencode_62data)
+- [base.decode_62(data)](#basedecode_62data)
+- [base.encode_85(data)](#baseencode_85data)
+- [base.decode_85(data)](#basedecode_85data)
+
+### Regex Library (regex)
+- [regex.search(pattern, text, options)](#regexsearchpattern-text-options)
+- [regex.find_all(pattern, text, options)](#regexfind_allpattern-text-options)
+- [regex.replace(pattern, replacement, text, options)](#regexreplacepattern-replacement-text-options)
+- [regex.split(pattern, text, options)](#regexsplitpattern-text-options)
+
+### Crypto Library (crypto)
+- [crypto.random_hex(nbytes)](#cryptorandom_hexnbytes)
+- [crypto.random_integer(n)](#cryptorandom_integern)
+- [crypto.random_float()](#cryptorandom_float)
+- [crypto.compare_strings(a, b)](#cryptocompare_stringsa-b)
+- [crypto.md5(str)](#cryptomd5str)
+- [crypto.sha1(str)](#cryptosha1str)
+- [crypto.sha256(str)](#cryptosha256str)
+- [crypto.sha384(str)](#cryptosha384str)
+- [crypto.sha512(str)](#cryptosha512str)
+- [crypto.hmac_md5(key, msg)](#cryptohmac_md5key-msg)
+- [crypto.hmac_sha1(key, msg)](#cryptohmac_sha1key-msg)
+- [crypto.hmac_sha256(key, msg)](#cryptohmac_sha256key-msg)
+- [crypto.hmac_sha384(key, msg)](#cryptohmac_sha384key-msg)
+- [crypto.hmac_sha512(key, msg)](#cryptohmac_sha512key-msg)
+- [crypto.pbkdf2_md5(password, salt, iterations, key_len)](#cryptopbkdf2_md5password-salt-iterations-key_len)
+- [crypto.pbkdf2_sha1(password, salt, iterations, key_len)](#cryptopbkdf2_sha1password-salt-iterations-key_len)
+- [crypto.pbkdf2_sha256(password, salt, iterations, key_len)](#cryptopbkdf2_sha256password-salt-iterations-key_len)
+- [crypto.pbkdf2_sha384(password, salt, iterations, key_len)](#cryptopbkdf2_sha384password-salt-iterations-key_len)
+- [crypto.pbkdf2_sha512(password, salt, iterations, key_len)](#cryptopbkdf2_sha512password-salt-iterations-key_len)
+- [crypto.aes128_encrypt(key, plaintext, iv)](#cryptoaes128_encryptkey-plaintext-iv)
+- [crypto.aes128_decrypt(key, ciphertext, iv)](#cryptoaes128_decryptkey-ciphertext-iv)
+- [crypto.aes192_encrypt(key, plaintext, iv)](#cryptoaes192_encryptkey-plaintext-iv)
+- [crypto.aes192_decrypt(key, ciphertext, iv)](#cryptoaes192_decryptkey-ciphertext-iv)
+- [crypto.aes256_encrypt(key, plaintext, iv)](#cryptoaes256_encryptkey-plaintext-iv)
+- [crypto.aes256_decrypt(key, ciphertext, iv)](#cryptoaes256_decryptkey-ciphertext-iv)
+
+### ZIP Library (zip)
+- [zip.pack(path)](#zippackpath)
+- [zip.unpack(path)](#zipunpackpath)
+
+### Datetime Library (datetime)
+- [datetime.now()](#datetimenow)
+- [datetime.local()](#datetimelocal)
+- [datetime.timestamp()](#datetimetimestamp)
+- [datetime.from_timestamp(secs)](#datetimefrom_timestampsecs)
+- [datetime.to_timestamp(dt)](#datetimeto_timestampdt)
+- [datetime.parse(str)](#datetimeparsestr)
+- [datetime.format(dt, fmt)](#datetimeformatdt-fmt)
+- [datetime.add(dt, n, unit)](#datetimeadddt-n-unit)
+- [datetime.diff(a, b, unit)](#datetimediffa-b-unit)
+
 ## OS Library (os)
 The OS library lets you interact with the operating system, manage processes, and handle standard I/O. Import it with `import os`.
 
@@ -11,16 +193,40 @@ Prints a value to the terminal followed by a newline. Always returns `none`.
 
 ```apex
 import os
-os.output("Hello, Friend!")     // Hello, Friend!
+os.output("Hello, Friend!")  // Hello, Friend!
+```
+
+### os.print(value)
+Prints a value to the terminal without a trailing newline. Always returns `none`.
+
+```apex
+import os
+os.print("Loading")
+os.print(".")
+os.print(".")
+os.print(".")
+os.print("\n")  // Loading...\n
 ```
 
 ### os.input(prompt)
-Waits for the user to type something and press Enter. Returns what they typed as a string, or an empty string. You can provide an optional prompt message.
+Prints `prompt`, then waits for the user to type something and press Enter. Returns what they typed as a string, or an empty string on EOF.
 
 ```apex
 import os
 name = os.input("What is your name? ")
 os.output("Hello, {name}")
+```
+
+### os.input_hidden(prompt)
+
+Works like `os.input`, but does not echo what the user types. Use it for passwords, tokens, and other secrets.
+
+Prints `prompt`, reads a line with echo turned off, then prints a newline. Returns the typed string, or an empty string on EOF. If stdin is not a terminal (pipe, redirect, CI), falls back to normal visible input.
+
+```apex
+import os
+password = os.input_hidden("Password: ")
+os.output("Received {password}")
 ```
 
 ### os.wait(seconds)
@@ -313,48 +519,6 @@ else
 ## System Library (sys)
 The System library provides static or rarely changing system information. Import it with `import sys`.
 
-### sys.time()
-Returns the current time as a number — seconds since January 1, 1970 (with microsecond precision). Always succeeds.
-
-```apex
-import os
-import sys
-
-start = sys.time()
-
-for i = 1, 100000
-    i = i + 1
-
-end = sys.time()
-
-os.output("Took {end - start} seconds")
-```
-
-### sys.datetime()
-Returns the current UTC date and time as a table. All values are numbers. The table contains the following keys:
-
-- `year` — The current year (e.g., 2026)
-- `month` — The month as a number (1-12)
-- `week` — The day of the week as a number (0 = Sunday, 6 = Saturday)
-- `day` — The day of the month (1-31)
-- `hour` — The hour in 24-hour format (0-23)
-- `minute` — The minute (0-59)
-- `second` — The second (0-59)
-- `millisecond` — The millisecond (0-999)
-
-```apex
-import os
-import sys
-
-now = sys.datetime()
-
-os.output("Year: {now['year']}")
-os.output("Month: {now['month']}")
-os.output("Day: {now['day']}")
-os.output("Hour: {now['hour']}")
-os.output("Minute: {now['minute']}")
-```
-
 ### sys.platform()
 Returns a string identifying your operating system, such as `"Windows"`, `"macOS"`, `"iOS"`, `"tvOS"`, `"watchOS"`, `"Android"`, `"Linux"`, `"FreeBSD"`, `"OpenBSD"`, `"NetBSD"`, `"QNX"`, or `"Unix"`. Returns `none` if the platform cannot be detected.
 
@@ -428,13 +592,13 @@ if home != none
 ```
 
 ### sys.is_terminal(fd)
-Checks if the file descriptor goes to a terminal. By default checks stdout (fd 1). Pass a number to check a different file descriptor: `0` for stdin, `2` for stderr. Returns `true` if the output goes to a terminal, `false` if it's redirected to a file or pipe. Always succeeds.
+Checks if the given file descriptor goes to a terminal. The `fd` argument is required and must be a number: `0` for stdin, `1` for stdout, `2` for stderr. Returns `true` if that stream goes to a terminal, `false` if it's redirected to a file or pipe. Always succeeds.
 
 ```apex
 import os
 import sys
 
-if sys.is_terminal() == true
+if sys.is_terminal(1) == true
     os.output("Output is a terminal")
 else
     os.output("Output is not a terminal")
@@ -905,6 +1069,15 @@ if result != none
     os.output(result)  // "Apex World Apex"
 ```
 
+### string.repeat(s, n)
+Returns `s` repeated `n` times. `n` must be a non-negative whole number. Returns `none` on error.
+
+```apex
+import os
+import string
+os.output(string.repeat("=", 20))  // "===================="
+```
+
 ## Table Library (table)
 The Table library provides functions for working with tables. Import it with `import table`.
 
@@ -1034,112 +1207,6 @@ merged = table.merge(t1, t2)
 
 if merged != none
     os.output(merged)  // ["age" = 31, "city" = "Dubai", "name" = "Alice"]
-```
-
-## FFI Library (ffi)
-The FFI library lets you call functions from shared libraries (.so on Linux, .dll on Windows). You can load libraries, call C functions, and manage memory. Import it with `import ffi`.
-
-### ffi.open(path)
-Loads a shared library from the given path and returns a table representing the library. The table contains `_handle` (internal numeric handle) and `path` (the library path). Returns `none` if the library cannot be loaded.
-
-If the path does not contain a slash or backslash, "./" is prepended to search in the current directory.
-
-```apex
-import os
-import ffi
-
-lib = ffi.open("libc.so.6")
-
-if lib == none
-    os.output("Could not load library")
-else
-    os.output("Library loaded: {lib['path']}")
-```
-
-### ffi.call(lib_table, func_name, ...)
-Calls a function from a loaded library. The first argument is the library table returned by `ffi.open()`, the second is the function name as a string, followed by optional arguments.
-
-Functions are assumed to return `long` and accept up to 4 `long` arguments. Arguments are converted to numbers before passing. Returns the result as a number, or `none` on failure.
-
-**Important**: This function may return `0` as a valid result. Always check for `none` to detect errors.
-
-```apex
-import os
-import ffi
-
-lib = ffi.open("libc.so.6")
-
-if lib == none
-    os.output("Could not load libc")
-else
-    pid = ffi.call(lib, "getpid")
-    
-    if pid == none
-        os.output("Failed to call getpid")
-    else
-        os.output("Process ID: {pid}")
-```
-
-### ffi.errno()
-Returns the current value of `errno` as a number. Always succeeds.
-
-```apex
-import os
-import ffi
-
-lib = ffi.open("nonexistent.so")
-
-if lib == none
-    err = ffi.errno()
-    os.output("Error code: {err}")
-```
-
-### ffi.strerror(code)
-Returns a human-readable error message for the given error code. If no code is provided, uses the current `errno`. Always returns a string.
-
-```apex
-import os
-import ffi
-
-lib = ffi.open("nonexistent.so")
-
-if lib == none
-    err = ffi.errno()
-    msg = ffi.strerror(err)
-    os.output("Error: {msg}")
-```
-
-### ffi.malloc(size)
-Allocates `size` bytes of memory and returns the pointer as a number. Returns `none` if allocation fails.
-
-```apex
-import os
-import ffi
-
-ptr = ffi.malloc(1024)
-
-if ptr == none
-    os.output("Memory allocation failed")
-else
-    os.output("Allocated memory at: {ptr}")
-    ffi.free(ptr)
-```
-
-### ffi.free(ptr)
-Frees memory previously allocated by `ffi.malloc()`. Takes the pointer number as an argument. Does nothing if the pointer is `0` (NULL). Returns `none` if the argument is invalid, otherwise returns `true`.
-
-```apex
-import os
-import ffi
-
-ptr = ffi.malloc(512)
-
-if ptr != none
-    result = ffi.free(ptr)
-    if result == true
-        os.output("Memory freed")
-    else
-        os.output("Failed to free memory")
 ```
 
 ## Random Library (random)
@@ -2141,48 +2208,148 @@ else
     os.output("Extracted successfully")
 ```
 
-# Network Library (network)
-The Network library provides HTTP client functions for making web requests. It supports HTTP GET and POST methods. Import it with `import network`.
+## Datetime Library (datetime)
+The Datetime library provides date and time handling. Import it with `import datetime`.
 
-**Note:** This library only supports plain HTTP (not HTTPS). URLs must start with `http://`. Connections use TCP and responses are capped at 16 MB to prevent runaway memory allocation.
+All functions work with a **datetime table** — a plain table with these keys:
 
-### network.get(url)
-Performs an HTTP GET request to the specified URL. Returns a table with the response, or `none` on failure (invalid URL, DNS failure, connection failure, send/receive error, or oversized response).
+- `year` — 1 to 9999
+- `month` — 1 to 12
+- `day` — 1 to 31
+- `hour` — 0 to 23
+- `minute` — 0 to 59
+- `second` — 0 to 59
+- `millisecond` — 0 to 999
+- `weekday` — 0 (Sunday) to 6 (Saturday)
 
-The returned table contains:
-- `status` — The HTTP status code as a number (e.g., 200, 404, 500)
-- `body` — The response body as a string
+There is no `epoch` key inside the table. Use `datetime.to_timestamp()` to convert.
+
+### datetime.now()
+Returns the current moment in UTC as a datetime table. Always succeeds.
 
 ```apex
 import os
-import network
+import datetime
 
-response = network.get("http://httpforever.com/")
-
-if response == none
-    os.output("Request failed")
-else
-    os.output("Status: {response['status']}")
-    os.output("Body: {response['body']}")
+d = datetime.now()
+os.output(d["year"])     // current UTC year
+os.output(d["hour"])     // current UTC hour
+os.output(d["weekday"])  // 0 (Sunday) .. 6 (Saturday)
 ```
 
-### network.post(url, body, content_type)
-Performs an HTTP POST request to the specified URL. The `body` and `content_type` arguments are optional. If `body` is provided without a `content_type`, the default is `"application/x-www-form-urlencoded"`. Returns a table with the response, or `none` on failure.
-
-The returned table contains the same keys as `http_get`:
-- `status` — The HTTP status code as a number
-- `body` — The response body as a string
+### datetime.local()
+Returns the current moment in the system's local time zone. Same shape as `datetime.now()`.
 
 ```apex
 import os
-import network
+import datetime
 
-data = '\{"name": "Alice", "age": 30\}'
-response = network.post("http://httpforever.com/", data, "application/json")
+d = datetime.local()
+os.output("Local time: {d['hour']}:{d['minute']}")
+```
 
-if response == none
-    os.output("Request failed")
-else
-    os.output("Status: {response['status']}")
-    os.output("Response: {response['body']}")
+### datetime.timestamp()
+Returns the current time as a number — seconds since 1970-01-01 UTC, with microsecond precision. Never allocates a table, so it is cheap in tight loops.
+
+```apex
+import os
+import datetime
+
+t0 = datetime.timestamp()
+for i = 1, 1000000
+    i = i + 1
+t1 = datetime.timestamp()
+os.output("Took {t1 - t0} seconds")
+```
+
+### datetime.from_timestamp(secs)
+Converts seconds since 1970-01-01 UTC into a datetime table. Returns `none` if the argument is not a number.
+
+```apex
+import os
+import datetime
+
+d = datetime.from_timestamp(1798761600)  // 2027-01-01 00:00:00 UTC
+os.output("{d['year']}-{d['month']}-{d['day']}")  // 2027-1-1
+os.output(d["weekday"])                            // 5 (Friday)
+```
+
+### datetime.to_timestamp(dt)
+Converts a datetime table back to seconds since 1970-01-01 UTC. Returns `none` if required fields (`year`, `month`, `day`) are missing. Time fields default to `0`.
+
+```apex
+import os
+import datetime
+
+d = ["year" = 2027, "month" = 1, "day" = 1]
+os.output(datetime.to_timestamp(d))  // 1798761600
+```
+
+### datetime.parse(str)
+Parses an ISO-8601 datetime string into a datetime table. Accepts `YYYY-MM-DD`, optionally followed by `T` or a space and `HH:MM`, `HH:MM:SS`, or `HH:MM:SS.fff`. Returns `none` on any syntax error, out-of-range field, or impossible date (like `2023-02-29`).
+
+```apex
+import os
+import datetime
+
+d1 = datetime.parse("2027-01-01")
+d2 = datetime.parse("2027-01-01 14:30:45.250")
+
+os.output(d1["weekday"])      // 5 (Friday)
+os.output(d2["millisecond"])  // 250
+```
+
+### datetime.format(dt, fmt)
+Renders a datetime table to a string using a strftime-like template. Returns `none` if `dt` is missing required fields.
+
+Supported tokens:
+
+| Token | Meaning              | Example    |
+|-------|----------------------|------------|
+| `%Y`  | Year, 4 digits       | `2027`     |
+| `%m`  | Month, 2 digits      | `01`       |
+| `%d`  | Day, 2 digits        | `01`       |
+| `%H`  | Hour 24h, 2 digits   | `14`       |
+| `%M`  | Minute, 2 digits     | `30`       |
+| `%S`  | Second, 2 digits     | `45`       |
+| `%f`  | Millisecond, 3 digits| `250`      |
+| `%a`  | Short weekday        | `Fri`      |
+| `%A`  | Full weekday         | `Friday`   |
+| `%b`  | Short month          | `Jan`      |
+| `%B`  | Full month           | `January`  |
+| `%j`  | Day of year, 3 digits| `001`      |
+| `%%`  | Literal `%`          | `%`        |
+
+```apex
+import os
+import datetime
+
+d = datetime.parse("2027-01-01 14:30:45")
+os.output(datetime.format(d, "%Y-%m-%d %H:%M:%S"))
+// 2027-01-01 14:30:45
+```
+
+### datetime.add(dt, n, unit)
+Returns a new datetime table shifted by `n` units. `unit` is one of: `"year"`, `"month"`, `"day"`, `"hour"`, `"minute"`, `"second"`, `"millisecond"`, `"week"`. Year and month use calendar arithmetic with day clamping (`2027-01-31 + 1 month = 2027-02-28`). Other units shift by fixed-length seconds. Returns `none` on unknown unit or invalid table.
+
+```apex
+import os
+import datetime
+
+d = datetime.parse("2027-01-31")
+m = datetime.add(d, 1, "month")
+os.output("{m['year']}-{m['month']}-{m['day']}")  // 2027-2-28
+```
+
+### datetime.diff(a, b, unit)
+Returns `a - b` as a number in the given unit. `unit` is one of: `"second"`, `"minute"`, `"hour"`, `"day"`, `"week"`. `"month"` and `"year"` are **not** accepted — their lengths vary and there is no single correct answer. Returns `none` on unknown unit or invalid table.
+
+```apex
+import os
+import datetime
+
+a = datetime.parse("2027-01-01")
+b = datetime.parse("2026-12-25")
+os.output(datetime.diff(a, b, "day"))   // 7
+os.output(datetime.diff(a, b, "week"))  // 1
 ```

@@ -4,7 +4,6 @@ async function loadNavbar() {
         const navbarHtml = await response.text();
         document.body.insertAdjacentHTML('afterbegin', navbarHtml);
         
-        // Language dropdown
         const langBtn = document.getElementById('lang-btn');
         const langMenu = document.getElementById('lang-menu');
         const currentLangSpan = document.getElementById('current-lang');
