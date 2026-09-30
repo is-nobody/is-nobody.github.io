@@ -10,14 +10,12 @@
 <body class="flex flex-col min-h-screen">
     <main class="flex-grow container mx-auto px-4 py-12 max-w-5xl">
         <div class="text-center mb-8">
-            <p id="tagline" class="text-2xl md:text-3xl font-bold dark:text-white light:text-gray-900 transition-opacity duration-500" style="min-height: 3.5rem;">
-                The biggest problem with Apex? You're still using something else.
-            </p>
+            <p id="tagline" class="text-2xl md:text-3xl font-bold dark:text-white light:text-gray-900 transition-opacity duration-500" style="min-height: 3.5rem;"></p>
         </div>
 
         <div class="w-full h-px dark:bg-[#2d2d2d] light:bg-gray-200 mb-12"></div>
 
-        <h2 class="text-3xl font-bold section-title mb-8 text-center">Projects</h2>
+        <h2 class="text-3xl font-bold section-title mb-8 text-center" data-i18n="index.projects_title">Projects</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <a href="apex-lang.html" class="block doc-card rounded-xl p-6 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                 <div class="flex items-center gap-3 mb-4">
@@ -27,16 +25,17 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold dark:text-white light:text-gray-900">Apex Language</h3>
+                        <h3 class="text-lg font-bold dark:text-white light:text-gray-900" data-i18n="index.apex_language_title">Apex Language</h3>
                         <span class="text-xs dark:text-gray-400 light:text-gray-500">26.09</span>
                     </div>
                 </div>
-                <p class="dark:text-gray-300 light:text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
+                <p class="dark:text-gray-300 light:text-gray-600 text-sm leading-relaxed mb-4 flex-grow" data-i18n="index.apex_language_desc">
                     A programming language built for speed, power, simplicity, clarity, readability, and modernity.
                 </p>
                 <div class="pt-4 border-t dark:border-[#2d2d2d] light:border-gray-200 flex items-center justify-between mt-auto">
                     <span class="text-sm text-green-500 hover:text-green-400 transition flex items-center gap-1">
-                        Explore <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        <span data-i18n="index.explore">Explore</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </span>
                 </div>
             </a>
@@ -49,53 +48,54 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold dark:text-white light:text-gray-900">Apex Obfuscator</h3>
+                        <h3 class="text-lg font-bold dark:text-white light:text-gray-900" data-i18n="index.apex_obfuscator_title">Apex Obfuscator</h3>
                         <span class="text-xs dark:text-gray-400 light:text-gray-500">26.08</span>
                     </div>
                 </div>
-                <p class="dark:text-gray-300 light:text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
+                <p class="dark:text-gray-300 light:text-gray-600 text-sm leading-relaxed mb-4 flex-grow" data-i18n="index.apex_obfuscator_desc">
                     A lightweight cipher with authenticated HMAC and streaming encryption.
                 </p>
                 <div class="pt-4 border-t dark:border-[#2d2d2d] light:border-gray-200 flex items-center justify-between mt-auto">
                     <span class="text-sm text-green-500 hover:text-green-400 transition flex items-center gap-1">
-                        Explore <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        <span data-i18n="index.explore">Explore</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </span>
                 </div>
             </a>
         </div>
     </main>
 
+    <script src="components/i18n.js"></script>
     <script src="components/load-navbar.js"></script>
     <script>
-        const taglines = [
-            "The biggest problem with Apex? You're still using something else.",
-            "Giants spend millions on marketing. We spend nights on code.",
-            "Apex: where every line of code does the work of ten.",
-            "Complex problems — simple solutions. That's our entire philosophy.",
-            "Code should be elegant, not bulky like a tax return manual.",
-            "Our code wasn't written for processors — it was written for people.",
-            "They dictate the rules. We give you the tools to change them.",
-            "We have no stock on the exchange. We have code that works.",
-            "Apex. Nowhere to go but up.",
-            "Apex. Power that corporations can't control."
-        ];
+        let taglineIndex = 0;
+        const taglineEl = document.getElementById('tagline');
 
-        let currentIndex = 0;
-        const taglineElement = document.getElementById('tagline');
+        function pickRandomTagline(list) {
+            if (!list.length) return;
+            taglineIndex = Math.floor(Math.random() * list.length);
+            taglineEl.textContent = list[taglineIndex];
+        }
 
         function rotateTagline() {
-            taglineElement.classList.add('opacity-0');
-            setTimeout(() => {
-                currentIndex = (currentIndex + 1) % taglines.length;
-                taglineElement.textContent = taglines[currentIndex];
-                taglineElement.classList.remove('opacity-0');
+            const list = window.i18n ? window.i18n.tArr('index.taglines') : [];
+            if (!list.length) return;
+            taglineEl.classList.add('opacity-0');
+            setTimeout(function() {
+                taglineIndex = (taglineIndex + 1) % list.length;
+                taglineEl.textContent = list[taglineIndex];
+                taglineEl.classList.remove('opacity-0');
             }, 500);
         }
 
-        currentIndex = Math.floor(Math.random() * taglines.length);
-        taglineElement.textContent = taglines[currentIndex];
+        window.i18n.ready.then(function() {
+            pickRandomTagline(window.i18n.tArr('index.taglines'));
+            setInterval(rotateTagline, 5000);
+        });
 
-        setInterval(rotateTagline, 5000);
+        window.addEventListener('languageChanged', function() {
+            pickRandomTagline(window.i18n.tArr('index.taglines'));
+        });
     </script>
 </body>
 </html>
