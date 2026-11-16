@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex - Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="components/common.css">
+</head>
+<body class="flex flex-col min-h-screen">
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-5xl">
+        <div class="text-center mb-8">
+            <p id="tagline" class="text-2xl md:text-3xl font-bold transition-opacity duration-500" style="min-height: 3.5rem; color: #D4D4D4;"></p>
+        </div>
+
+        <div class="w-full h-px mb-12" style="background-color: #3C3C3C;"></div>
+
+        <h2 class="text-3xl font-bold section-title mb-8 text-center" data-i18n="index.projects_title">Projects</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <a href="apex-lang.html" class="block doc-card rounded-lg p-6 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: rgba(78, 201, 176, 0.1);">
+                        <svg class="w-6 h-6" style="color: #4EC9B0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold" style="color: #D4D4D4;" data-i18n="index.apex_language_title">Apex Language</h3>
+                        <span class="text-xs" style="color: #969696;">27.03</span>
+                    </div>
+                </div>
+                <p class="text-sm leading-relaxed mb-4 flex-grow" style="color: #969696;" data-i18n="index.apex_language_desc">
+                    A programming language built for speed, power, simplicity, clarity, readability, and modernity.
+                </p>
+                <div class="pt-4 flex items-center justify-between mt-auto" style="border-top: 1px solid #3C3C3C;">
+                    <span class="text-sm flex items-center gap-1" style="color: #4EC9B0;">
+                        <span data-i18n="index.explore">Explore</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </span>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <script src="components/i18n.js"></script>
+    <script src="components/load-navbar.js"></script>
+    <script>
+        let taglineIndex = 0;
+        const taglineEl = document.getElementById('tagline');
+
+        function pickRandomTagline(list) {
+            if (!list.length) return;
+            taglineIndex = Math.floor(Math.random() * list.length);
+            taglineEl.textContent = list[taglineIndex];
+        }
+
+        function rotateTagline() {
+            const list = window.i18n ? window.i18n.tArr('index.taglines') : [];
+            if (!list.length) return;
+            taglineEl.classList.add('opacity-0');
+            setTimeout(function() {
+                taglineIndex = (taglineIndex + 1) % list.length;
+                taglineEl.textContent = list[taglineIndex];
+                taglineEl.classList.remove('opacity-0');
+            }, 500);
+        }
+
+        window.i18n.ready.then(function() {
+            pickRandomTagline(window.i18n.tArr('index.taglines'));
+            setInterval(rotateTagline, 5000);
+        });
+
+        window.addEventListener('languageChanged', function() {
+            pickRandomTagline(window.i18n.tArr('index.taglines'));
+        });
+    </script>
+</body>
+</html>

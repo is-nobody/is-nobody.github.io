@@ -1,0 +1,500 @@
+/* base - native Apex UI palette */
+body {
+    font-family: initial;       /* Restores browser default (usually serif) */
+    background-color: #1E1E1E;  /* UI_C_BG */
+    color: #D4D4D4;             /* UI_C_FG */
+    font-size: 14px;            /* UI_FS_BODY */
+    line-height: 21px;          /* UI_LINE_H */
+}
+
+nav {
+    background-color: #181818;              /* UI_C_BAR */
+    border-bottom: 1px solid #3C3C3C;       /* UI_C_BORDER */
+}
+
+.nav-link {
+    color: #969696;                         /* UI_C_FG_DIM */
+    transition: color 0.15s;
+}
+.nav-link:hover {
+    color: #D4D4D4;                         /* UI_C_FG */
+}
+
+.github-icon {
+    color: #969696;
+    transition: color 0.15s;
+}
+.github-icon:hover {
+    color: #D4D4D4;
+}
+
+/* scrollbar - native Apex UI style */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(121, 121, 121, 0.4);   /* UI_C_SCROLL_H */
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(180, 180, 180, 0.5);   /* UI_C_SCROLL_A */
+}
+
+/* Buttons - strictly native UI_C_ACCENT metrics */
+.btn-primary, .btn-outline {
+    height: 30px;                  /* UI_BTN_H */
+    padding: 0 12px;               /* Native width = text width + 24px */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 14px;               /* UI_FS_BODY */
+    font-weight: normal;           /* Native UI does not use bold buttons */
+    border-radius: 6px;            /* UI_RADIUS */
+    box-sizing: border-box;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+}
+
+.btn-primary {
+    background-color: #3A3D41;              /* UI_C_ACCENT */
+    color: #E8E8E8;                         /* UI_C_ACCENT_T */
+    border: 1px solid #454545;              /* UI_C_BORDER_S */
+}
+.btn-primary:hover {
+    background-color: #4A4D51;              /* UI_C_ACCENT_H */
+}
+.btn-primary:active {
+    background-color: #2A2D2E;              /* UI_C_ACCENT_A */
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #D4D4D4;                         /* UI_C_FG */
+    border: 1px solid #3C3C3C;              /* UI_C_BORDER */
+}
+.btn-outline:hover {
+    border-color: #454545;                  /* UI_C_BORDER_S */
+    background-color: #252526;              /* UI_C_PANEL */
+    color: #E8E8E8;                         /* UI_C_ACCENT_T */
+}
+
+/* editor / IDE containers */
+.editor-container {
+    height: 300px;
+    border-radius: 6px;                     /* UI_RADIUS */
+    overflow: hidden;
+    border: 1px solid #3C3C3C;
+}
+
+.terminal {
+    min-height: 100px;
+    font-family: monospace;                 /* Browser default monospace */
+    font-size: 13px;
+    background-color: #1E1E1E;              /* matches editor */
+    border-top: 1px solid #3C3C3C;
+    color: #D4D4D4;
+}
+
+/* headings */
+.hero-title {
+    color: #D4D4D4;
+}
+
+.hero-text {
+    color: #969696;                         /* UI_C_FG_DIM */
+}
+
+.section-title {
+    color: #D4D4D4;
+}
+
+/* ide shell */
+.ide-container {
+    background-color: #1E1E1E;              /* UI_C_BG */
+    border: 1px solid #3C3C3C;              /* UI_C_BORDER */
+}
+
+.tabs-toolbar {
+    background-color: #181818;              /* UI_C_TABS_BG */
+    border-bottom: 1px solid #3C3C3C;
+}
+
+.toolbar-text {
+    color: #969696;
+    transition: color 0.15s;
+}
+.toolbar-text:hover {
+    color: #D4D4D4;
+}
+
+.output-box {
+    color: #4EC9B0;                         /* UI_C_TEAL - semantic success */
+}
+
+/* sidebar - learn page */
+.sidebar {
+    background-color: #181818;              /* UI_C_TABS_BG */
+    border-right: 1px solid #3C3C3C;        /* UI_C_BORDER */
+    width: 300px;
+    min-height: calc(100vh - 73px);
+}
+
+.doc-card {
+    background-color: #1E1E1E;              /* UI_C_TAB_BG */
+    border: 1px solid #3C3C3C;              /* UI_C_BORDER */
+    transition: all 0.15s;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.doc-card:hover {
+    border-color: #4A4D51;                  /* UI_C_ACCENT_H */
+    background-color: #2A2D2E;              /* UI_C_TAB_BG_HOV */
+}
+
+.active-doc {
+    background-color: #2A2D2E;              /* UI_C_TAB_BG_ACT */
+    border-color: #454545;                  /* UI_C_BORDER_S */
+}
+
+.content-area {
+    background-color: #1E1E1E;              /* UI_C_BG */
+}
+
+/* markdown */
+.markdown-content {
+    background-color: #252526;              /* UI_C_PANEL */
+    border: 1px solid #3C3C3C;
+    padding: 2rem;
+    border-radius: 6px;
+    line-height: 1.8;
+}
+
+.markdown-content h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #4EC9B0;       /* UI_C_TEAL */
+    color: #D4D4D4;
+}
+
+.markdown-content h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #D4D4D4;
+}
+
+.markdown-content h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #D4D4D4;
+}
+
+/* inline code - native string color */
+.markdown-content code {
+    background-color: #2D2D30;              /* UI_C_DOCK_HEADER */
+    color: #CE9178;                         /* monaco string */
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;                 /* Browser default monospace */
+    font-size: 0.875em;
+}
+
+/* code block - native panel */
+.markdown-content pre {
+    background-color: #1E1E1E;
+    border: 1px solid #3C3C3C;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.markdown-content pre code {
+    background: none;
+    padding: 0;
+    color: #D4D4D4;                         /* UI_C_FG */
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.markdown-content li {
+    margin-bottom: 0.25rem;
+}
+
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.markdown-content th,
+.markdown-content td {
+    border: 1px solid #3C3C3C;              /* UI_C_BORDER */
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.markdown-content th {
+    background-color: #2D2D30;              /* UI_C_DOCK_HEADER */
+}
+
+.markdown-content blockquote {
+    border-left: 4px solid #4EC9B0;         /* UI_C_TEAL */
+    padding-left: 1rem;
+    margin: 1rem 0;
+    font-style: italic;
+    color: #969696;                         /* UI_C_FG_DIM */
+}
+
+/* language selector */
+.lang-btn {
+    background-color: #252526;              /* UI_C_PANEL */
+    border: 1px solid #3C3C3C;              /* UI_C_BORDER */
+    color: #D4D4D4;                         /* UI_C_FG */
+    transition: border-color 0.15s;
+    border-radius: 4px;
+}
+.lang-btn:hover {
+    border-color: #4EC9B0;                  /* UI_C_TEAL */
+}
+
+.lang-menu {
+    background-color: #252526;              /* UI_C_PANEL */
+    border: 1px solid #3C3C3C;              /* UI_C_BORDER */
+    border-radius: 6px;
+}
+
+.lang-option {
+    color: #D4D4D4;
+}
+.lang-option:hover {
+    background-color: #3A3D41 !important;   /* UI_C_ACCENT */
+    color: #E8E8E8 !important;
+}
+
+/* benchmarks */
+.benchmark-desc {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 56rem;
+    color: #969696;                         /* UI_C_FG_DIM */
+}
+
+.benchmark-card {
+    border-radius: 6px;
+    padding: 1.5rem;
+    background-color: #252526;              /* UI_C_PANEL */
+    border: 1px solid #3C3C3C;              /* UI_C_BORDER */
+    min-width: 0;
+}
+
+.bar-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.bar-label {
+    font-size: 0.875rem;
+    white-space: nowrap;
+    min-width: 100px;
+    max-width: 120px;
+    flex-shrink: 0;
+    color: #D4D4D4;                         /* UI_C_FG */
+}
+
+.bar-track {
+    flex: 1 1 auto;
+    min-width: 60px;
+    border-radius: 4px;
+    height: 24px;
+    overflow: hidden;
+    background-color: #1E1E1E;              /* UI_C_BG */
+    border: 1px solid #3C3C3C;              /* UI_C_BORDER */
+}
+
+.benchmark-bar {
+    height: 24px;
+    border-radius: 3px;
+    transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    position: relative;
+    min-width: fit-content;
+    background-color: #6E6E6E;              /* UI_C_FG_MUTED for others */
+}
+
+.apex-bar {
+    background-color: #3A3D41;              /* UI_C_ACCENT for Apex */
+}
+
+.bar-value {
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    margin-left: auto;
+    margin-right: 6px;
+}
+
+.benchmark-footer-text {
+    color: #969696;                         /* UI_C_FG_DIM */
+    font-style: italic;
+}
+
+/* feature cards */
+.feature-card {
+    background-color: #252526;              /* UI_C_PANEL */
+    border: 1px solid #3C3C3C;              /* UI_C_BORDER */
+}
+
+.feature-title {
+    color: #D4D4D4;
+}
+
+.feature-text {
+    color: #969696;                         /* UI_C_FG_DIM */
+}
+
+/* responsive */
+@media (max-width: 768px) {
+    .tabs-toolbar {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 8px;
+        padding: 8px !important;
+    }
+
+    .tabs-scroll-container {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding-bottom: 4px;
+    }
+
+    .tabs-scroll-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tabs-scroll-container .flex {
+        display: inline-flex;
+        flex-wrap: nowrap;
+    }
+
+    .toolbar-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .flex-grow {
+        flex-direction: column !important;
+    }
+
+    .sidebar {
+        width: 100% !important;
+        border-right: none !important;
+        border-bottom: 1px solid #3C3C3C !important;
+        padding: 1rem !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: auto !important;
+    }
+
+    .sidebar .space-y-3 {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        padding-bottom: 0 !important;
+    }
+
+    .sidebar .space-y-3 > * {
+        margin-top: 0 !important;
+    }
+
+    .content-area {
+        width: 100% !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+        height: auto !important;
+        max-height: none !important;
+    }
+
+    .content-area[style*="max-height"] {
+        max-height: none !important;
+    }
+
+    .bar-container {
+        gap: 8px;
+    }
+
+    .bar-label {
+        min-width: 80px;
+        max-width: 100px;
+    }
+
+    .benchmark-bar {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 0;
+    }
+
+    .bar-value {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 4px;
+        margin-right: 4px;
+        font-size: 0.7rem;
+    }
+
+    .bar-track {
+        min-width: 40px;
+    }
+}
+
+.tabs-scroll-container {
+    position: relative;
+}
+
+#tagline {
+    color: #D4D4D4;
+}
+
+.doc-card h3 {
+    color: #D4D4D4;
+}
+
+.doc-card p {
+    color: #969696;
+}

@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "switch_theme": "Cambia tema"
+  },
+  "index": {
+    "taglines": [
+      "Il più grande problema con Apex? Stai ancora usando qualcos'altro.",
+      "I giganti spendono milioni in marketing. Noi passiamo le notti sul codice.",
+      "Apex: dove ogni riga di codice fa il lavoro di dieci.",
+      "Problemi complessi — soluzioni semplici. Tutta la nostra filosofia.",
+      "Il codice dovrebbe essere elegante, non ingombrante come una dichiarazione dei redditi.",
+      "Il nostro codice non è stato scritto per i processori — è stato scritto per le persone.",
+      "Loro dettano le regole. Noi ti diamo gli strumenti per cambiarle.",
+      "Non abbiamo azioni in borsa. Abbiamo codice che funziona.",
+      "Apex. Si può solo salire.",
+      "Apex. Potere che le aziende non possono controllare."
+    ],
+    "projects_title": "Progetti",
+    "apex_language_title": "Linguaggio Apex",
+    "apex_language_desc": "Un linguaggio di programmazione costruito per velocità, potenza, semplicità, chiarezza, leggibilità e modernità.",
+    "explore": "Esplora"
+  },
+  "learn": {
+    "documentation": "Documentazione",
+    "doc1_title": "Corso rapido Apex per sviluppatori",
+    "doc1_desc": "Guida accelerata per sviluppatori",
+    "doc2_title": "Apex: Programmazione senza dolore",
+    "doc2_desc": "Formazione per principianti senza esperienza di programmazione",
+    "doc3_title": "Riferimento della libreria",
+    "doc3_desc": "Documentazione della libreria standard",
+    "select_document": "Seleziona un documento",
+    "select_document_hint": "Scegli un documento dalla barra laterale per iniziare a leggere",
+    "error_loading": "Errore nel caricamento del documento",
+    "error_could_not_load": "Impossibile caricare {filename}. Assicurati che il file esista."
+  },
+  "apex_lang": {
+    "hero_title": "Apex",
+    "hero_text": "Apex è un linguaggio di programmazione costruito per velocità, potenza, semplicità, chiarezza, leggibilità e modernità.",
+    "learn_btn": "Impara",
+    "github_btn": "GitHub",
+    "try_apex": "Prova Apex!",
+    "run_btn": "Esegui",
+    "apex_ready": "Apex è pronto",
+    "apex_failed_load": "Impossibile caricare Apex: {error}",
+    "why_apex": "Perché Apex?",
+    "simplicity_title": "Semplicità",
+    "simplicity_desc": "Sintassi pulita basata sull'indentazione, senza graffe o punti e virgola. Progettato per essere leggibile e facile da imparare.",
+    "builtin_title": "Potenza integrata",
+    "builtin_desc": "Include una libreria standard completa (os, sys, math, string, table, random, json, xml, csv, base, regex, crypto, zip, datetime) pronta all'uso.",
+    "performance_title": "Prestazioni",
+    "performance_desc": "Scritto in C con macchina virtuale a registri, NaN-boxing, esecuzione ottimizzata del bytecode e un compilatore JIT per x86-64.",
+    "bundle_title": "Impacchetta binari",
+    "bundle_desc": "Usa apex build per compilare il sorgente in bytecode e incorporarlo con l'interprete per un avvio istantaneo.",
+    "benchmarks_title": "Benchmark",
+    "benchmarks_desc": "Apex è veloce grazie alla VM a registri, al NaN-boxing e a un compilatore JIT opzionale. Sotto ci sono confronti con altri runtime ad alte prestazioni, raggruppati per modalità di esecuzione. La larghezza delle barre rappresenta il tempo relativo (il più lento = 100%).",
+    "jit_mode": "Modalità JIT",
+    "interpreted_mode": "Modalità interpretata",
+    "benchmarks_footer": "* Misurato su Intel i5-12400F, Ubuntu 26.04 LTS, single-core. Barre più corte = più veloce. LuaJIT gira con il JIT attivo nel gruppo JIT e con -j off nel gruppo interpretato."
+  }
+}
